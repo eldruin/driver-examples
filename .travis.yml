@@ -7,7 +7,7 @@ before_install:
 matrix:
   include:
     # F3 Discovery
-    - env: TARGET=thumbv7em-none-eabihf EXAMPLES="f3-mcp41x"
+    - env: TARGET=thumbv7em-none-eabihf EXAMPLES="f3-mcp41x f3-mcp42x f3-mcp42x-ads1115-display"
 
 install:
   bash ci/install.sh
