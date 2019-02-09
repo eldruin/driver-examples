@@ -28,13 +28,12 @@
 // panic handler
 extern crate panic_semihosting;
 
-use embedded_hal::spi::MODE_0;
 use cortex_m_rt::entry;
 use f3::{
     hal::{delay::Delay, spi::Spi, prelude::*, stm32f30x},
     led::Led,
 };
-use mcp4x::{Channel, Mcp4x};
+use mcp4x::{Channel, Mcp4x, MODE};
 
 #[entry]
 fn main() -> ! {
@@ -63,7 +62,7 @@ fn main() -> ! {
     let spi = Spi::spi1(
         dp.SPI1,
         (sck, miso, mosi),
-        MODE_0,
+        MODE,
         1.mhz(),
         clocks,
         &mut rcc.apb2,

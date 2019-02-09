@@ -49,8 +49,7 @@ use nb::block;
 
 use core::fmt::Write;
 
-use embedded_hal::spi::MODE_0;
-use mcp4x::{Channel as DigiPotChannel, Mcp4x};
+use mcp4x::{Channel as DigiPotChannel, Mcp4x, MODE};
 
 #[entry]
 fn main() -> ! {
@@ -94,7 +93,7 @@ fn main() -> ! {
     let spi = Spi::spi1(
         dp.SPI1,
         (sck, miso, mosi),
-        MODE_0,
+        MODE,
         1.mhz(),
         clocks,
         &mut rcc.apb2,
