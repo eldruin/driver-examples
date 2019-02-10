@@ -10,6 +10,7 @@ edition = "2018"
 
 [dependencies]
 ads1x1x = "0.1"
+apds9960 = "0.1"
 mcp4x = "0.1"
 ssd1306 = "0.2"
 embedded-graphics = "0.4.4"
