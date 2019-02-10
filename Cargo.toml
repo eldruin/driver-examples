@@ -1,16 +1,16 @@
 [package]
 authors = ["Diego Barrios Romero <eldruin@gmail.com>"]
 categories = ["embedded", "no-std"]
-description = "Examples of using MCP4x digital potentiometers (digipot) through the mcp4x driver."
-keywords = ["digipot", "digital", "potentiometer", "example"]
+description = "Examples of using several rust drivers."
+keywords = ["driver", "i2c", "spi", "example"]
 license = "MIT OR Apache-2.0"
-name = "mcp4x-examples"
+name = "driver-examples"
 version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-mcp4x = { git = "https://github.com/eldruin/mcp4x-rs" }
 ads1x1x = "0.1"
+mcp4x = "0.1"
 ssd1306 = "0.2"
 embedded-graphics = "0.4.4"
 cortex-m = "0.5.0"
