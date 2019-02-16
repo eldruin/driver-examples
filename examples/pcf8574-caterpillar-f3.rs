@@ -14,9 +14,9 @@ extern crate panic_semihosting;
 extern crate pcf857x;
 
 use f3::hal::delay::Delay;
+use f3::hal::i2c::I2c;
 use f3::hal::prelude::*;
 use f3::hal::stm32f30x;
-use f3::hal::i2c::I2c;
 pub use f3::hal::stm32f30x::i2c1;
 use pcf857x::{Pcf8574, SlaveAddr};
 
@@ -48,7 +48,7 @@ fn main() -> ! {
 
 enum Direction {
     Up,
-    Down
+    Down,
 }
 
 struct OutputStatus {
@@ -70,14 +70,13 @@ impl OutputStatus {
                 if self.status == 64 {
                     self.direction = Direction::Down;
                 }
-            self.status = self.status << 1;
-
+                self.status = self.status << 1;
             }
             Direction::Down => {
                 if self.status == 2 {
                     self.direction = Direction::Up;
                 }
-            self.status = self.status >> 1;
+                self.status = self.status >> 1;
             }
         }
     }

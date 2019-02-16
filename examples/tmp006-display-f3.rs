@@ -18,20 +18,20 @@
 #![no_main]
 
 // panic handler
-extern crate panic_semihosting;
 extern crate embedded_graphics;
+extern crate panic_semihosting;
 
 use cortex_m_rt::entry;
+use embedded_graphics::fonts::Font6x8;
+use embedded_graphics::prelude::*;
 use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
-use tmp006::{Tmp006, SlaveAddr};
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use nb::block;
 use ssd1306::prelude::*;
 use ssd1306::Builder;
-use nb::block;
+use tmp006::{SlaveAddr, Tmp006};
 
 use core::fmt::Write;
 #[entry]
@@ -58,7 +58,6 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
 
     disp.init().unwrap();
     disp.flush().unwrap();
@@ -90,9 +89,9 @@ fn main() -> ! {
         ).unwrap();
         */
         disp.draw(
-        Font6x8::render_str(&buffer)
-            .with_stroke(Some(1u8.into()))
-            .into_iter(),
+            Font6x8::render_str(&buffer)
+                .with_stroke(Some(1u8.into()))
+                .into_iter(),
         );
         disp.flush().unwrap();
     }

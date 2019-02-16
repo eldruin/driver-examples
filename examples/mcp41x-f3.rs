@@ -29,7 +29,7 @@ extern crate panic_semihosting;
 
 use cortex_m_rt::entry;
 use f3::{
-    hal::{delay::Delay, spi::Spi, prelude::*, stm32f30x},
+    hal::{delay::Delay, prelude::*, spi::Spi, stm32f30x},
     led::Led,
 };
 use mcp4x::{Channel, Mcp4x, MODE};
@@ -88,8 +88,7 @@ fn main() -> ! {
 
         if position == 255 {
             position = 0
-        }
-        else {
+        } else {
             position += 1;
         }
     }

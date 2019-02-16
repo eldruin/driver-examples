@@ -31,21 +31,21 @@
 #![no_main]
 
 // panic handler
-extern crate panic_semihosting;
 extern crate embedded_graphics;
+extern crate panic_semihosting;
 
-use cortex_m_rt::entry;
-use f3::{
-    hal::{delay::Delay, spi::Spi, i2c::I2c, prelude::*, stm32f30x},
-    led::Led,
-};
-use embedded_hal::adc::OneShot;
 use ads1x1x::{channel as AdcChannel, Ads1x1x, FullScaleRange, SlaveAddr};
+use cortex_m_rt::entry;
 use embedded_graphics::fonts::Font6x8;
 use embedded_graphics::prelude::*;
+use embedded_hal::adc::OneShot;
+use f3::{
+    hal::{delay::Delay, i2c::I2c, prelude::*, spi::Spi, stm32f30x},
+    led::Led,
+};
+use nb::block;
 use ssd1306::prelude::*;
 use ssd1306::Builder;
-use nb::block;
 
 use core::fmt::Write;
 
@@ -83,7 +83,8 @@ fn main() -> ! {
 
     let mut adc = Ads1x1x::new_ads1115(manager.acquire(), SlaveAddr::default());
     // need to be able to measure [0-5V]
-    adc.set_full_scale_range(FullScaleRange::Within6_144V).unwrap();
+    adc.set_full_scale_range(FullScaleRange::Within6_144V)
+        .unwrap();
 
     // SPI configuration
     let sck = gpioa.pa5.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
@@ -107,7 +108,6 @@ fn main() -> ! {
 
     let mut digipot = Mcp4x::new_mcp42x(spi, chip_select);
 
-
     let mut position = 0;
     loop {
         // Blink LED 0 to check that everything is actually running.
@@ -118,7 +118,9 @@ fn main() -> ! {
 
         // set positions to the digital potentiometer channels
         digipot.set_position(DigiPotChannel::Ch0, position).unwrap();
-        digipot.set_position(DigiPotChannel::Ch1, 255-position).unwrap();
+        digipot
+            .set_position(DigiPotChannel::Ch1, 255 - position)
+            .unwrap();
 
         // Read voltage in channel 0 and 1
         let value_ch0 = block!(adc.read(&mut AdcChannel::SingleA0)).unwrap();
@@ -137,23 +139,22 @@ fn main() -> ! {
 
         // print first line
         disp.draw(
-        Font6x8::render_str(&line0)
-            .with_stroke(Some(1u8.into()))
-            .into_iter(),
+            Font6x8::render_str(&line0)
+                .with_stroke(Some(1u8.into()))
+                .into_iter(),
         );
         // print second line
         disp.draw(
-        Font6x8::render_str(&line1)
-            .with_stroke(Some(1u8.into()))
-            .translate(Coord::new(0, 16))
-            .into_iter(),
+            Font6x8::render_str(&line1)
+                .with_stroke(Some(1u8.into()))
+                .translate(Coord::new(0, 16))
+                .into_iter(),
         );
         disp.flush().unwrap();
 
         if position >= 248 {
             position = 0
-        }
-        else {
+        } else {
             position += 8;
         }
     }

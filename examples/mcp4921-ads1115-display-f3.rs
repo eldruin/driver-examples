@@ -28,21 +28,21 @@
 #![no_main]
 
 // panic handler
-extern crate panic_semihosting;
 extern crate embedded_graphics;
+extern crate panic_semihosting;
 
-use cortex_m_rt::entry;
-use f3::{
-    hal::{delay::Delay, spi::Spi, i2c::I2c, prelude::*, stm32f30x},
-    led::Led,
-};
-use embedded_hal::adc::OneShot;
 use ads1x1x::{channel as AdcChannel, Ads1x1x, FullScaleRange, SlaveAddr};
+use cortex_m_rt::entry;
 use embedded_graphics::fonts::Font6x8;
 use embedded_graphics::prelude::*;
+use embedded_hal::adc::OneShot;
+use f3::{
+    hal::{delay::Delay, i2c::I2c, prelude::*, spi::Spi, stm32f30x},
+    led::Led,
+};
+use nb::block;
 use ssd1306::prelude::*;
 use ssd1306::Builder;
-use nb::block;
 
 use core::fmt::Write;
 
@@ -80,7 +80,8 @@ fn main() -> ! {
 
     let mut adc = Ads1x1x::new_ads1115(manager.acquire(), SlaveAddr::default());
     // need to be able to measure [0-5V] since that is the reference voltage of the DAC (VREFA)
-    adc.set_full_scale_range(FullScaleRange::Within6_144V).unwrap();
+    adc.set_full_scale_range(FullScaleRange::Within6_144V)
+        .unwrap();
 
     // SPI configuration
     let sck = gpioa.pa5.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
@@ -127,16 +128,16 @@ fn main() -> ! {
 
         // print
         disp.draw(
-        Font6x8::render_str(&msg)
-            .with_stroke(Some(1u8.into()))
-            .into_iter(),
+            Font6x8::render_str(&msg)
+                .with_stroke(Some(1u8.into()))
+                .into_iter(),
         );
         disp.flush().unwrap();
 
         // Actually this gets only until 4080.
         // Then it would be too big so we set it to 0.
         position += 255;
-        if position >= 1<<12 {
+        if position >= 1 << 12 {
             position = 0
         }
     }

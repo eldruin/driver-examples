@@ -15,11 +15,11 @@ extern crate panic_semihosting;
 extern crate pcf857x;
 
 use f3::hal::delay::Delay;
+use f3::hal::i2c::I2c;
 use f3::hal::prelude::*;
 use f3::hal::stm32f30x;
-use f3::hal::i2c::I2c;
 pub use f3::hal::stm32f30x::i2c1;
-use pcf857x::{Pcf8574, SlaveAddr, PinFlag};
+use pcf857x::{Pcf8574, PinFlag, SlaveAddr};
 
 #[entry]
 fn main() -> ! {
@@ -42,8 +42,7 @@ fn main() -> ! {
         // instead of havin a busy-wait loop like this one, one could use the INT output
         // of the PCF8574 which notifies of changes on the input pins (see datasheet).
 
-        let _input_mask = PinFlag::P0 | PinFlag::P1
-                         | PinFlag::P2 | PinFlag::P3;
+        let _input_mask = PinFlag::P0 | PinFlag::P1 | PinFlag::P2 | PinFlag::P3;
         // This does not work yet due to https://github.com/japaric/stm32f30x-hal/pull/27
         // let input = expander.get(_input_mask).unwrap();
         let input = 0b00001010;

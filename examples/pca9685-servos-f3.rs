@@ -21,10 +21,10 @@
 #![no_main]
 
 // panic handler
-extern crate panic_semihosting;
 extern crate cortex_m_rt;
-extern crate pwm_pca9685;
 extern crate f3;
+extern crate panic_semihosting;
+extern crate pwm_pca9685;
 
 use cortex_m_rt::entry;
 use f3::{
@@ -77,12 +77,12 @@ fn main() -> ! {
         delay.delay_ms(1_u16);
 
         pwm.set_channel_off(Channel::C0, current).unwrap();
-        pwm.set_channel_off(Channel::C1, servo_min + (servo_max - current)).unwrap();
+        pwm.set_channel_off(Channel::C1, servo_min + (servo_max - current))
+            .unwrap();
 
         if current == servo_max {
             factor = -1;
-        }
-        else if current == servo_min {
+        } else if current == servo_min {
             factor = 1;
         }
         current = (current as i16 + factor) as u16;

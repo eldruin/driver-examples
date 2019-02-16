@@ -22,9 +22,7 @@ extern crate panic_semihosting;
 
 use cortex_m_rt::entry;
 use f3::{
-    hal::{i2c::I2c, prelude::*,
-    delay::Delay,
-    stm32f30x::{self}},
+    hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
 
@@ -54,14 +52,16 @@ fn main() -> ! {
 
     let mut eeprom = Eeprom24x::new_24x256(i2c, SlaveAddr::Alternative(true, true, true));
     let memory_address = 0x01;
-    eeprom.write_page(memory_address, &[0xAB, 0xCD, 0xEF, 0x12]).unwrap();
+    eeprom
+        .write_page(memory_address, &[0xAB, 0xCD, 0xEF, 0x12])
+        .unwrap();
 
     // wait maximum time necessary for write
     delay.delay_ms(5_u16);
     loop {
         let mut data = [0; 4];
         eeprom.read_data(memory_address, &mut data).unwrap();
-        if data == [ 0xAB, 0xCD, 0xEF, 0x12 ] {
+        if data == [0xAB, 0xCD, 0xEF, 0x12] {
             led.on();
             delay.delay_ms(500_u16);
             led.off();
