@@ -8,6 +8,7 @@ This repository includes examples of using devices through these drivers:
 |---------------|-----------------------------------------------------------|-----------|
 |[Ads1x1x]      | 12/16-bit Analog-to-digital (ADC) converters.             | I2C       |
 |[Apds9960]     | Digital proximity, ambient light, RGB and gesture sensor. | I2C       |
+|[Eeprom24x]    | 24x series serial EEPROM devices.                         | I2C       |
 |[Lm75]         | Temperature sensor and thermal watchdog.                  | I2C       |
 |[Mcp4x]        | Digital potentiometers.                                   | SPI       |
 |[Mcp49x]       | 8/10/12-bit Digital-to-analog (DAC) converters.           | SPI       |
@@ -17,6 +18,7 @@ This repository includes examples of using devices through these drivers:
 
 [Ads1x1x]: https://crates.io/crates/ads1x1x
 [Apds9960]: https://crates.io/crates/apds9960
+[Eeprom24x]: https://crates.io/crates/eeprom24x
 [Lm75]: https://crates.io/crates/lm75
 [Mcp4x]: https://crates.io/crates/mcp4x
 [Mcp49x]: https://github.com/eldruin/mcp49x-rs
