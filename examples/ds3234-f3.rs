@@ -1,13 +1,13 @@
-//! Stores the date and time on a DS3231 real-time clock (RTC).
+//! Stores the date and time on a DS3234 real-time clock (RTC).
 //! Then reads the date and time repeatedly and if everything but the
 //! seconds match, blinks LED 0.
 //! After 1 minute it will stop blinking as the minutes will not match
 //! anymore.
 //!
-//! This example is runs on the STM32F3 Discovery board using I2C1.
+//! This example is runs on the STM32F3 Discovery board using SPI1.
 //!
 //! ```
-//! F3  <-> DS3231
+//! F3  <-> DS3234
 //! GND <-> GND
 //! +5V <-> +5V
 //! PB7 <-> SDA
@@ -15,7 +15,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example ds3231-f3 --target thumbv7em-none-eabihf`,
+//! `cargo run --example ds3234-f3 --target thumbv7em-none-eabihf`,
 
 #![no_std]
 #![no_main]
@@ -24,8 +24,9 @@
 extern crate panic_semihosting;
 
 use cortex_m_rt::entry;
+use embedded_hal::spi::MODE_0;
 use f3::{
-    hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
+    hal::{delay::Delay, prelude::*, spi::Spi, stm32f30x},
     led::Led,
 };
 
@@ -47,13 +48,30 @@ fn main() -> ! {
         .into_push_pull_output(&mut gpioe.moder, &mut gpioe.otyper)
         .into();
 
+    let mut gpioa = dp.GPIOA.split(&mut rcc.ahb);
     let mut gpiob = dp.GPIOB.split(&mut rcc.ahb);
-    let scl = gpiob.pb6.into_af4(&mut gpiob.moder, &mut gpiob.afrl);
-    let sda = gpiob.pb7.into_af4(&mut gpiob.moder, &mut gpiob.afrl);
 
-    let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
+    // SPI configuration
+    let sck = gpioa.pa5.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
+    let miso = gpioa.pa6.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
+    let mosi = gpioa.pa7.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
 
-    let mut rtc = Ds323x::new_ds3231(i2c);
+    let spi = Spi::spi1(
+        dp.SPI1,
+        (sck, miso, mosi),
+        MODE_0,
+        1.mhz(),
+        clocks,
+        &mut rcc.apb2,
+    );
+
+    let mut chip_select = gpiob
+        .pb5
+        .into_push_pull_output(&mut gpiob.moder, &mut gpiob.otyper);
+
+    chip_select.set_high();
+
+    let mut rtc = Ds323x::new_ds3234(spi, chip_select);
     let begin = DateTime {
         year: 2019,
         month: 1,
