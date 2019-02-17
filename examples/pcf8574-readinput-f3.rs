@@ -1,6 +1,19 @@
 //! Uses a PCF8574 connected to pins PB6 and PB7 of the STM23F3Discovery
 //! board to read the pins P0-P3 and output the values to the LEDs
 //! connected to P4-P7.
+//!
+//! This example is runs on the STM32F3 Discovery board using I2C1.
+//!
+//! ```
+//! F3  <-> PCF8574
+//! GND <-> GND
+//! +5V <-> +5V
+//! PB7 <-> SDA
+//! PB6 <-> SCL
+//! ```
+//!
+//! Run with:
+//! `cargo run --example pcf8574-readinput-f3 --target thumbv7em-none-eabihf`,
 
 #![deny(unsafe_code)]
 #![deny(warnings)]

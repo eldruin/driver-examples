@@ -1,5 +1,19 @@
 //! Uses PCF8575 connected to pins PB6 and PB7 of the STM23F3Discovery
 //! board to read the pins P0-P7 and write its state to pins P10-P17.
+//!
+//! This example is runs on the STM32F3 Discovery board using I2C1.
+//!
+//! ```
+//! F3  <-> PCF8575
+//! GND <-> GND
+//! +5V <-> +5V
+//! PB7 <-> SDA
+//! PB6 <-> SCL
+//! ```
+//!
+//! Run with:
+//! `cargo run --example pcf8575-input-output-f3 --target thumbv7em-none-eabihf`,
+
 
 #![deny(unsafe_code)]
 #![deny(warnings)]

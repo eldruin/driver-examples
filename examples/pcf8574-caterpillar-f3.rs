@@ -1,6 +1,19 @@
 //! Uses PCF8574 connected to pins PB6 and PB7 of the STM23F3Discovery
 //! board to blink LEDs so that they move like a caterpillar.
 //! i.e. it outputs 0b0000_0001, then 0b0000_0010 and so on.
+//!
+//! This example is runs on the STM32F3 Discovery board using I2C1.
+//!
+//! ```
+//! F3  <-> PCF8574
+//! GND <-> GND
+//! +5V <-> +5V
+//! PB7 <-> SDA
+//! PB6 <-> SCL
+//! ```
+//!
+//! Run with:
+//! `cargo run --example pcf8574-caterpillar-f3 --target thumbv7em-none-eabihf`,
 
 #![deny(unsafe_code)]
 #![deny(warnings)]
