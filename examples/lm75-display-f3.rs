@@ -11,7 +11,7 @@
 //! PB6 <-> SCL  <-> SCL
 //! ```
 //! Run with:
-//! `cargo run --example f3-display --target thumbv7em-none-eabihf`,
+//! `cargo run --example lm75-display-f3 --target thumbv7em-none-eabihf`,
 //! currently only works on nightly.
 
 #![deny(unsafe_code)]

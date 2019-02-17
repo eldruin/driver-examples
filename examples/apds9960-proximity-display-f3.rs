@@ -14,7 +14,7 @@
 //! so make sure to put a logic level shifter in between.
 //!
 //! Run with:
-//! `cargo run --example f3-proximity-display --target thumbv7em-none-eabihf`,
+//! `cargo run --example apds9960-proximity-display-f3 --target thumbv7em-none-eabihf`,
 
 #![deny(unsafe_code)]
 #![no_std]

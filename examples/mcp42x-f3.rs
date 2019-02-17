@@ -19,7 +19,7 @@
 //! For example, 0-50Kohm for MCP42050 and 0-100Kohm for MCP42100.
 //!
 //! Run with:
-//! `cargo run --example f3-mcp42x --target thumbv7em-none-eabihf`,
+//! `cargo run --example mcp42x-f3 --target thumbv7em-none-eabihf`,
 
 #![deny(unsafe_code)]
 #![no_std]

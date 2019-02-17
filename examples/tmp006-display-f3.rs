@@ -11,7 +11,7 @@
 //! PB6 <-> SCL    <-> SCL
 //! ```
 //! Run with:
-//! `cargo run --example f3-display --target thumbv7em-none-eabihf`
+//! `cargo run --example tmp006-display-f3 --target thumbv7em-none-eabihf`
 
 #![deny(unsafe_code)]
 #![no_std]

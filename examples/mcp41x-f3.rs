@@ -18,7 +18,7 @@
 //! For example, 0-50Kohm for MCP41050 and 0-100Kohm for MCP41100.
 //!
 //! Run with:
-//! `cargo run --example f3-mcp41x --target thumbv7em-none-eabihf`,
+//! `cargo run --example mcp41x-f3 --target thumbv7em-none-eabihf`,
 
 #![deny(unsafe_code)]
 #![no_std]

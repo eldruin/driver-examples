@@ -23,7 +23,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example f3-usart --target thumbv7em-none-eabihf`,
+//! `cargo run --example lm75-usart-f3 --target thumbv7em-none-eabihf`,
 
 #![no_std]
 #![no_main]

@@ -21,7 +21,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example f3-mcp42x-ads1115-display --target thumbv7em-none-eabihf`,
+//! `cargo run --example mcp42x-ads1115-display-f3 --target thumbv7em-none-eabihf`,
 
 #![deny(unsafe_code)]
 #![no_std]

@@ -13,7 +13,7 @@
 //! PB6 <-> SCL
 //! ```
 //! Run with:
-//! `cargo run --example f3-servos --target thumbv7em-none-eabihf`,
+//! `cargo run --example pca9685-servos-f3 --target thumbv7em-none-eabihf`,
 //! currently only works on nightly.
 
 #![deny(unsafe_code, warnings)]
