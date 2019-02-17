@@ -9,6 +9,9 @@ matrix:
     # F3 Discovery
     - env: TARGET=thumbv7em-none-eabihf
 
+    - env: TARGET=thumbv7em-none-eabihf
+      rust: nightly
+
     # Minimum Supported Rust Version
     - env: TARGET=thumbv7em-none-eabihf
       rust: 1.31.0
