@@ -4,6 +4,23 @@ before_install:
   - git clone https://github.com/eldruin/rust-driver-example-ci-scripts ci
   - bash ci/before_install.sh
 
+env:
+  global:
+    - DRIVERS="
+            ads1x1x
+            apds9960
+            ds1307
+            ds323x
+            eeprom24x
+            lm75
+            max44009
+            mcp4x
+            mcp49x
+            pcf857x
+            pwm-pca9685
+            tcs3472
+            tmp006"
+
 matrix:
   include:
     # F3 Discovery
@@ -14,6 +31,13 @@ matrix:
 
     # Minimum Supported Rust Version
     - env: TARGET=thumbv7em-none-eabihf
+      rust: 1.31.0
+
+    - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS
+      rust: nightly
+
+    # Minimum Supported Rust Version
+    - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS
       rust: 1.31.0
 
 install:
