@@ -15,7 +15,7 @@ env:
             lm75
             max44009
             mcp4x
-            mcp49x
+            mcp49xx
             pcf857x
             pwm-pca9685
             tcs3472

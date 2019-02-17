@@ -21,7 +21,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example mcp42x-ads1115-display-f3 --target thumbv7em-none-eabihf`,
+//! `cargo run --example mcp4921-ads1115-display-f3 --target thumbv7em-none-eabihf`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -46,7 +46,7 @@ use ssd1306::Builder;
 
 use core::fmt::Write;
 
-use mcp49x::{Command as DacCommand, Mcp49x, MODE};
+use mcp49xx::{Command as DacCommand, Mcp49xx, MODE0};
 
 #[entry]
 fn main() -> ! {
@@ -91,7 +91,7 @@ fn main() -> ! {
     let spi = Spi::spi1(
         dp.SPI1,
         (sck, miso, mosi),
-        MODE,
+        MODE0,
         1.mhz(),
         clocks,
         &mut rcc.apb2,
@@ -103,7 +103,7 @@ fn main() -> ! {
 
     chip_select.set_high();
 
-    let mut dac = Mcp49x::new_mcp4921(spi, chip_select);
+    let mut dac = Mcp49xx::new_mcp4921(spi, chip_select);
     let dac_cmd = DacCommand::default();
     let mut position = 0;
     loop {
