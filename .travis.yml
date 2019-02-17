@@ -19,7 +19,12 @@ env:
             pcf857x
             pwm-pca9685
             tcs3472
-            tmp006"
+            tmp006
+            tmp1x2
+            veml6040
+            veml6070
+            veml6075
+            xca9548a"
 
 matrix:
   include:
