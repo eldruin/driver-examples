@@ -14,7 +14,6 @@
 //! Run with:
 //! `cargo run --example pcf8575-input-output-f3 --target thumbv7em-none-eabihf`,
 
-
 #![deny(unsafe_code)]
 #![deny(warnings)]
 #![no_std]
