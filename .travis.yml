@@ -39,6 +39,8 @@ matrix:
       rust: 1.31.0
 
     - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS
+
+    - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS
       rust: nightly
 
     # Minimum Supported Rust Version
