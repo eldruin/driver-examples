@@ -30,7 +30,7 @@ use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
-use max3010x::{Led as MaxLed, Max3010x, TimeSlot};
+use max3010x::{Led as MaxLed, Max3010x};
 use ssd1306::prelude::*;
 use ssd1306::Builder;
 
