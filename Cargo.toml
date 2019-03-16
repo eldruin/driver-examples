@@ -15,7 +15,7 @@ ds1307 = "0.2"
 ds323x = "0.2"
 eeprom24x = "0.3"
 lm75 = "0.1"
-max3010x = { git = "https://github.com/eldruin/max3010x-rs" }
+max3010x = "0.1"
 mcp4x = "0.1"
 mcp49xx = "0.1"
 pcf857x = "0.2"

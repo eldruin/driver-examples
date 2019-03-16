@@ -13,6 +13,7 @@ env:
             ds323x
             eeprom24x
             lm75
+            max3010x
             max44009
             mcp4x
             mcp49xx
