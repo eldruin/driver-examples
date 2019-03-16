@@ -15,6 +15,7 @@ This repository includes examples of using devices through these drivers:
 |[Pcf857x]      | 8/16-pin I/O port expanders.                              | I2C       |
 |[Pwm-pca9685]  | 16-pin PWM port expander / LED driver.                    | I2C       |
 |[Tmp006]       | Non-contact infrared (IR) thermopile temperature sensor   | I2C       |
+|[Tmp1x2]       | Temperature sensors.                                      | I2C       |
 
 [Ads1x1x]: https://crates.io/crates/ads1x1x
 [Apds9960]: https://crates.io/crates/apds9960
@@ -25,6 +26,7 @@ This repository includes examples of using devices through these drivers:
 [Pcf857x]: https://crates.io/crates/pcf857x
 [Pwm-pca9685]: https://crates.io/crates/pwm-pca9685
 [Tmp006]: https://crates.io/crates/tmp006
+[Tmp1x2]: https://crates.io/crates/tmp1x2
 
 These examples use the STM32F3Discovery board. At the beginning of each example the setup
 and behavior is described.
