@@ -31,7 +31,8 @@ This repository includes examples of using devices through these drivers:
 [Tmp1x2]: https://crates.io/crates/tmp1x2
 
 These examples use the STM32F3Discovery board. At the beginning of each example the setup
-and behavior is described.
+and behavior is described. Many of them also use an SSD1306 OLED display.
+You can get the modules used here on [AliExpress] generally for a very small price.
 
 For example, to run the f3-mcp41x example:
 First, connect your discovery board per USB, then connect OpenOCD in a terminal with:
@@ -60,3 +61,5 @@ Licensed under either of
 Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall
 be dual licensed as above, without any additional terms or conditions.
+
+[AliExpress]: https://www.aliexpress.com
