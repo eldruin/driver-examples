@@ -10,6 +10,7 @@ This repository includes examples of using devices through these drivers:
 |[Apds9960]     | Digital proximity, ambient light, RGB and gesture sensor. | I2C       |
 |[Eeprom24x]    | 24x series serial EEPROM devices.                         | I2C       |
 |[Lm75]         | Temperature sensor and thermal watchdog.                  | I2C       |
+|[Max3010x]     | Pulse oximeter and heart-rate sensor.                     | I2C       |
 |[Mcp4x]        | Digital potentiometers.                                   | SPI       |
 |[Mcp49x]       | 8/10/12-bit Digital-to-analog (DAC) converters.           | SPI       |
 |[Pcf857x]      | 8/16-pin I/O port expanders.                              | I2C       |
@@ -21,6 +22,7 @@ This repository includes examples of using devices through these drivers:
 [Apds9960]: https://crates.io/crates/apds9960
 [Eeprom24x]: https://crates.io/crates/eeprom24x
 [Lm75]: https://crates.io/crates/lm75
+[Max3010x]: https://crates.io/crates/max3010x
 [Mcp4x]: https://crates.io/crates/mcp4x
 [Mcp49x]: https://github.com/eldruin/mcp49x-rs
 [Pcf857x]: https://crates.io/crates/pcf857x
