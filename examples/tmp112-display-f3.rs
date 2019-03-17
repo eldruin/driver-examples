@@ -72,11 +72,11 @@ fn main() -> ! {
         led.off();
         delay.delay_ms(50_u16);
 
-        // If there was an error, it will print 500.00ºC.
+        // If there was an error, it will print 500.0ºC.
         let temp_c = tmp112.read_temperature().unwrap_or(500.0);
 
         buffer.clear();
-        write!(buffer, "Temperature: {:.2}ºC", temp_c).unwrap();
+        write!(buffer, "Temperature: {:.1}ºC", temp_c).unwrap();
         disp.draw(
             Font6x8::render_str(&buffer)
                 .with_stroke(Some(1u8.into()))
