@@ -1,17 +1,17 @@
-//! Continuously read the temperature with the TMP112 sensor and display it in
+//! Continuously read the temperature with a TMP102 sensor and display it in
 //! an SSD1306 OLED display.
 //!
 //! This example is runs on the STM32F3 Discovery board using I2C1.
 //!
 //! ```
-//! F3  <-> TMP112 <-> Display
+//! F3  <-> TMP102 <-> Display
 //! GND <-> GND    <-> GND
 //! VCC <-> +5V    <-> +5V
 //! PB7 <-> SDA    <-> SDA
 //! PB6 <-> SCL    <-> SCL
 //! ```
 //! Run with:
-//! `cargo run --example tmp112-display-f3 --target thumbv7em-none-eabihf`
+//! `cargo run --example tmp102-display-f3 --target thumbv7em-none-eabihf`
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -61,7 +61,7 @@ fn main() -> ! {
     disp.init().unwrap();
     disp.flush().unwrap();
 
-    let mut tmp112 = Tmp1x2::new(manager.acquire(), SlaveAddr::default());
+    let mut tmp102 = Tmp1x2::new(manager.acquire(), SlaveAddr::default());
 
     let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
     loop {
@@ -73,7 +73,7 @@ fn main() -> ! {
         delay.delay_ms(50_u16);
 
         // If there was an error, it will print 500.0ºC.
-        let temp_c = tmp112.read_temperature().unwrap_or(500.0);
+        let temp_c = tmp102.read_temperature().unwrap_or(500.0);
 
         buffer.clear();
         write!(buffer, "Temperature: {:.1}ºC", temp_c).unwrap();
