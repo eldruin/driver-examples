@@ -4,12 +4,17 @@
 //! This example is runs on the STM32F3 Discovery board using I2C1.
 //!
 //! ```
-//! F3  <-> TMP102 <-> Display
-//! GND <-> GND    <-> GND
-//! VCC <-> +5V    <-> +5V
-//! PB7 <-> SDA    <-> SDA
-//! PB6 <-> SCL    <-> SCL
+//! F3    <-> TMP102 <-> Display
+//! GND   <-> GND    <-> GND
+//! +5V              <-> +5V
+//! +3v3V <-> +3.3V
+//! PB7   <-> SDA    <-> SDA
+//! PB6   <-> SCL    <-> SCL
 //! ```
+//!
+//! Beware that the TMP102 runs on 3.3V but PB6 and PB7 run on 5V level
+//! so make sure to put a logic level shifter in between.
+//!
 //! Run with:
 //! `cargo run --example tmp102-display-f3 --target thumbv7em-none-eabihf`
 
