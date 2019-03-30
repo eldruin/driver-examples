@@ -33,10 +33,10 @@ use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
+use nb::block;
 use ssd1306::prelude::*;
 use ssd1306::Builder;
 use tmp1x2::{SlaveAddr, Tmp1x2};
-use nb::block;
 
 use core::fmt::Write;
 #[entry]
