@@ -18,6 +18,7 @@ This repository includes examples of using devices through these drivers:
 |[Tmp006]       | Non-contact infrared (IR) thermopile temperature sensor   | I2C       | [Intro blog post][blog-tmp006]    |
 |[Tmp1x2]       | Temperature sensors.                                      | I2C       | [Intro blog post][blog-tmp1x2]    |
 |[Veml6040]     | RGBW light color sensor.                                  | I2C       |                                   |
+|[Veml6075]     | Ultraviolet A (UVA) and B (UVB) light sensor.             | I2C       |                                   |
 
 These examples use the STM32F3Discovery board. At the beginning of each example the setup
 and behavior is described. Many of them also use an SSD1306 OLED display.
@@ -65,6 +66,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Tmp006]: https://crates.io/crates/tmp006
 [Tmp1x2]: https://crates.io/crates/tmp1x2
 [Veml6040]: https://crates.io/crates/veml6040
+[Veml6075]: https://crates.io/crates/veml6075
 
 [blog-ads1x1x]: https://blog.eldruin.com/ads1x1x-analog-to-digital-converter-driver-in-rust/
 [blog-eeprom24x]: https://blog.eldruin.com/24x-serial-eeprom-driver-in-rust/
