@@ -1,6 +1,11 @@
 //! Measure the voltages with an ADS1015 analog/digital
 //! converter and print them to an SSD1306 OLED display.
 //!
+//! You can see further explanations about this device and how this example
+//! works here:
+//!
+//! https://blog.eldruin.com/ads1x1x-analog-to-digital-converter-driver-in-rust/
+//!
 //! This example is runs on the STM32F3 Discovery board using SPI1 and I2C1.
 //!
 //! ```
