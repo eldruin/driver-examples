@@ -22,9 +22,9 @@ env:
             tcs3472
             tmp006
             tmp1x2
-            veml6040
+            # veml6040 Git version is not compatible. Deactivated until a new version is released.
             veml6070
-            veml6075
+            # veml6075 Git version is not compatible. Deactivated until a new version is released.
             xca9548a"
 
 matrix:
