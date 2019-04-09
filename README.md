@@ -15,7 +15,8 @@ This repository includes examples of using devices through these drivers:
 |[Mcp49x]       | 8/10/12-bit Digital-to-analog (DAC) converters.           | SPI       |                                   |
 |[Pcf857x]      | 8/16-pin I/O port expanders.                              | I2C       |                                   |
 |[Pwm-pca9685]  | 16-pin PWM port expander / LED driver.                    | I2C       |                                   |
-|[Tmp006]       | Non-contact infrared (IR) thermopile temperature sensor   | I2C       | [Intro blog post][blog-tmp006]    |
+|[Tcs3472]      | RGBW light color sensor with IR filter.                   | I2C       |                                   |
+|[Tmp006]       | Non-contact infrared (IR) thermopile temperature sensor.  | I2C       | [Intro blog post][blog-tmp006]    |
 |[Tmp1x2]       | Temperature sensors.                                      | I2C       | [Intro blog post][blog-tmp1x2]    |
 |[Veml6040]     | RGBW light color sensor.                                  | I2C       |                                   |
 |[Veml6075]     | Ultraviolet A (UVA) and B (UVB) light sensor.             | I2C       |                                   |
@@ -63,6 +64,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Mcp49x]: https://github.com/eldruin/mcp49x-rs
 [Pcf857x]: https://crates.io/crates/pcf857x
 [Pwm-pca9685]: https://crates.io/crates/pwm-pca9685
+[Tcs3472]: https://crates.io/crates/tcs3472
 [Tmp006]: https://crates.io/crates/tmp006
 [Tmp1x2]: https://crates.io/crates/tmp1x2
 [Veml6040]: https://crates.io/crates/veml6040
