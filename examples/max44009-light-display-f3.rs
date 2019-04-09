@@ -33,9 +33,9 @@ use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
+use max44009::{Max44009, SlaveAddr};
 use ssd1306::prelude::*;
 use ssd1306::Builder;
-use max44009::{SlaveAddr, Max44009};
 
 use core::fmt::Write;
 #[entry]
