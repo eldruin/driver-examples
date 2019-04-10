@@ -16,7 +16,6 @@
 //! `cargo run --example pcf8574-caterpillar-f3 --target thumbv7em-none-eabihf`,
 
 #![deny(unsafe_code)]
-#![deny(warnings)]
 #![no_std]
 #![no_main]
 

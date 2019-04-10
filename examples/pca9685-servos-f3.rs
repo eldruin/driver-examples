@@ -16,7 +16,7 @@
 //! `cargo run --example pca9685-servos-f3 --target thumbv7em-none-eabihf`,
 //! currently only works on nightly.
 
-#![deny(unsafe_code, warnings)]
+#![deny(unsafe_code)]
 #![no_std]
 #![no_main]
 
