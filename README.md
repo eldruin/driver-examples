@@ -8,6 +8,7 @@ This repository includes examples of using devices through these drivers:
 |---------------|-----------------------------------------------------------|-----------|-----------------------------------|
 |[Ads1x1x]      | 12/16-bit Analog-to-digital (ADC) converters.             | I2C       | [Intro blog post][blog-ads1x1x]   |
 |[Apds9960]     | Digital proximity, ambient light, RGB and gesture sensor. | I2C       |                                   |
+|[Ds1307]       | Real-time clock (RTC).                                    | I2C       | [Intro blog post][blog-ds1307]    |
 |[Eeprom24x]    | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
 |[Lm75]         | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
 |[Max3010x]     | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
@@ -57,6 +58,7 @@ be dual licensed as above, without any additional terms or conditions.
 
 [Ads1x1x]: https://crates.io/crates/ads1x1x
 [Apds9960]: https://crates.io/crates/apds9960
+[Ds1307]: https://crates.io/crates/ds1307
 [Eeprom24x]: https://crates.io/crates/eeprom24x
 [Lm75]: https://crates.io/crates/lm75
 [Max3010x]: https://crates.io/crates/max3010x
@@ -71,6 +73,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Veml6075]: https://crates.io/crates/veml6075
 
 [blog-ads1x1x]: https://blog.eldruin.com/ads1x1x-analog-to-digital-converter-driver-in-rust/
+[blog-ds1307]: https://blog.eldruin.com/ds1307-real-time-clock-rtc-driver-in-rust/
 [blog-eeprom24x]: https://blog.eldruin.com/24x-serial-eeprom-driver-in-rust/
 [blog-tmp006]: https://blog.eldruin.com/tmp006-contact-less-infrared-ir-thermopile-driver-in-rust/
 [blog-tmp1x2]: https://blog.eldruin.com/tmp1x2-temperature-sensor-driver-in-rust/
