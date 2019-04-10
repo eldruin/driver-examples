@@ -14,6 +14,7 @@
 //! Run with:
 //! `cargo run --example at24c256-f3 --target thumbv7em-none-eabihf`,
 
+#![deny(unsafe_code)]
 #![no_std]
 #![no_main]
 

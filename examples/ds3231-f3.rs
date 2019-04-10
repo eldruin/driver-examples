@@ -17,6 +17,7 @@
 //! Run with:
 //! `cargo run --example ds3231-f3 --target thumbv7em-none-eabihf`,
 
+#![deny(unsafe_code)]
 #![no_std]
 #![no_main]
 
