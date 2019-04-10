@@ -60,7 +60,7 @@ fn main() -> ! {
             | PinFlag::P6
             | PinFlag::P7;
         //let inputs = expander.get(&_input_mask.unwrap();
-        let inputs = 0b0000000010100101;
+        let inputs = 0b0000_0000_1010_0101;
         expander.set(0b0000_0000_1111_1111 | inputs << 8).unwrap();
         delay.delay_ms(100_u16);
     }

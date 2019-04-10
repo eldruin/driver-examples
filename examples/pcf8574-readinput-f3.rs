@@ -58,7 +58,7 @@ fn main() -> ! {
         let _input_mask = PinFlag::P0 | PinFlag::P1 | PinFlag::P2 | PinFlag::P3;
         // This does not work yet due to https://github.com/japaric/stm32f30x-hal/pull/27
         // let input = expander.get(_input_mask).unwrap();
-        let input = 0b00001010;
+        let input = 0b0000_1010;
         // inputs are set to `1` (see PCF8574 datasheet).
         // The status needs to be kept so we `or` the input mask.
         expander.set(input << 4 | 0b0000_1111).unwrap();
