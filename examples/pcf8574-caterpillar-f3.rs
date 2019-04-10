@@ -83,13 +83,13 @@ impl OutputStatus {
                 if self.status == 64 {
                     self.direction = Direction::Down;
                 }
-                self.status = self.status << 1;
+                self.status <<= 1;
             }
             Direction::Down => {
                 if self.status == 2 {
                     self.direction = Direction::Up;
                 }
-                self.status = self.status >> 1;
+                self.status >>= 1;
             }
         }
     }
