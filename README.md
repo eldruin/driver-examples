@@ -10,6 +10,7 @@ This repository includes examples of using devices through these drivers:
 |[Apds9960]     | Digital proximity, ambient light, RGB and gesture sensor. | I2C       |                                   |
 |[Ds1307]       | Real-time clock (RTC).                                    | I2C       | [Intro blog post][blog-ds1307]    |
 |[Ds323x]       | Extremely accurate real-time clock (RTC).                 | I2C / SPI |                                   |
+|[Kxcj9]        | Tri-axis accelerometer                                    | I2C       |                                   |
 |[Eeprom24x]    | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
 |[Lm75]         | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
 |[Max3010x]     | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
@@ -61,6 +62,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Apds9960]: https://crates.io/crates/apds9960
 [Ds1307]: https://crates.io/crates/ds1307
 [Ds323x]: https://crates.io/crates/ds323x
+[Kxcj9]: https://github.com/eldruin/kxcj9-rs
 [Eeprom24x]: https://crates.io/crates/eeprom24x
 [Lm75]: https://crates.io/crates/lm75
 [Max3010x]: https://crates.io/crates/max3010x
