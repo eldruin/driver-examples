@@ -64,7 +64,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Apds9960]: https://crates.io/crates/apds9960
 [Ds1307]: https://crates.io/crates/ds1307
 [Ds323x]: https://crates.io/crates/ds323x
-[Kxcj9]: https://github.com/eldruin/kxcj9-rs
+[Kxcj9]: https://crates.io/crates/kxcj9
 [Eeprom24x]: https://crates.io/crates/eeprom24x
 [Lm75]: https://crates.io/crates/lm75
 [Max3010x]: https://crates.io/crates/max3010x
