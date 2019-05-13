@@ -121,7 +121,8 @@ impl Iterator for MidiTable {
     fn next(&mut self) -> Option<Self::Item> {
         let mut silence = None;
         let note_duration = Self::NOTES[self.position].1;
-        if self.position == (Self::NOTES.len() - 1) {
+        let should_start_over = self.position == (Self::NOTES.len() - 1);
+        if should_start_over {
             self.position = 0;
             self.duration_counter = 0;
         } else if self.duration_counter == note_duration {
