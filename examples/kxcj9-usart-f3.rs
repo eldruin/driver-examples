@@ -68,7 +68,7 @@ fn main() -> ! {
 
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
 
-    let mut accelerometer = Kxcj9::new_1018(i2c, SlaveAddr::default());
+    let mut accelerometer = Kxcj9::new_kxcj9_1018(i2c, SlaveAddr::default());
     accelerometer.enable().unwrap();
 
     loop {

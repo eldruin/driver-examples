@@ -12,6 +12,7 @@ env:
             ds1307
             ds323x
             eeprom24x
+            kxcj9
             lm75
             max3010x
             max44009
@@ -24,7 +25,7 @@ env:
             tmp1x2
             veml6070
             xca9548a"
-# kxcj9 Git version is not compatible. Deactivated until a new version is released.
+
 # veml6040 Git version is not compatible. Deactivated until a new version is released.
 # veml6075 Git version is not compatible. Deactivated until a new version is released.
 
