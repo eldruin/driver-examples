@@ -1,6 +1,9 @@
 //! This plays the final part of Beethoven's ninth symphony given by
 //! its MIDI tones using an AD9833 waveform generator / direct digital synthesizer.
 //!
+//! You can see a video of this running here:
+//! https://blog.eldruin.com/ad983x-waveform-generator-dds-driver-in-rust/
+//!
 //! This example is runs on the STM32F3 Discovery board using SPI1.
 //!
 //! ```

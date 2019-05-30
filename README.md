@@ -6,7 +6,7 @@ This repository includes examples of using devices through these drivers:
 
 | Device driver | Description                                               | Interface | Introductory blog post            |
 |---------------|-----------------------------------------------------------|-----------|-----------------------------------|
-|[Ad983x]       | Waveform generator / direct digital synthesizer (DDS).    | SPI       |                                   |
+|[Ad983x]       | Waveform generator / direct digital synthesizer (DDS).    | SPI       | [Intro blog post][blog-ad983x]    |
 |[Ads1x1x]      | 12/16-bit Analog-to-digital (ADC) converters.             | I2C       | [Intro blog post][blog-ads1x1x]   |
 |[Apds9960]     | Digital proximity, ambient light, RGB and gesture sensor. | I2C       |                                   |
 |[Ds1307]       | Real-time clock (RTC).                                    | I2C       | [Intro blog post][blog-ds1307]    |
@@ -59,7 +59,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall
 be dual licensed as above, without any additional terms or conditions.
 
-[Ad983x]: https://github.com/eldruin/ad983x-rs
+[Ad983x]: https://crates.io/crates/ad983x
 [Ads1x1x]: https://crates.io/crates/ads1x1x
 [Apds9960]: https://crates.io/crates/apds9960
 [Ds1307]: https://crates.io/crates/ds1307
@@ -78,6 +78,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Veml6040]: https://crates.io/crates/veml6040
 [Veml6075]: https://crates.io/crates/veml6075
 
+[blog-ad983x]: https://blog.eldruin.com/ad983x-waveform-generator-dds-driver-in-rust/
 [blog-ads1x1x]: https://blog.eldruin.com/ads1x1x-analog-to-digital-converter-driver-in-rust/
 [blog-ds1307]: https://blog.eldruin.com/ds1307-real-time-clock-rtc-driver-in-rust/
 [blog-eeprom24x]: https://blog.eldruin.com/24x-serial-eeprom-driver-in-rust/
