@@ -105,7 +105,7 @@ fn main() -> ! {
 
         let mut msg: heapless::String<heapless::consts::U64> = heapless::String::new();
 
-        write!(msg, "JEDEC ID: {} {} {}", id[0], id[1], id[2]).unwrap();
+        write!(msg, "222JEDEC ID: {} {} {}", id[0], id[1], id[2]).unwrap();
 
         disp.draw(
             Font6x8::render_str(&msg)
