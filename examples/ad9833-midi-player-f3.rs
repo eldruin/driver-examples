@@ -31,8 +31,13 @@ extern crate panic_semihosting;
 
 use ad983x::{Ad983x, FrequencyRegister, MODE};
 use cortex_m_rt::entry;
+use embedded_hal::blocking::delay::DelayMs;
+use embedded_hal::digital::v2::OutputPin;
 use f3::{
-    hal::{delay::Delay, prelude::*, spi::Spi, stm32f30x},
+    hal::{
+        delay::Delay, flash::FlashExt, gpio::GpioExt, rcc::RccExt, spi::Spi, stm32f30x,
+        time::U32Ext,
+    },
     led::Led,
 };
 use libm;
@@ -74,7 +79,7 @@ fn main() -> ! {
         .pb5
         .into_push_pull_output(&mut gpiob.moder, &mut gpiob.otyper);
 
-    chip_select.set_high();
+    chip_select.set_high().unwrap();
 
     let mut synth = Ad983x::new_ad9833(spi, chip_select);
     synth.reset().unwrap();
