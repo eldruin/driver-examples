@@ -10,8 +10,10 @@
 //! F3  <-> DS3234
 //! GND <-> GND
 //! +5V <-> +5V
-//! PB7 <-> SDA
-//! PB6 <-> SCL
+//! PA5 <-> CLK
+//! PA6 <-> DO
+//! PA7 <-> DI
+//! PB1 <-> CS
 //! ```
 //!
 //! Run with:
@@ -72,7 +74,7 @@ fn main() -> ! {
     );
 
     let mut chip_select = gpiob
-        .pb5
+        .pb1
         .into_push_pull_output(&mut gpiob.moder, &mut gpiob.otyper);
 
     chip_select.set_high().unwrap();
