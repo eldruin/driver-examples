@@ -27,7 +27,7 @@ extern crate panic_semihosting;
 use cortex_m_rt::entry;
 use embedded_hal::blocking::delay::DelayMs;
 use embedded_hal::digital::v2::OutputPin;
-use embedded_hal::spi::MODE_0;
+use embedded_hal::spi::MODE_1;
 use f3::{
     hal::{
         delay::Delay, flash::FlashExt, gpio::GpioExt, rcc::RccExt, spi::Spi, stm32f30x,
@@ -65,7 +65,7 @@ fn main() -> ! {
     let spi = Spi::spi1(
         dp.SPI1,
         (sck, miso, mosi),
-        MODE_0,
+        MODE_1,
         1.mhz(),
         clocks,
         &mut rcc.apb2,
