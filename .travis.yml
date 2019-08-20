@@ -19,6 +19,7 @@ env:
             max44009
             mcp4x
             mcp49xx
+            mcp794xx
             pcf857x
             pwm-pca9685
             tcs3472
