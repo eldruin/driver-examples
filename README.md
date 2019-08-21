@@ -30,7 +30,7 @@ These examples use the STM32F3Discovery board. At the beginning of each example 
 and behavior is described. Many of them also use an SSD1306 OLED display.
 You can get the modules used here on [AliExpress] generally for a very small price.
 
-For example, to run the f3-mcp41x example:
+For example, to run the mcp41x-f3 example:
 First, connect your discovery board per USB, then connect OpenOCD in a terminal with:
 ```
 openocd -f interface/stlink-v2-1.cfg -f target/stm32f3x.cfg
@@ -40,7 +40,7 @@ Then on another terminal run:
 ```
 git clone https://github.com/eldruin/driver-examples
 cd driver-examples
-cargo run --example f3-mcp41x
+cargo run --example mcp41x-f3
 ```
 
 ## License
