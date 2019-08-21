@@ -9,8 +9,8 @@ This repository includes examples of using devices through these drivers:
 |[Ad983x]       | Waveform generator / direct digital synthesizer (DDS).    | SPI       | [Intro blog post][blog-ad983x]    |
 |[Ads1x1x]      | 12/16-bit Analog-to-digital (ADC) converters.             | I2C       | [Intro blog post][blog-ads1x1x]   |
 |[Apds9960]     | Digital proximity, ambient light, RGB and gesture sensor. | I2C       |                                   |
-|[Ds1307]       | Real-time clock (RTC).                                    | I2C       | [Intro blog post][blog-ds1307]    |
-|[Ds323x]       | Extremely accurate real-time clock (RTC).                 | I2C / SPI |                                   |
+|[Ds1307]       | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-ds1307]    |
+|[Ds323x]       | Extremely accurate real-time clock (RTC) / calendar.      | I2C / SPI |                                   |
 |[Kxcj9]        | Tri-axis accelerometer                                    | I2C       |                                   |
 |[Eeprom24x]    | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
 |[Lm75]         | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
