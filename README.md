@@ -16,7 +16,7 @@ This repository includes examples of using devices through these drivers:
 |[Lm75]         | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
 |[Max3010x]     | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
 |[Mcp4x]        | Digital potentiometers.                                   | SPI       |                                   |
-|[Mcp49x]       | 8/10/12-bit Digital-to-analog (DAC) converters.           | SPI       |                                   |
+|[Mcp49xx]      | 8/10/12-bit Digital-to-analog (DAC) converters.           | SPI       |                                   |
 |[Pcf857x]      | 8/16-pin I/O port expanders.                              | I2C       |                                   |
 |[Pwm-pca9685]  | 16-pin PWM port expander / LED driver.                    | I2C       |                                   |
 |[Tcs3472]      | RGBW light color sensor with IR filter.                   | I2C       |                                   |
@@ -70,7 +70,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Lm75]: https://crates.io/crates/lm75
 [Max3010x]: https://crates.io/crates/max3010x
 [Mcp4x]: https://crates.io/crates/mcp4x
-[Mcp49x]: https://github.com/eldruin/mcp49x-rs
+[Mcp49xx]: https://crates.io/crates/mcp49xx
 [Pcf857x]: https://crates.io/crates/pcf857x
 [Pwm-pca9685]: https://crates.io/crates/pwm-pca9685
 [Tcs3472]: https://crates.io/crates/tcs3472
