@@ -17,6 +17,7 @@ This repository includes examples of using devices through these drivers:
 |[Max3010x]     | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
 |[Mcp4x]        | Digital potentiometers.                                   | SPI       |                                   |
 |[Mcp49xx]      | 8/10/12-bit Digital-to-analog (DAC) converters.           | SPI       |                                   |
+|[Mcp794xx]     | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-mcp794xx]  |
 |[Pcf857x]      | 8/16-pin I/O port expanders.                              | I2C       |                                   |
 |[Pwm-pca9685]  | 16-pin PWM port expander / LED driver.                    | I2C       |                                   |
 |[Tcs3472]      | RGBW light color sensor with IR filter.                   | I2C       |                                   |
@@ -71,6 +72,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Max3010x]: https://crates.io/crates/max3010x
 [Mcp4x]: https://crates.io/crates/mcp4x
 [Mcp49xx]: https://crates.io/crates/mcp49xx
+[Mcp794xx]: https://crates.io/crates/mcp794xx
 [Pcf857x]: https://crates.io/crates/pcf857x
 [Pwm-pca9685]: https://crates.io/crates/pwm-pca9685
 [Tcs3472]: https://crates.io/crates/tcs3472
@@ -86,5 +88,6 @@ be dual licensed as above, without any additional terms or conditions.
 [blog-eeprom24x]: https://blog.eldruin.com/24x-serial-eeprom-driver-in-rust/
 [blog-tmp006]: https://blog.eldruin.com/tmp006-contact-less-infrared-ir-thermopile-driver-in-rust/
 [blog-tmp1x2]: https://blog.eldruin.com/tmp1x2-temperature-sensor-driver-in-rust/
+[blog-mcp794xx]: https://blog.eldruin.com/mcp794xx-real-time-clock-rtc-driver-in-rust
 
 [AliExpress]: https://www.aliexpress.com
