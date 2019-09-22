@@ -67,7 +67,12 @@ fn main() -> ! {
 
     let mut sensor = VEML6075::new(manager.acquire());
 
-    let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
+    let mut lines: [heapless::String<heapless::consts::U32>; 4] = [
+                        heapless::String::new(),
+                        heapless::String::new(),
+                        heapless::String::new(),
+                        heapless::String::new(),
+                    ];
     sensor.enable().unwrap();
     loop {
         // Blink LED 0 to check that everything is actually running.
@@ -80,12 +85,39 @@ fn main() -> ! {
         // If there was an error, it will print 65535.
         let uva = sensor.read_uva().unwrap_or(65535);
         let uvb = sensor.read_uvb().unwrap_or(65535);
+        let uvcomp1 = sensor.read_uvcomp1().unwrap_or(65535);
+        let uvcomp2 = sensor.read_uvcomp2().unwrap_or(65535);
 
-        buffer.clear();
-        write!(buffer, "UVA: {}, UVB: {}", uva, uvb).unwrap();
+        lines[0].clear();
+        lines[1].clear();
+        lines[2].clear();
+        lines[3].clear();
+
+        write!(lines[0], "UVA: {}     ", uva).unwrap();
+        write!(lines[1], "UVB: {}     ", uvb).unwrap();
+        write!(lines[2], "UVcomp1: {}     ", uvcomp1).unwrap();
+        write!(lines[3], "UVcomp2: {}     ", uvcomp2).unwrap();
         disp.draw(
-            Font6x8::render_str(&buffer)
+            Font6x8::render_str(&lines[0])
                 .with_stroke(Some(1u8.into()))
+                .into_iter(),
+        );
+        disp.draw(
+            Font6x8::render_str(&lines[1])
+                .with_stroke(Some(1u8.into()))
+                .translate(Coord::new(0, 12))
+                .into_iter(),
+        );
+        disp.draw(
+            Font6x8::render_str(&lines[2])
+                .with_stroke(Some(1u8.into()))
+                .translate(Coord::new(0, 24))
+                .into_iter(),
+        );
+        disp.draw(
+            Font6x8::render_str(&lines[3])
+                .with_stroke(Some(1u8.into()))
+                .translate(Coord::new(0, 36))
                 .into_iter(),
         );
         disp.flush().unwrap();
