@@ -68,6 +68,7 @@ fn main() -> ! {
     let mut sensor = VEML6075::new(manager.acquire());
 
     let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
+    sensor.enable().unwrap();
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 is off, something went wrong.
