@@ -1,5 +1,6 @@
 //! Continuously measure the ultraviolet A and ultraviolet B light sensor data
-//! and print it to an SSD1306 OLED display.
+//! and print it to an SSD1306 OLED display together with the calculated
+//! UV index.
 //!
 //! This example is runs on the STM32F3 Discovery board using I2C1.
 //!
@@ -15,7 +16,7 @@
 //! so make sure to put a logic level shifter in between.
 //!
 //! Run with:
-//! `cargo run --example veml6075-color-display-f3 --target thumbv7em-none-eabihf`,
+//! `cargo run --example veml6075-uv-display-f3 --target thumbv7em-none-eabihf`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -34,7 +35,7 @@ use f3::{
 };
 use ssd1306::prelude::*;
 use ssd1306::Builder;
-use veml6075::VEML6075;
+use veml6075::{Calibration, Measurement, Veml6075};
 
 use core::fmt::Write;
 #[entry]
@@ -65,14 +66,13 @@ fn main() -> ! {
     disp.init().unwrap();
     disp.flush().unwrap();
 
-    let mut sensor = VEML6075::new(manager.acquire());
+    let mut sensor = Veml6075::new(manager.acquire(), Calibration::default());
 
-    let mut lines: [heapless::String<heapless::consts::U32>; 4] = [
-                        heapless::String::new(),
-                        heapless::String::new(),
-                        heapless::String::new(),
-                        heapless::String::new(),
-                    ];
+    let mut lines: [heapless::String<heapless::consts::U32>; 3] = [
+        heapless::String::new(),
+        heapless::String::new(),
+        heapless::String::new(),
+    ];
     sensor.enable().unwrap();
     loop {
         // Blink LED 0 to check that everything is actually running.
@@ -82,21 +82,20 @@ fn main() -> ! {
         led.off();
         delay.delay_ms(50_u16);
 
-        // If there was an error, it will print 65535.
-        let uva = sensor.read_uva().unwrap_or(65535);
-        let uvb = sensor.read_uvb().unwrap_or(65535);
-        let uvcomp1 = sensor.read_uvcomp1().unwrap_or(65535);
-        let uvcomp2 = sensor.read_uvcomp2().unwrap_or(65535);
+        // If there was an error, it will print 0.00, 0.00, 0.00.
+        let Measurement { uva, uvb, uv_index } = sensor.read().unwrap_or(Measurement {
+            uva: 0.0,
+            uvb: 0.0,
+            uv_index: 0.0,
+        });
 
         lines[0].clear();
         lines[1].clear();
         lines[2].clear();
-        lines[3].clear();
 
         write!(lines[0], "UVA: {}     ", uva).unwrap();
         write!(lines[1], "UVB: {}     ", uvb).unwrap();
-        write!(lines[2], "UVcomp1: {}     ", uvcomp1).unwrap();
-        write!(lines[3], "UVcomp2: {}     ", uvcomp2).unwrap();
+        write!(lines[2], "UV index: {}     ", uv_index).unwrap();
         disp.draw(
             Font6x8::render_str(&lines[0])
                 .with_stroke(Some(1u8.into()))
@@ -112,12 +111,6 @@ fn main() -> ! {
             Font6x8::render_str(&lines[2])
                 .with_stroke(Some(1u8.into()))
                 .translate(Coord::new(0, 24))
-                .into_iter(),
-        );
-        disp.draw(
-            Font6x8::render_str(&lines[3])
-                .with_stroke(Some(1u8.into()))
-                .translate(Coord::new(0, 36))
                 .into_iter(),
         );
         disp.flush().unwrap();
