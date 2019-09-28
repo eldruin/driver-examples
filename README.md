@@ -24,7 +24,7 @@ This repository includes examples of using devices through these drivers:
 |[Tmp006]       | Non-contact infrared (IR) thermopile temperature sensor.  | I2C       | [Intro blog post][blog-tmp006]    |
 |[Tmp1x2]       | Temperature sensors.                                      | I2C       | [Intro blog post][blog-tmp1x2]    |
 |[Veml6040]     | RGBW light color sensor.                                  | I2C       |                                   |
-|[Veml6075]     | Ultraviolet A (UVA) and B (UVB) light sensor.             | I2C       |                                   |
+|[Veml6075]     | Ultraviolet A (UVA) and B (UVB) light sensor.             | I2C       | [Intro blog post][blog-veml6075]  |
 |[W25]          | Winbond's W25 serial flash memory devices.                | SPI       |                                   |
 
 These examples use the STM32F3Discovery board. At the beginning of each example the setup
@@ -86,8 +86,9 @@ be dual licensed as above, without any additional terms or conditions.
 [blog-ads1x1x]: https://blog.eldruin.com/ads1x1x-analog-to-digital-converter-driver-in-rust/
 [blog-ds1307]: https://blog.eldruin.com/ds1307-real-time-clock-rtc-driver-in-rust/
 [blog-eeprom24x]: https://blog.eldruin.com/24x-serial-eeprom-driver-in-rust/
+[blog-mcp794xx]: https://blog.eldruin.com/mcp794xx-real-time-clock-rtc-driver-in-rust
 [blog-tmp006]: https://blog.eldruin.com/tmp006-contact-less-infrared-ir-thermopile-driver-in-rust/
 [blog-tmp1x2]: https://blog.eldruin.com/tmp1x2-temperature-sensor-driver-in-rust/
-[blog-mcp794xx]: https://blog.eldruin.com/mcp794xx-real-time-clock-rtc-driver-in-rust
+[blog-veml6075]: https://blog.eldruin.com/veml6075-uva-uvb-uv-index-light-sensor-driver-in-rust/
 
 [AliExpress]: https://www.aliexpress.com
