@@ -31,7 +31,7 @@ tmp1x2 = "0.2"
 veml6040 = "0.1"
 veml6075 = "0.2"
 w25 = { git = "https://github.com/eldruin/w25-rs"}
-embedded-graphics = "0.4.4"
+embedded-graphics = "0.4"
 cortex-m = "0.5.0"
 cortex-m-rt = "0.6.5"
 cortex-m-semihosting = "0.3.2"
