@@ -23,7 +23,7 @@ This repository includes examples of using devices through these drivers:
 |[Tcs3472]      | RGBW light color sensor with IR filter.                   | I2C       |                                   |
 |[Tmp006]       | Non-contact infrared (IR) thermopile temperature sensor.  | I2C       | [Intro blog post][blog-tmp006]    |
 |[Tmp1x2]       | Temperature sensors.                                      | I2C       | [Intro blog post][blog-tmp1x2]    |
-|[Veml6030]     | Ambient light color sensor.                               | I2C       |                                   |
+|[Veml6030]     | Ambient light sensor.                                     | I2C       |                                   |
 |[Veml6040]     | RGBW light color sensor.                                  | I2C       |                                   |
 |[Veml6075]     | Ultraviolet A (UVA) and B (UVB) light sensor.             | I2C       | [Intro blog post][blog-veml6075]  |
 |[W25]          | Winbond's W25 serial flash memory devices.                | SPI       |                                   |
