@@ -25,6 +25,7 @@ env:
             tcs3472
             tmp006
             tmp1x2
+            veml6030
             veml6070
             veml6075
             xca9548a"

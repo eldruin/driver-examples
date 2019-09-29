@@ -28,6 +28,7 @@ ssd1306 = "0.2"
 tcs3472 = "0.1"
 tmp006 = "0.1"
 tmp1x2 = "0.2"
+veml6030 = { git = "https://github.com/eldruin/veml6030-rs"}
 veml6040 = "0.1"
 veml6075 = "0.2"
 w25 = { git = "https://github.com/eldruin/w25-rs"}
