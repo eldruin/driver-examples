@@ -28,6 +28,7 @@ This repository includes examples of using devices through these drivers:
 |[Veml6040]     | RGBW light color sensor.                                  | I2C       |                                   |
 |[Veml6075]     | Ultraviolet A (UVA) and B (UVB) light sensor.             | I2C       | [Intro blog post][blog-veml6075]  |
 |[W25]          | Winbond's W25 serial flash memory devices.                | SPI       |                                   |
+|[Xca9548a]     | TCA9548A/PCA9548A I2C switches/multiplexers.              | I2C       |                                   |
 
 These examples use the STM32F3Discovery board. At the beginning of each example the setup
 and behavior is described. Many of them also use an SSD1306 OLED display.
