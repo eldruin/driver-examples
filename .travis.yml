@@ -35,10 +35,14 @@ env:
 
 matrix:
   include:
-    # F3 Discovery
-    - env: TARGET=thumbv7em-none-eabihf
+    - env: TARGET=thumbv7em-none-eabihf SUBFOLDER=stm32f3-discovery
 
-    - env: TARGET=thumbv7em-none-eabihf
+    - env: TARGET=thumbv7em-none-eabihf SUBFOLDER=stm32f3-discovery
+      rust: nightly
+
+    - env: TARGET=thumbv7m-none-eabi SUBFOLDER=stm32f1-bluepill
+
+    - env: TARGET=thumbv7m-none-eabi SUBFOLDER=stm32f1-bluepill
       rust: nightly
 
     # Minimum Supported Rust Version
@@ -47,9 +51,14 @@ matrix:
     #- env: TARGET=thumbv7em-none-eabihf
     #  rust: 1.31.0
 
-    - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS
+    - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=stm32f3-discovery
 
-    - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS
+    - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=stm32f3-discovery
+      rust: nightly
+
+    - env: TARGET=thumbv7m-none-eabi GIT_DRIVERS=$DRIVERS SUBFOLDER=stm32f1-bluepill
+
+    - env: TARGET=thumbv7m-none-eabi GIT_DRIVERS=$DRIVERS SUBFOLDER=stm32f1-bluepill
       rust: nightly
 
     # Minimum Supported Rust Version
