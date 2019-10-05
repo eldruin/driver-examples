@@ -27,11 +27,11 @@ env:
             tmp006
             tmp1x2
             veml6030
-            veml6070
             veml6075
             xca9548a"
 
 # veml6040 Git version is not compatible. Deactivated until a new version is released.
+# veml6070 Git version is not compatible. Deactivated until a new version is released.
 
 matrix:
   include:
