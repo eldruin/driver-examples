@@ -86,8 +86,10 @@ be dual licensed as above, without any additional terms or conditions.
 [Tmp1x2]: https://crates.io/crates/tmp1x2
 [Veml6030]: https://crates.io/crates/veml6030
 [Veml6040]: https://crates.io/crates/veml6040
+[Veml6070]: https://crates.io/crates/veml6070
 [Veml6075]: https://crates.io/crates/veml6075
 [W25]: https://github.com/eldruin/w25-rs
+[Xca9548a]: https://crates.io/crates/xca9548a
 
 [blog-ad983x]: https://blog.eldruin.com/ad983x-waveform-generator-dds-driver-in-rust/
 [blog-ads1x1x]: https://blog.eldruin.com/ads1x1x-analog-to-digital-converter-driver-in-rust/
