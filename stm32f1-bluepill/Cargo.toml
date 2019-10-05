@@ -1,0 +1,27 @@
+[package]
+authors = ["Diego Barrios Romero <eldruin@gmail.com>"]
+categories = ["embedded", "no-std"]
+description = "Examples of using several rust drivers using an stm32f103 bluepill board."
+keywords = ["driver", "i2c", "spi", "example"]
+license = "MIT OR Apache-2.0"
+name = "driver-examples-bluepill"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+veml6070 = "0.1"
+
+ssd1306 = "0.2"
+embedded-graphics = "0.4.4"
+shared-bus = { version = "0.1.4", features = ["cortexm"] }
+heapless = "0.4.0"
+nb = "0.1"
+embedded-hal = "0.2.3"
+libm = "0.1"
+panic-halt = "0.2"
+cortex-m = "0.5.0"
+cortex-m-rt = "0.6.5"
+cortex-m-semihosting = "0.3.3"
+[dependencies.stm32f1xx-hal]
+version = "0.4.0"
+features = ["stm32f103", "rt"]
