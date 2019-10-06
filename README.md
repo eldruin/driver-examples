@@ -21,6 +21,7 @@ This repository includes examples of using devices through these drivers:
 |[Opt300x]      | Ambient light sensor.                                     | I2C       |                                   |
 |[Pcf857x]      | 8/16-pin I/O port expanders.                              | I2C       |                                   |
 |[Pwm-pca9685]  | 16-pin PWM port expander / LED driver.                    | I2C       |                                   |
+|[Si470x]       | FM radio turners (receivers)          .                   | I2C       |                                   |
 |[Tcs3472]      | RGBW light color sensor with IR filter.                   | I2C       |                                   |
 |[Tmp006]       | Non-contact infrared (IR) thermopile temperature sensor.  | I2C       | [Intro blog post][blog-tmp006]    |
 |[Tmp1x2]       | Temperature sensors.                                      | I2C       | [Intro blog post][blog-tmp1x2]    |
