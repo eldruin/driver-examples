@@ -9,7 +9,7 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-si470x = { git = "http://github.com/eldruin/si470x-rs" }
+si4703 = { git = "http://github.com/eldruin/si4703-rs" }
 veml6070 = "0.1"
 
 ssd1306 = "0.2"
