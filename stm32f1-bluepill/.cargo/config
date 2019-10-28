@@ -1,5 +1,6 @@
 [target.thumbv7m-none-eabi]
-runner = 'gdb-multiarch'
+# runner = 'gdb-multiarch' Ubuntu 18.04
+runner = 'arm-none-eabi-gdb'
 rustflags = [
   "-C", "link-arg=-Tlink.x",
 ]
