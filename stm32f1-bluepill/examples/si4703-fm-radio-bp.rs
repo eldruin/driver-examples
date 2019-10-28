@@ -21,9 +21,9 @@
 #![no_main]
 
 use cortex_m_rt::entry;
-use embedded_hal::digital::v2::OutputPin;
-use panic_halt as _;
+use embedded_hal::digital::v2::{InputPin, OutputPin};
 use nb::block;
+use panic_semihosting as _;
 use stm32f1xx_hal::{
     delay::Delay,
     i2c::{BlockingI2c, DutyCycle, Mode},

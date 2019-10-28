@@ -11,9 +11,6 @@
 //! PB9  <-> SDA      <-> SDA
 //! ```
 //!
-//! Beware that the VEML6070 runs on 3.3V but PB8 and PB9 run on 5V level
-//! so make sure to put a logic level shifter in between.
-//!
 //! Run with:
 //! `cargo run --example veml6070-uv-display-bp`,
 
@@ -26,7 +23,7 @@ use cortex_m_rt::entry;
 use embedded_graphics::fonts::Font6x8;
 use embedded_graphics::prelude::*;
 use embedded_hal::digital::v2::OutputPin;
-use panic_halt as _;
+use panic_semihosting as _;
 use ssd1306::prelude::*;
 use ssd1306::Builder;
 
