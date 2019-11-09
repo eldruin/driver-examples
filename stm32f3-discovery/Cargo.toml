@@ -22,7 +22,7 @@ max44009 = "0.1"
 mcp4x = "0.1"
 mcp49xx = "0.1"
 mcp794xx = "0.1"
-opt300x = { git = "https://github.com/eldruin/opt300x-rs"}
+opt300x = "0.1"
 pcf857x = "0.3"
 pwm-pca9685 = "0.1"
 ssd1306 = "0.2"
