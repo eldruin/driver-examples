@@ -26,6 +26,7 @@ use embedded_hal::digital::v2::OutputPin;
 use panic_semihosting as _;
 use ssd1306::prelude::*;
 use ssd1306::Builder;
+use nb::block;
 
 use opt300x::{Measurement, Opt300x, SlaveAddr, Status};
 use stm32f1xx_hal::{
@@ -94,7 +95,7 @@ fn main() -> ! {
             result: 999.9,
             status: Status::default(),
         };
-        let m = sensor.read_lux().unwrap_or(def);
+        let m = block!(sensor.read_lux()).unwrap_or(def);
 
         buffer.clear();
         write!(buffer, "lux: {:2}     ", m.result).unwrap();
