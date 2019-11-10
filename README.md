@@ -11,7 +11,7 @@ This repository includes examples of using devices through these drivers:
 |[Apds9960]     | Digital proximity, ambient light, RGB and gesture sensor. | I2C       |                                   |
 |[Ds1307]       | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-ds1307]    |
 |[Ds323x]       | Extremely accurate real-time clock (RTC) / calendar.      | I2C / SPI |                                   |
-|[Kxcj9]        | Tri-axis accelerometer                                    | I2C       |                                   |
+|[Kxcj9]        | Tri-axis MEMS accelerometer.                              | I2C       | [Intro blog post][blog-kxcj9]     |
 |[Eeprom24x]    | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
 |[Lm75]         | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
 |[Max3010x]     | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
@@ -99,6 +99,7 @@ be dual licensed as above, without any additional terms or conditions.
 [blog-ads1x1x]: https://blog.eldruin.com/ads1x1x-analog-to-digital-converter-driver-in-rust/
 [blog-ds1307]: https://blog.eldruin.com/ds1307-real-time-clock-rtc-driver-in-rust/
 [blog-eeprom24x]: https://blog.eldruin.com/24x-serial-eeprom-driver-in-rust/
+[blog-kxcj9]: https://blog.eldruin.com/kxcj9-kxcjb-tri-axis-mems-accelerator-driver-in-rust/
 [blog-mcp794xx]: https://blog.eldruin.com/mcp794xx-real-time-clock-rtc-driver-in-rust
 [blog-opt300x]: https://blog.eldruin.com/opt300x-ambient-light-sensor-driver-in-rust/
 [blog-tmp006]: https://blog.eldruin.com/tmp006-contact-less-infrared-ir-thermopile-driver-in-rust/
