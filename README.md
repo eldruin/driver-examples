@@ -18,7 +18,7 @@ This repository includes examples of using devices through these drivers:
 |[Mcp4x]        | Digital potentiometers.                                   | SPI       |                                   |
 |[Mcp49xx]      | 8/10/12-bit Digital-to-analog (DAC) converters.           | SPI       |                                   |
 |[Mcp794xx]     | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-mcp794xx]  |
-|[Opt300x]      | Ambient light sensor.                                     | I2C       |                                   |
+|[Opt300x]      | Ambient light sensor.                                     | I2C       | [Intro blog post][blog-opt300x]   |
 |[Pcf857x]      | 8/16-pin I/O port expanders.                              | I2C       |                                   |
 |[Pwm-pca9685]  | 16-pin PWM port expander / LED driver.                    | I2C       |                                   |
 |[Si4703]       | FM radio turners (receivers).                             | I2C       |                                   |
@@ -98,6 +98,7 @@ be dual licensed as above, without any additional terms or conditions.
 [blog-ds1307]: https://blog.eldruin.com/ds1307-real-time-clock-rtc-driver-in-rust/
 [blog-eeprom24x]: https://blog.eldruin.com/24x-serial-eeprom-driver-in-rust/
 [blog-mcp794xx]: https://blog.eldruin.com/mcp794xx-real-time-clock-rtc-driver-in-rust
+[blog-opt300x]: https://blog.eldruin.com/opt300x-ambient-light-sensor-driver-in-rust/
 [blog-tmp006]: https://blog.eldruin.com/tmp006-contact-less-infrared-ir-thermopile-driver-in-rust/
 [blog-tmp1x2]: https://blog.eldruin.com/tmp1x2-temperature-sensor-driver-in-rust/
 [blog-veml6075]: https://blog.eldruin.com/veml6075-uva-uvb-uv-index-light-sensor-driver-in-rust/
