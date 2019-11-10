@@ -21,7 +21,7 @@ This repository includes examples of using devices through these drivers:
 |[Opt300x]      | Ambient light sensor.                                     | I2C       |                                   |
 |[Pcf857x]      | 8/16-pin I/O port expanders.                              | I2C       |                                   |
 |[Pwm-pca9685]  | 16-pin PWM port expander / LED driver.                    | I2C       |                                   |
-|[Si470x]       | FM radio turners (receivers)          .                   | I2C       |                                   |
+|[Si4703]       | FM radio turners (receivers).                             | I2C       |                                   |
 |[Tcs3472]      | RGBW light color sensor with IR filter.                   | I2C       |                                   |
 |[Tmp006]       | Non-contact infrared (IR) thermopile temperature sensor.  | I2C       | [Intro blog post][blog-tmp006]    |
 |[Tmp1x2]       | Temperature sensors.                                      | I2C       | [Intro blog post][blog-tmp1x2]    |
@@ -82,6 +82,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Opt300x]: https://crates.io/crates/Opt300x
 [Pcf857x]: https://crates.io/crates/pcf857x
 [Pwm-pca9685]: https://crates.io/crates/pwm-pca9685
+[Si4703]: https://github.com/eldruin/si4703-rs
 [Tcs3472]: https://crates.io/crates/tcs3472
 [Tmp006]: https://crates.io/crates/tmp006
 [Tmp1x2]: https://crates.io/crates/tmp1x2
