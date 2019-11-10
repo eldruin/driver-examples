@@ -9,6 +9,7 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
+ad983x = "0.2"
 opt300x = "0.1"
 si4703 = { git = "http://github.com/eldruin/si4703-rs" }
 veml6070 = "0.1"
