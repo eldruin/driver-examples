@@ -15,6 +15,7 @@ This repository includes examples of using devices through these drivers:
 |[Eeprom24x]    | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
 |[Lm75]         | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
 |[Max3010x]     | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
+|[Max44009]     | Ambient light sensor.                                     | I2C       |                                   |
 |[Mcp4x]        | Digital potentiometers.                                   | SPI       |                                   |
 |[Mcp49xx]      | 8/10/12-bit Digital-to-analog (DAC) converters.           | SPI       |                                   |
 |[Mcp794xx]     | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-mcp794xx]  |
@@ -76,6 +77,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Eeprom24x]: https://crates.io/crates/eeprom24x
 [Lm75]: https://crates.io/crates/lm75
 [Max3010x]: https://crates.io/crates/max3010x
+[Max44009]: https://crates.io/crates/max44009
 [Mcp4x]: https://crates.io/crates/mcp4x
 [Mcp49xx]: https://crates.io/crates/mcp49xx
 [Mcp794xx]: https://crates.io/crates/mcp794xx
