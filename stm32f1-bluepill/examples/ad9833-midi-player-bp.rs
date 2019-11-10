@@ -25,17 +25,12 @@
 #![no_std]
 #![no_main]
 
-use panic_semihosting as _;
 use ad983x::{Ad983x, FrequencyRegister, MODE};
 use cortex_m_rt::entry;
 use embedded_hal::digital::v2::OutputPin;
-use stm32f1xx_hal::{
-    delay::Delay,
-    spi::Spi,
-    pac,
-    prelude::*
-};
 use libm;
+use panic_semihosting as _;
+use stm32f1xx_hal::{delay::Delay, pac, prelude::*, spi::Spi};
 
 #[entry]
 fn main() -> ! {
@@ -50,7 +45,7 @@ fn main() -> ! {
 
     let mut afio = dp.AFIO.constrain(&mut rcc.apb2);
     let mut gpioa = dp.GPIOA.split(&mut rcc.apb2);
-    
+
     // SPI1
     let sck = gpioa.pa5.into_alternate_push_pull(&mut gpioa.crl);
     let miso = gpioa.pa6;
@@ -121,7 +116,8 @@ impl Iterator for MidiTable {
         let mut silence = None;
         let (_, note_duration, silence_duration) = Self::NOTES[self.position];
         let total_duration = note_duration + silence_duration;
-        let is_in_silence = self.duration_counter >= note_duration && self.duration_counter < total_duration;
+        let is_in_silence =
+            self.duration_counter >= note_duration && self.duration_counter < total_duration;
         if is_in_silence {
             self.duration_counter += 1;
             silence = Some(0);

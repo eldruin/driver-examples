@@ -23,10 +23,10 @@ use cortex_m_rt::entry;
 use embedded_graphics::fonts::Font6x8;
 use embedded_graphics::prelude::*;
 use embedded_hal::digital::v2::OutputPin;
+use nb::block;
 use panic_semihosting as _;
 use ssd1306::prelude::*;
 use ssd1306::Builder;
-use nb::block;
 
 use opt300x::{Measurement, Opt300x, SlaveAddr, Status};
 use stm32f1xx_hal::{
