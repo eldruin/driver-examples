@@ -27,7 +27,8 @@ use embedded_hal::digital::v2::{InputPin, OutputPin};
 use nb::block;
 use panic_semihosting as _;
 use si4703::{
-    reset as reset_si4703, ChannelSpacing, DeEmphasis, SeekDirection, SeekMode, Si4703, Volume,
+    reset_and_select_i2c_method1 as reset_si4703, ChannelSpacing, DeEmphasis, SeekDirection, SeekMode,
+    Si4703, Volume,
 };
 use stm32f1xx_hal::{
     delay::Delay,

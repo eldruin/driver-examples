@@ -29,8 +29,8 @@ use embedded_graphics::{fonts::Font6x8, prelude::*};
 use embedded_hal::digital::v2::{InputPin, OutputPin};
 use panic_semihosting as _;
 use si4703::{
-    reset as reset_si4703, ChannelSpacing, DeEmphasis, ErrorWithPin, SeekDirection, SeekMode,
-    Si4703, Volume,
+    reset_and_select_i2c_method1 as reset_si4703, ChannelSpacing, DeEmphasis, ErrorWithPin,
+    SeekDirection, SeekMode, Si4703, Volume,
 };
 use ssd1306::{prelude::*, Builder};
 use stm32f1xx_hal::{
@@ -94,6 +94,7 @@ fn main() -> ! {
     radio.set_deemphasis(DeEmphasis::Us50).unwrap();
     radio.set_channel_spacing(ChannelSpacing::Khz100).unwrap();
     radio.unmute().unwrap();
+
     let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
     loop {
         // Blink LED 0 every time a new seek is started
@@ -106,33 +107,24 @@ fn main() -> ! {
         let should_seek_up = seekup.is_high().unwrap();
         if should_seek_down || should_seek_up {
             buffer.clear();
-            write!(buffer, "Seeking...   ").unwrap();
+            write!(buffer, "Seeking...     ").unwrap();
+
             disp.draw(
                 Font6x8::render_str(&buffer)
                     .with_stroke(Some(1u8.into()))
                     .into_iter(),
             );
             disp.flush().unwrap();
-            let mode = SeekMode::Wrap;
             let direction = if should_seek_down {
                 SeekDirection::Down
             } else {
                 SeekDirection::Up
             };
 
-            loop {
                 buffer.clear();
-                match radio.seek_with_stc_int_pin(mode, direction, &stcint) {
-                    Err(nb::Error::WouldBlock) => {
-                        let channel = radio.get_channel().unwrap_or(-1.0);
-                        write!(buffer, "Trying {:1}    ", channel).unwrap();
-                        disp.draw(
-                            Font6x8::render_str(&buffer)
-                                .with_stroke(Some(1u8.into()))
-                                .into_iter(),
-                        );
-                        disp.flush().unwrap();
-                    }
+            loop {
+                match radio.seek_with_stc_int_pin(SeekMode::Wrap, direction, &stcint) {
+                    Err(nb::Error::WouldBlock) => {}
                     Err(nb::Error::Other(ErrorWithPin::SeekFailed)) => {
                         write!(buffer, "Seek Failed!  ").unwrap();
                         break;
@@ -143,12 +135,11 @@ fn main() -> ! {
                     }
                     Ok(_) => {
                         let channel = radio.get_channel().unwrap_or(-1.0);
-                        write!(buffer, "Found! {:1}    ", channel).unwrap();
+                        write!(buffer, "Found {:1} MHz ", channel).unwrap();
                         break;
                     }
                 }
             }
-
             disp.draw(
                 Font6x8::render_str(&buffer)
                     .with_stroke(Some(1u8.into()))
