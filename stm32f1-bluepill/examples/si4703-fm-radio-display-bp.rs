@@ -134,7 +134,7 @@ fn main() -> ! {
                         break;
                     }
                     Ok(_) => {
-                        let channel = radio.get_channel().unwrap_or(-1.0);
+                        let channel = radio.channel().unwrap_or(-1.0);
                         write!(buffer, "Found {:1} MHz ", channel).unwrap();
                         break;
                     }
