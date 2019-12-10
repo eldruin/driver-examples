@@ -11,7 +11,7 @@ edition = "2018"
 [dependencies]
 ad983x = "0.2"
 opt300x = "0.1"
-pwm-pca9685 = "0.1"
+pwm-pca9685 = "0.2"
 si4703 = "0.1"
 veml6070 = "0.1"
 
