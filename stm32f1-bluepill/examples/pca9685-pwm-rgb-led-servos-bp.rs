@@ -1,5 +1,8 @@
 //! Demonstration of controlling two RGB LEDs to display a rainbow and
 //! moving 5 servos simultaneously.
+//! 
+//! You can see a video of this program running here:
+//! https://blog.eldruin.com/pca9685-pwm-led-servo-controller-driver-in-rust/
 //!
 //! This example is runs on the STM32F103 "Bluepill" board using I2C1.
 //!

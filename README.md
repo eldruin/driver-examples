@@ -21,7 +21,7 @@ This repository includes examples of using devices through these drivers:
 |[Mcp794xx]     | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-mcp794xx]  |
 |[Opt300x]      | Ambient light sensor.                                     | I2C       | [Intro blog post][blog-opt300x]   |
 |[Pcf857x]      | 8/16-pin I/O port expanders.                              | I2C       |                                   |
-|[Pwm-pca9685]  | 16-pin PWM port expander / LED driver.                    | I2C       |                                   |
+|[Pwm-pca9685]  | 16-pin PWM port expander / LED driver.                    | I2C       | [Intro blog post][blog-pca9685]   |
 |[Si4703]       | FM radio turners (receivers).                             | I2C       |                                   |
 |[Tcs3472]      | RGBW light color sensor with IR filter.                   | I2C       |                                   |
 |[Tmp006]       | Non-contact infrared (IR) thermopile temperature sensor.  | I2C       | [Intro blog post][blog-tmp006]    |
@@ -102,6 +102,7 @@ be dual licensed as above, without any additional terms or conditions.
 [blog-kxcj9]: https://blog.eldruin.com/kxcj9-kxcjb-tri-axis-mems-accelerator-driver-in-rust/
 [blog-mcp794xx]: https://blog.eldruin.com/mcp794xx-real-time-clock-rtc-driver-in-rust
 [blog-opt300x]: https://blog.eldruin.com/opt300x-ambient-light-sensor-driver-in-rust/
+[blog-pca9685]: https://blog.eldruin.com/pca9685-pwm-led-servo-controller-driver-in-rust/
 [blog-tmp006]: https://blog.eldruin.com/tmp006-contact-less-infrared-ir-thermopile-driver-in-rust/
 [blog-tmp1x2]: https://blog.eldruin.com/tmp1x2-temperature-sensor-driver-in-rust/
 [blog-veml6075]: https://blog.eldruin.com/veml6075-uva-uvb-uv-index-light-sensor-driver-in-rust/
