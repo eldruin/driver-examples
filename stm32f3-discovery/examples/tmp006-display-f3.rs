@@ -1,5 +1,8 @@
 //! Continuously read the object temperature with the TMP006 and display it in
 //! an SSD1306 OLED display.
+//! 
+//! Introductory blog post with some pictures here:
+//! https://blog.eldruin.com/tmp006-contact-less-infrared-ir-thermopile-driver-in-rust/
 //!
 //! This example is runs on the STM32F3 Discovery board using I2C1.
 //!

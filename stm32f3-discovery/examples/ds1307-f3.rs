@@ -3,6 +3,9 @@
 //! seconds match, blinks LED 0.
 //! After 1 minute it will stop blinking as the minutes will not match
 //! anymore.
+//! 
+//! Introductory blog post here:
+//! https://blog.eldruin.com/ds1307-real-time-clock-rtc-driver-in-rust/
 //!
 //! This example is runs on the STM32F3 Discovery board using I2C1.
 //!

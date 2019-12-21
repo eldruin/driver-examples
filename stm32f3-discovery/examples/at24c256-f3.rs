@@ -1,5 +1,8 @@
 //! Stores some data on an AT24C256C EEPROM.
 //! Then reads it again and if it matches, blinks LED 0.
+//! 
+//! Introductory blog post here:
+//! https://blog.eldruin.com/24x-serial-eeprom-driver-in-rust/
 //!
 //! This example is runs on the STM32F3 Discovery board using I2C1.
 //!

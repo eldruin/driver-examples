@@ -1,5 +1,8 @@
 //! Continuously read the temperature with a TMP102 sensor and display it in
 //! an SSD1306 OLED display.
+//! 
+//! Introductory blog post with some pictures here:
+//! https://blog.eldruin.com/tmp1x2-temperature-sensor-driver-in-rust/
 //!
 //! This example is runs on the STM32F3 Discovery board using I2C1.
 //!

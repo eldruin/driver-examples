@@ -1,6 +1,9 @@
 //! Continuously measure the ultraviolet A and ultraviolet B light sensor data
 //! and print it to an SSD1306 OLED display together with the calculated
 //! UV index.
+//! 
+//! Introductory blog post with some pictures here:
+//! https://blog.eldruin.com/veml6075-uva-uvb-uv-index-light-sensor-driver-in-rust/
 //!
 //! This example is runs on the STM32F3 Discovery board using I2C1.
 //!

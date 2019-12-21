@@ -1,5 +1,8 @@
 //! Seek an FM radio channel when pressing two buttons "Seek down" / "Seek up"
-//! using an Si4703 FM radio receiver (turner)
+//! using an Si4703 FM radio receiver (turner).
+//! 
+//! Introductory blog post with some pictures here:
+//! https://blog.eldruin.com/si4703-fm-radio-receiver-driver-in-rust/
 //!
 //! This example is runs on the STM32F103 "Bluepill" board using I2C1.
 //!

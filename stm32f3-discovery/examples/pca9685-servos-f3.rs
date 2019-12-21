@@ -2,6 +2,9 @@
 //!
 //! Make the servo at channel 0 turn clockwise, then counter-clockwise and
 //! the servo at channel 1 does the opposite.
+//! 
+//! You can see a video of this device running here:
+//! https://blog.eldruin.com/pca9685-pwm-led-servo-controller-driver-in-rust/
 //!
 //! This example is runs on the STM32F3 Discovery board using I2C1.
 //!
