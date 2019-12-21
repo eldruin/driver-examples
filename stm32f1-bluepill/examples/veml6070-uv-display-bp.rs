@@ -4,7 +4,7 @@
 //! This example is runs on the STM32F103 "Bluepill" board using I2C1.
 //!
 //! ```
-//! F3   <-> VEML6070 <-> Display
+//! BP   <-> VEML6070 <-> Display
 //! GND  <-> GND      <-> GND
 //! 3.3V <-> VCC      <-> VDD
 //! PB8  <-> SCL      <-> SCL

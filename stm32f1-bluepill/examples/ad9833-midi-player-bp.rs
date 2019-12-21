@@ -7,7 +7,7 @@
 //! This example is runs on the STM32F103 "Bluepill" board using  SPI1.
 //!
 //! ```
-//! F3   <-> AD9833  <-> Amplifier
+//! BP   <-> AD9833  <-> Amplifier
 //! GND  <-> VSS     <-> GND
 //! 3.3V <-> VDD     <-> VCC
 //! PA4  <-> FSYNC

@@ -1,13 +1,13 @@
 //! Continuously measure the ambient light sensor data with an OPT3001
 //! and print it to an SSD1306 OLED display in lux.
-//! 
+//!
 //! Introductory blog post with some pictures here:
 //! https://blog.eldruin.com/opt300x-ambient-light-sensor-driver-in-rust/
 //!
 //! This example is runs on the STM32F103 "Bluepill" board using I2C1.
 //!
 //! ```
-//! F3   <-> OPT3001 <-> Display
+//! BP   <-> OPT3001 <-> Display
 //! GND  <-> GND     <-> GND
 //! 3.3V <-> VCC     <-> VDD
 //! PB8  <-> SCL     <-> SCL
