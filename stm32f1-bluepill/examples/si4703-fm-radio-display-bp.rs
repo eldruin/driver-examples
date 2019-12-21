@@ -1,7 +1,7 @@
 //! Seek an FM radio channel when pressing two buttons "Seek down" / "Seek up"
 //! using an Si4703 FM radio receiver (turner) and display the channel
 //! frequency in an SSD1306 OLED display.
-//! 
+//!
 //! Introductory blog post with some pictures here:
 //! https://blog.eldruin.com/si4703-fm-radio-receiver-driver-in-rust/
 //!
@@ -124,7 +124,7 @@ fn main() -> ! {
                 SeekDirection::Up
             };
 
-                buffer.clear();
+            buffer.clear();
             loop {
                 match radio.seek_with_stc_int_pin(SeekMode::Wrap, direction, &stcint) {
                     Err(nb::Error::WouldBlock) => {}

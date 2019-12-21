@@ -1,6 +1,6 @@
 //! Seek an FM radio channel when pressing two buttons "Seek down" / "Seek up"
 //! using an Si4703 FM radio receiver (turner).
-//! 
+//!
 //! Introductory blog post with some pictures here:
 //! https://blog.eldruin.com/si4703-fm-radio-receiver-driver-in-rust/
 //!
@@ -30,8 +30,8 @@ use embedded_hal::digital::v2::{InputPin, OutputPin};
 use nb::block;
 use panic_semihosting as _;
 use si4703::{
-    reset_and_select_i2c_method1 as reset_si4703, ChannelSpacing, DeEmphasis, SeekDirection, SeekMode,
-    Si4703, Volume,
+    reset_and_select_i2c_method1 as reset_si4703, ChannelSpacing, DeEmphasis, SeekDirection,
+    SeekMode, Si4703, Volume,
 };
 use stm32f1xx_hal::{
     delay::Delay,
