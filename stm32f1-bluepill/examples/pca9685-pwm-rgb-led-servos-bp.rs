@@ -1,6 +1,6 @@
 //! Demonstration of controlling two RGB LEDs to display a rainbow and
 //! moving 5 servos simultaneously.
-//! 
+//!
 //! You can see a video of this program running here:
 //! https://blog.eldruin.com/pca9685-pwm-led-servo-controller-driver-in-rust/
 //!
@@ -68,14 +68,14 @@ fn main() -> ! {
     let mut pwm = Pca9685::new(i2c, SlaveAddr::default());
     pwm.enable().unwrap();
     pwm.set_prescale(100).unwrap();
-    
+
     let mut rainbow = Rainbow::new(0);
     let mut servos = [
         Servo::new(Servo::MIN),
-        Servo::new(Servo::MIN+40),
-        Servo::new(Servo::MIN+80),
-        Servo::new(Servo::MIN+120),
-        Servo::new(Servo::MIN+160),
+        Servo::new(Servo::MIN + 40),
+        Servo::new(Servo::MIN + 80),
+        Servo::new(Servo::MIN + 120),
+        Servo::new(Servo::MIN + 160),
     ];
     let mut values = [0; 16];
     loop {
