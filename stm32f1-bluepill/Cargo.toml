@@ -10,6 +10,7 @@ edition = "2018"
 
 [dependencies]
 ad983x = "0.2"
+ads1x1x = "0.2"
 eeprom24x = "0.3"
 opt300x = "0.1"
 pwm-pca9685 = "0.2"
