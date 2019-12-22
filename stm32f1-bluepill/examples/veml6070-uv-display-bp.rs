@@ -18,15 +18,12 @@
 #![no_std]
 #![no_main]
 
-extern crate embedded_graphics;
+use core::fmt::Write;
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{fonts::Font6x8, prelude::*};
 use embedded_hal::digital::v2::OutputPin;
 use panic_semihosting as _;
-use ssd1306::prelude::*;
-use ssd1306::Builder;
-
+use ssd1306::{prelude::*, Builder};
 use stm32f1xx_hal::{
     delay::Delay,
     i2c::{BlockingI2c, DutyCycle, Mode},
@@ -35,7 +32,6 @@ use stm32f1xx_hal::{
 };
 use veml6070::VEML6070;
 
-use core::fmt::Write;
 #[entry]
 fn main() -> ! {
     let cp = cortex_m::Peripherals::take().unwrap();

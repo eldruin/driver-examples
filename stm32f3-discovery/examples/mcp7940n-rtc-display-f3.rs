@@ -25,21 +25,17 @@
 #![no_std]
 #![no_main]
 
-extern crate embedded_graphics;
-// panic handler
-extern crate panic_semihosting;
-
 use core::fmt::Write;
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{fonts::Font6x8, prelude::*};
 use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
 use mcp794xx::{DateTime, Hours, Mcp794xx, Rtcc};
-use ssd1306::prelude::*;
-use ssd1306::Builder;
+// panic handler
+use panic_semihosting as _;
+use ssd1306::{prelude::*, Builder};
 
 #[entry]
 fn main() -> ! {
