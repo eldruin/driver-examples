@@ -33,7 +33,7 @@ use stm32f1xx_hal::{
     pac,
     prelude::*,
 };
-use veml6030::{Veml6030, SlaveAddr};
+use veml6030::{SlaveAddr, Veml6030};
 
 #[entry]
 fn main() -> ! {

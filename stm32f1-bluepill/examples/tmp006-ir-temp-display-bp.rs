@@ -25,6 +25,7 @@ use core::fmt::Write;
 use cortex_m_rt::entry;
 use embedded_graphics::{fonts::Font6x8, prelude::*};
 use embedded_hal::digital::v2::OutputPin;
+use nb::block;
 use panic_semihosting as _;
 use ssd1306::{prelude::*, Builder};
 use stm32f1xx_hal::{
@@ -33,7 +34,6 @@ use stm32f1xx_hal::{
     pac,
     prelude::*,
 };
-use nb::block;
 use tmp006::{SlaveAddr, Tmp006};
 
 #[entry]
