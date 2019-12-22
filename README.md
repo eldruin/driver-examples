@@ -22,11 +22,11 @@ This repository includes examples of using devices through these drivers:
 |[Opt300x]      | Ambient light sensor.                                     | I2C       | [Intro blog post][blog-opt300x]   |
 |[Pcf857x]      | 8/16-pin I/O port expanders.                              | I2C       |                                   |
 |[Pwm-pca9685]  | 16-pin PWM port expander / LED driver.                    | I2C       | [Intro blog post][blog-pca9685]   |
-|[Si4703]       | FM radio turners (receivers).                             | I2C       |                                   |
+|[Si4703]       | FM radio turners (receivers).                             | I2C       | [Intro blog post][blog-si4703]    |
 |[Tcs3472]      | RGBW light color sensor with IR filter.                   | I2C       |                                   |
 |[Tmp006]       | Non-contact infrared (IR) thermopile temperature sensor.  | I2C       | [Intro blog post][blog-tmp006]    |
 |[Tmp1x2]       | Temperature sensors.                                      | I2C       | [Intro blog post][blog-tmp1x2]    |
-|[Veml6030]     | Ambient light sensor.                                     | I2C       |                                   |
+|[Veml6030]     | Ambient light sensor.                                     | I2C       | [Intro blog post][blog-veml6030]  |
 |[Veml6040]     | RGBW light color sensor.                                  | I2C       |                                   |
 |[Veml6070]     | Ultraviolet A (UVA) light sensor.                         | I2C       |                                   |
 |[Veml6075]     | Ultraviolet A (UVA) and B (UVB) light sensor.             | I2C       | [Intro blog post][blog-veml6075]  |
@@ -84,7 +84,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Opt300x]: https://crates.io/crates/Opt300x
 [Pcf857x]: https://crates.io/crates/pcf857x
 [Pwm-pca9685]: https://crates.io/crates/pwm-pca9685
-[Si4703]: https://github.com/eldruin/si4703-rs
+[Si4703]: https://crates.io/crates/si4703
 [Tcs3472]: https://crates.io/crates/tcs3472
 [Tmp006]: https://crates.io/crates/tmp006
 [Tmp1x2]: https://crates.io/crates/tmp1x2
@@ -103,8 +103,10 @@ be dual licensed as above, without any additional terms or conditions.
 [blog-mcp794xx]: https://blog.eldruin.com/mcp794xx-real-time-clock-rtc-driver-in-rust
 [blog-opt300x]: https://blog.eldruin.com/opt300x-ambient-light-sensor-driver-in-rust/
 [blog-pca9685]: https://blog.eldruin.com/pca9685-pwm-led-servo-controller-driver-in-rust/
+[blog-si4703]: https://blog.eldruin.com/si4703-fm-radio-receiver-driver-in-rust/
 [blog-tmp006]: https://blog.eldruin.com/tmp006-contact-less-infrared-ir-thermopile-driver-in-rust/
 [blog-tmp1x2]: https://blog.eldruin.com/tmp1x2-temperature-sensor-driver-in-rust/
+[blog-veml6030]: https://blog.eldruin.com/veml6030-ambient-light-sensor-driver-in-rust/
 [blog-veml6075]: https://blog.eldruin.com/veml6075-uva-uvb-uv-index-light-sensor-driver-in-rust/
 
 [AliExpress]: https://www.aliexpress.com
