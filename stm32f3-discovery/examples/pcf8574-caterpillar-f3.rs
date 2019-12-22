@@ -19,17 +19,9 @@
 #![no_std]
 #![no_main]
 
-extern crate cortex_m;
 use cortex_m_rt::entry;
-extern crate f3;
-extern crate panic_semihosting;
-extern crate pcf857x;
-
-use f3::hal::delay::Delay;
-use f3::hal::i2c::I2c;
-use f3::hal::prelude::*;
-use f3::hal::stm32f30x;
-pub use f3::hal::stm32f30x::i2c1;
+use f3::hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x};
+use panic_semihosting as _;
 use pcf857x::{Pcf8574, SlaveAddr};
 
 #[entry]
@@ -52,9 +44,10 @@ fn main() -> ! {
     let mut output_status = OutputStatus::new();
 
     loop {
-        expander.set(output_status.get_status()).unwrap();
-        delay.delay_ms(100_u16);
-        output_status.increment();
+        if let Some(status) = output_status.next() {
+            expander.set(status).unwrap();
+            delay.delay_ms(100_u16);
+        }
     }
 }
 
@@ -75,8 +68,12 @@ impl OutputStatus {
             direction: Direction::Up,
         }
     }
+}
 
-    pub fn increment(&mut self) {
+impl Iterator for OutputStatus {
+    type Item = u8;
+
+    fn next(&mut self) -> Option<Self::Item> {
         match self.direction {
             Direction::Up => {
                 if self.status == 64 {
@@ -91,9 +88,6 @@ impl OutputStatus {
                 self.status >>= 1;
             }
         }
-    }
-
-    pub fn get_status(&self) -> u8 {
-        self.status
+        Some(self.status)
     }
 }
