@@ -6,7 +6,7 @@
 //!
 //! https://blog.eldruin.com/ads1x1x-analog-to-digital-converter-driver-in-rust/
 //!
-//! This example is runs on the STM32F3 Discovery board using SPI1 and I2C1.
+//! This example is runs on the STM32F3 Discovery board using I2C1.
 //!
 //! ```
 //! F3  <-> ADS1015 <-> Display
