@@ -24,22 +24,17 @@
 #![no_std]
 #![no_main]
 
-// panic handler
-extern crate embedded_graphics;
-extern crate panic_semihosting;
-
+use core::fmt::Write;
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{fonts::Font6x8, prelude::*};
 use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
-use ssd1306::prelude::*;
-use ssd1306::Builder;
+use panic_semihosting as _;
+use ssd1306::{prelude::*, Builder};
 use veml6030::{SlaveAddr, Veml6030};
 
-use core::fmt::Write;
 #[entry]
 fn main() -> ! {
     let cp = cortex_m::Peripherals::take().unwrap();
