@@ -3,7 +3,7 @@
 //!
 //! When running you should be able to see the acceleration readings in your
 //! serial communication program.
-//! 
+//!
 //! Introductory blog post here:
 //! https://blog.eldruin.com/kxcj9-kxcjb-tri-axis-mems-accelerator-driver-in-rust/
 //!

@@ -130,7 +130,8 @@ impl Iterator for MidiTable {
         let mut silence = None;
         let (_, note_duration, silence_duration) = Self::NOTES[self.position];
         let total_duration = note_duration + silence_duration;
-        let is_in_silence = self.duration_counter >= note_duration && self.duration_counter < total_duration;
+        let is_in_silence =
+            self.duration_counter >= note_duration && self.duration_counter < total_duration;
         if is_in_silence {
             self.duration_counter += 1;
             silence = Some(0);

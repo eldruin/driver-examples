@@ -1,6 +1,6 @@
 //! Stores the date and time on a MCP7940N real-time clock (RTC).
 //! Then continuously print the date and time.
-//! 
+//!
 //! Introductory blog post here:
 //! https://blog.eldruin.com/mcp794xx-real-time-clock-rtc-driver-in-rust/
 //!

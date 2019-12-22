@@ -1,6 +1,6 @@
 //! Continuously measure the ambient light sensor data
 //! and print it to an SSD1306 OLED display in lux.
-//! 
+//!
 //! Introductory blog post with some pictures here:
 //! https://blog.eldruin.com/veml6030-ambient-light-sensor-driver-in-rust/
 //!

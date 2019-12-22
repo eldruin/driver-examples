@@ -1,6 +1,6 @@
 //! Read the temperature in one-shot mode with a TMP102 sensor and display it in
 //! an SSD1306 OLED display.
-//! 
+//!
 //! Introductory blog post with some pictures here:
 //! https://blog.eldruin.com/tmp1x2-temperature-sensor-driver-in-rust/
 //!

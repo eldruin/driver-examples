@@ -3,7 +3,7 @@
 //! seconds match, blinks LED 0.
 //! After 1 minute it will stop blinking as the minutes will not match
 //! anymore.
-//! 
+//!
 //! Introductory blog post here:
 //! https://blog.eldruin.com/ds1307-real-time-clock-rtc-driver-in-rust/
 //!
