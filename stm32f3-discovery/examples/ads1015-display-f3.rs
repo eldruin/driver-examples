@@ -64,24 +64,19 @@
 #![no_std]
 #![no_main]
 
-extern crate embedded_graphics;
-// panic handler
-extern crate panic_semihosting;
-
 use ads1x1x::{channel as AdcChannel, Ads1x1x, FullScaleRange, SlaveAddr};
+use core::fmt::Write;
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{fonts::Font6x8, prelude::*};
 use embedded_hal::adc::OneShot;
 use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
 use nb::block;
-use ssd1306::prelude::*;
-use ssd1306::Builder;
-
-use core::fmt::Write;
+// panic handler
+use panic_semihosting as _;
+use ssd1306::{prelude::*, Builder};
 
 #[entry]
 fn main() -> ! {
