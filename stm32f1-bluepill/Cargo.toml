@@ -13,7 +13,7 @@ ad983x = "0.2"
 ads1x1x = "0.2"
 ds1307 = "0.2"
 eeprom24x = "0.3"
-ccs811 = { git = "https://github.com/eldruin/ccs811-rs" }
+ccs811 = "0.1"
 iaq-core = "0.1"
 mcp794xx = "0.1"
 opt300x = "0.1"
