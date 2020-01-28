@@ -20,9 +20,9 @@
 #![no_std]
 #![no_main]
 
-use embedded_ccs811::{prelude::*, AlgorithmResult, Ccs811Awake, MeasurementMode, SlaveAddr};
 use core::fmt::Write;
 use cortex_m_rt::entry;
+use embedded_ccs811::{prelude::*, AlgorithmResult, Ccs811Awake, MeasurementMode, SlaveAddr};
 use embedded_graphics::{fonts::Font6x12, prelude::*};
 use embedded_hal::digital::v2::OutputPin;
 use nb::block;
