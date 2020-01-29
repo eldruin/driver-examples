@@ -13,6 +13,7 @@ This repository includes examples of using devices through these drivers:
 |[Ds323x]          | Extremely accurate real-time clock (RTC) / calendar.      | I2C / SPI |                                   |
 |[Eeprom24x]       | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
 |[Embedded-Ccs811] | Digital gas sensor for monitoring indoor air quality.     | I2C       |                                   |
+|[iAQ-Core]        | Indoor air quality sensor.                                | I2C       |                                   |
 |[Kxcj9]           | Tri-axis MEMS accelerometer.                              | I2C       | [Intro blog post][blog-kxcj9]     |
 |[Lm75]            | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
 |[Max3010x]        | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
@@ -77,6 +78,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Kxcj9]: https://crates.io/crates/kxcj9
 [Eeprom24x]: https://crates.io/crates/eeprom24x
 [Embedded-Ccs811]: https://crates.io/crates/embedded-ccs811
+[iAQ-Core]: https://crates.io/crates/iaq-core
 [Lm75]: https://crates.io/crates/lm75
 [Max3010x]: https://crates.io/crates/max3010x
 [Max44009]: https://crates.io/crates/max44009
