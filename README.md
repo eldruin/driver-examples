@@ -4,34 +4,35 @@
 
 This repository includes examples of using devices through these drivers:
 
-| Device driver | Description                                               | Interface | Introductory blog post            |
-|---------------|-----------------------------------------------------------|-----------|-----------------------------------|
-|[Ad983x]       | Waveform generator / direct digital synthesizer (DDS).    | SPI       | [Intro blog post][blog-ad983x]    |
-|[Ads1x1x]      | 12/16-bit Analog-to-digital (ADC) converters.             | I2C       | [Intro blog post][blog-ads1x1x]   |
-|[Apds9960]     | Digital proximity, ambient light, RGB and gesture sensor. | I2C       |                                   |
-|[Ds1307]       | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-ds1307]    |
-|[Ds323x]       | Extremely accurate real-time clock (RTC) / calendar.      | I2C / SPI |                                   |
-|[Eeprom24x]    | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
-|[Kxcj9]        | Tri-axis MEMS accelerometer.                              | I2C       | [Intro blog post][blog-kxcj9]     |
-|[Lm75]         | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
-|[Max3010x]     | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
-|[Max44009]     | Ambient light sensor.                                     | I2C       |                                   |
-|[Mcp4x]        | Digital potentiometers.                                   | SPI       |                                   |
-|[Mcp49xx]      | 8/10/12-bit Digital-to-analog (DAC) converters.           | SPI       |                                   |
-|[Mcp794xx]     | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-mcp794xx]  |
-|[Opt300x]      | Ambient light sensor.                                     | I2C       | [Intro blog post][blog-opt300x]   |
-|[Pcf857x]      | 8/16-pin I/O port expanders.                              | I2C       |                                   |
-|[Pwm-pca9685]  | 16-pin PWM port expander / LED driver.                    | I2C       | [Intro blog post][blog-pca9685]   |
-|[Si4703]       | FM radio turners (receivers).                             | I2C       | [Intro blog post][blog-si4703]    |
-|[Tcs3472]      | RGBW light color sensor with IR filter.                   | I2C       |                                   |
-|[Tmp006]       | Non-contact infrared (IR) thermopile temperature sensor.  | I2C       | [Intro blog post][blog-tmp006]    |
-|[Tmp1x2]       | Temperature sensors.                                      | I2C       | [Intro blog post][blog-tmp1x2]    |
-|[Veml6030]     | Ambient light sensor.                                     | I2C       | [Intro blog post][blog-veml6030]  |
-|[Veml6040]     | RGBW light color sensor.                                  | I2C       |                                   |
-|[Veml6070]     | Ultraviolet A (UVA) light sensor.                         | I2C       |                                   |
-|[Veml6075]     | Ultraviolet A (UVA) and B (UVB) light sensor.             | I2C       | [Intro blog post][blog-veml6075]  |
-|[W25]          | Winbond's W25 serial flash memory devices.                | SPI       |                                   |
-|[Xca9548a]     | TCA9548A/PCA9548A I2C switches/multiplexers.              | I2C       |                                   |
+| Device driver    | Description                                               | Interface | Introductory blog post            |
+|------------------|-----------------------------------------------------------|-----------|-----------------------------------|
+|[Ad983x]          | Waveform generator / direct digital synthesizer (DDS).    | SPI       | [Intro blog post][blog-ad983x]    |
+|[Ads1x1x]         | 12/16-bit Analog-to-digital (ADC) converters.             | I2C       | [Intro blog post][blog-ads1x1x]   |
+|[Apds9960]        | Digital proximity, ambient light, RGB and gesture sensor. | I2C       |                                   |
+|[Ds1307]          | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-ds1307]    |
+|[Ds323x]          | Extremely accurate real-time clock (RTC) / calendar.      | I2C / SPI |                                   |
+|[Eeprom24x]       | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
+|[Embedded-ccs811] | Digital gas sensor for monitoring indoor air quality.     | I2C       |                                   |
+|[Kxcj9]           | Tri-axis MEMS accelerometer.                              | I2C       | [Intro blog post][blog-kxcj9]     |
+|[Lm75]            | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
+|[Max3010x]        | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
+|[Max44009]        | Ambient light sensor.                                     | I2C       |                                   |
+|[Mcp4x]           | Digital potentiometers.                                   | SPI       |                                   |
+|[Mcp49xx]         | 8/10/12-bit Digital-to-analog (DAC) converters.           | SPI       |                                   |
+|[Mcp794xx]        | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-mcp794xx]  |
+|[Opt300x]         | Ambient light sensor.                                     | I2C       | [Intro blog post][blog-opt300x]   |
+|[Pcf857x]         | 8/16-pin I/O port expanders.                              | I2C       |                                   |
+|[Pwm-pca9685]     | 16-pin PWM port expander / LED driver.                    | I2C       | [Intro blog post][blog-pca9685]   |
+|[Si4703]          | FM radio turners (receivers).                             | I2C       | [Intro blog post][blog-si4703]    |
+|[Tcs3472]         | RGBW light color sensor with IR filter.                   | I2C       |                                   |
+|[Tmp006]          | Non-contact infrared (IR) thermopile temperature sensor.  | I2C       | [Intro blog post][blog-tmp006]    |
+|[Tmp1x2]          | Temperature sensors.                                      | I2C       | [Intro blog post][blog-tmp1x2]    |
+|[Veml6030]        | Ambient light sensor.                                     | I2C       | [Intro blog post][blog-veml6030]  |
+|[Veml6040]        | RGBW light color sensor.                                  | I2C       |                                   |
+|[Veml6070]        | Ultraviolet A (UVA) light sensor.                         | I2C       |                                   |
+|[Veml6075]        | Ultraviolet A (UVA) and B (UVB) light sensor.             | I2C       | [Intro blog post][blog-veml6075]  |
+|[W25]             | Winbond's W25 serial flash memory devices.                | SPI       |                                   |
+|[Xca9548a]        | TCA9548A/PCA9548A I2C switches/multiplexers.              | I2C       |                                   |
 
 These examples use either the STM32F3Discovery board or the STM32F103 "Blue pill" board.
 At the beginning of each example the setup
@@ -75,6 +76,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Ds323x]: https://crates.io/crates/ds323x
 [Kxcj9]: https://crates.io/crates/kxcj9
 [Eeprom24x]: https://crates.io/crates/eeprom24x
+[Embedded-ccs811]: https://crates.io/crates/embedded-ccs811
 [Lm75]: https://crates.io/crates/lm75
 [Max3010x]: https://crates.io/crates/max3010x
 [Max44009]: https://crates.io/crates/max44009
