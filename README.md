@@ -11,8 +11,8 @@ This repository includes examples of using devices through these drivers:
 |[Apds9960]     | Digital proximity, ambient light, RGB and gesture sensor. | I2C       |                                   |
 |[Ds1307]       | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-ds1307]    |
 |[Ds323x]       | Extremely accurate real-time clock (RTC) / calendar.      | I2C / SPI |                                   |
-|[Kxcj9]        | Tri-axis MEMS accelerometer.                              | I2C       | [Intro blog post][blog-kxcj9]     |
 |[Eeprom24x]    | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
+|[Kxcj9]        | Tri-axis MEMS accelerometer.                              | I2C       | [Intro blog post][blog-kxcj9]     |
 |[Lm75]         | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
 |[Max3010x]     | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
 |[Max44009]     | Ambient light sensor.                                     | I2C       |                                   |
