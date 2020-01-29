@@ -12,7 +12,7 @@ This repository includes examples of using devices through these drivers:
 |[Ds1307]          | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-ds1307]    |
 |[Ds323x]          | Extremely accurate real-time clock (RTC) / calendar.      | I2C / SPI |                                   |
 |[Eeprom24x]       | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
-|[Embedded-ccs811] | Digital gas sensor for monitoring indoor air quality.     | I2C       |                                   |
+|[Embedded-Ccs811] | Digital gas sensor for monitoring indoor air quality.     | I2C       |                                   |
 |[Kxcj9]           | Tri-axis MEMS accelerometer.                              | I2C       | [Intro blog post][blog-kxcj9]     |
 |[Lm75]            | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
 |[Max3010x]        | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
@@ -22,7 +22,7 @@ This repository includes examples of using devices through these drivers:
 |[Mcp794xx]        | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-mcp794xx]  |
 |[Opt300x]         | Ambient light sensor.                                     | I2C       | [Intro blog post][blog-opt300x]   |
 |[Pcf857x]         | 8/16-pin I/O port expanders.                              | I2C       |                                   |
-|[Pwm-pca9685]     | 16-pin PWM port expander / LED driver.                    | I2C       | [Intro blog post][blog-pca9685]   |
+|[Pwm-Pca9685]     | 16-pin PWM port expander / LED driver.                    | I2C       | [Intro blog post][blog-pca9685]   |
 |[Si4703]          | FM radio turners (receivers).                             | I2C       | [Intro blog post][blog-si4703]    |
 |[Tcs3472]         | RGBW light color sensor with IR filter.                   | I2C       |                                   |
 |[Tmp006]          | Non-contact infrared (IR) thermopile temperature sensor.  | I2C       | [Intro blog post][blog-tmp006]    |
@@ -76,7 +76,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Ds323x]: https://crates.io/crates/ds323x
 [Kxcj9]: https://crates.io/crates/kxcj9
 [Eeprom24x]: https://crates.io/crates/eeprom24x
-[Embedded-ccs811]: https://crates.io/crates/embedded-ccs811
+[Embedded-Ccs811]: https://crates.io/crates/embedded-ccs811
 [Lm75]: https://crates.io/crates/lm75
 [Max3010x]: https://crates.io/crates/max3010x
 [Max44009]: https://crates.io/crates/max44009
@@ -85,7 +85,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Mcp794xx]: https://crates.io/crates/mcp794xx
 [Opt300x]: https://crates.io/crates/Opt300x
 [Pcf857x]: https://crates.io/crates/pcf857x
-[Pwm-pca9685]: https://crates.io/crates/pwm-pca9685
+[Pwm-Pca9685]: https://crates.io/crates/pwm-pca9685
 [Si4703]: https://crates.io/crates/si4703
 [Tcs3472]: https://crates.io/crates/tcs3472
 [Tmp006]: https://crates.io/crates/tmp006
