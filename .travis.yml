@@ -10,6 +10,7 @@ env:
             ad983x
             ads1x1x
             apds9960
+            bmi160
             ds1307
             ds323x
             eeprom24x
@@ -30,6 +31,7 @@ env:
             veml6075
             xca9548a"
 
+# embedded-ccs811 Deactivated as the name differs.
 # veml6040 Git version is not compatible. Deactivated until a new version is released.
 # veml6070 Git version is not compatible. Deactivated until a new version is released.
 
