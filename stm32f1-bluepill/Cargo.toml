@@ -11,6 +11,7 @@ edition = "2018"
 [dependencies]
 ad983x = "0.2"
 ads1x1x = "0.2"
+bmi160 = "0.1"
 ds1307 = "0.2"
 eeprom24x = "0.3"
 embedded-ccs811 = "0.1"
