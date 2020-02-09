@@ -32,7 +32,7 @@ use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
-use mcp794xx::{DateTime, Hours, Mcp794xx, Rtcc};
+use mcp794xx::{Datelike, Mcp794xx, NaiveDate, Rtcc, Timelike};
 // panic handler
 use panic_semihosting as _;
 use ssd1306::{prelude::*, Builder};
@@ -66,15 +66,7 @@ fn main() -> ! {
     disp.flush().unwrap();
 
     let mut rtc = Mcp794xx::new_mcp7940n(manager.acquire());
-    let begin = DateTime {
-        year: 2019,
-        month: 1,
-        day: 2,
-        weekday: 3,
-        hour: Hours::H24(4),
-        minute: 5,
-        second: 6,
-    };
+    let begin = NaiveDate::from_ymd(2019, 1, 2).and_hms(4, 5, 6);
     rtc.set_datetime(&begin).unwrap();
     rtc.enable().unwrap();
     loop {
@@ -87,20 +79,22 @@ fn main() -> ! {
 
         let now = rtc.get_datetime().unwrap();
         let mut buffer: heapless::String<heapless::consts::U32> = heapless::String::new();
-        if let Hours::H24(h) = now.hour {
-            write!(
-                buffer,
-                "{}-{}-{} {} {}:{}:{}   ",
-                now.year, now.month, now.day, now.weekday, h, now.minute, now.second
-            )
-            .unwrap();
-            disp.draw(
-                Font6x8::render_str(&buffer)
-                    .with_stroke(Some(1u8.into()))
-                    .into_iter(),
-            );
-        }
-
+        write!(
+            buffer,
+            "{}-{}-{} {}:{}:{}   ",
+            now.year(),
+            now.month(),
+            now.day(),
+            now.hour(),
+            now.minute(),
+            now.second()
+        )
+        .unwrap();
+        disp.draw(
+            Font6x8::render_str(&buffer)
+                .with_stroke(Some(1u8.into()))
+                .into_iter(),
+        );
         disp.flush().unwrap();
     }
 }
