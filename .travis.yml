@@ -14,6 +14,7 @@ env:
             ds1307
             ds323x
             eeprom24x
+            hdc20xx
             kxcj9
             lm75
             max3010x
