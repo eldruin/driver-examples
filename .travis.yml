@@ -15,6 +15,7 @@ env:
             ds323x
             eeprom24x
             hdc20xx
+            isl29125
             kxcj9
             lm75
             max3010x
