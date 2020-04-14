@@ -81,7 +81,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Eeprom24x]: https://crates.io/crates/eeprom24x
 [Embedded-Ccs811]: https://crates.io/crates/embedded-ccs811
 [Hdc20xx]: https://crates.io/crates/hdc20xx
-[Isl29125]: https://github.com/eldruin/isl29125-rs
+[Isl29125]: https://crates.io/crates/isl29125
 [iAQ-Core]: https://crates.io/crates/iaq-core
 [Lm75]: https://crates.io/crates/lm75
 [Max3010x]: https://crates.io/crates/max3010x
