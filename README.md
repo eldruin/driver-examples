@@ -15,6 +15,7 @@ This repository includes examples of using devices through these drivers:
 |[Embedded-Ccs811] | Digital gas sensor for monitoring indoor air quality.     | I2C       |                                   |
 |[Hdc20xx]         | Temperature and humidity sensors.                         | I2C       |                                   |
 |[iAQ-Core]        | Indoor air quality sensor.                                | I2C       |                                   |
+|[Isl29125]        | RGB color light sensor with IR blocking filter.           | I2C       |                                   |
 |[Kxcj9]           | Tri-axis MEMS accelerometer.                              | I2C       | [Intro blog post][blog-kxcj9]     |
 |[Lm75]            | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
 |[Max3010x]        | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
@@ -80,6 +81,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Eeprom24x]: https://crates.io/crates/eeprom24x
 [Embedded-Ccs811]: https://crates.io/crates/embedded-ccs811
 [Hdc20xx]: https://crates.io/crates/hdc20xx
+[Isl29125]: https://github.com/eldruin/isl29125-rs
 [iAQ-Core]: https://crates.io/crates/iaq-core
 [Lm75]: https://crates.io/crates/lm75
 [Max3010x]: https://crates.io/crates/max3010x
