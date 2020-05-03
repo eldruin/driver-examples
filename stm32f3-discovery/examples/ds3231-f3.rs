@@ -24,13 +24,14 @@
 // panic handler
 extern crate panic_semihosting;
 
+use chrono::{Datelike, Timelike};
 use cortex_m_rt::entry;
+use ds323x::{Ds323x, NaiveDate};
 use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
-
-use ds323x::{DateTime, Ds323x, Hours};
+use rtcc::Rtcc;
 
 #[entry]
 fn main() -> ! {
@@ -55,24 +56,15 @@ fn main() -> ! {
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
 
     let mut rtc = Ds323x::new_ds3231(i2c);
-    let begin = DateTime {
-        year: 2019,
-        month: 1,
-        day: 2,
-        weekday: 3,
-        hour: Hours::H24(4),
-        minute: 5,
-        second: 6,
-    };
+    let begin = NaiveDate::from_ymd(2020, 5, 2).and_hms(13, 50, 23);
     rtc.set_datetime(&begin).unwrap();
     loop {
         let now = rtc.get_datetime().unwrap();
-        if now.year == begin.year
-            && now.month == begin.month
-            && now.day == begin.day
-            && now.weekday == begin.weekday
-            && now.hour == begin.hour
-            && now.minute == begin.minute
+        if now.year() == begin.year()
+            && now.month() == begin.month()
+            && now.day() == begin.day()
+            && now.hour() == begin.hour()
+            && now.minute() == begin.minute()
         {
             // as we do not compare the seconds, this will blink for one
             // minute and then stop.

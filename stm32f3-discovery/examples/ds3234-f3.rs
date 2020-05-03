@@ -38,7 +38,9 @@ use f3::{
     led::Led,
 };
 
-use ds323x::{DateTime, Ds323x, Hours};
+use chrono::{Datelike, Timelike};
+use ds323x::{Ds323x, NaiveDate};
+use rtcc::Rtcc;
 
 #[entry]
 fn main() -> ! {
@@ -80,24 +82,15 @@ fn main() -> ! {
     chip_select.set_high().unwrap();
 
     let mut rtc = Ds323x::new_ds3234(spi, chip_select);
-    let begin = DateTime {
-        year: 2019,
-        month: 1,
-        day: 2,
-        weekday: 3,
-        hour: Hours::H24(4),
-        minute: 5,
-        second: 6,
-    };
+    let begin = NaiveDate::from_ymd(2020, 5, 2).and_hms(13, 50, 23);
     rtc.set_datetime(&begin).unwrap();
     loop {
         let now = rtc.get_datetime().unwrap();
-        if now.year == begin.year
-            && now.month == begin.month
-            && now.day == begin.day
-            && now.weekday == begin.weekday
-            && now.hour == begin.hour
-            && now.minute == begin.minute
+        if now.year() == begin.year()
+            && now.month() == begin.month()
+            && now.day() == begin.day()
+            && now.hour() == begin.hour()
+            && now.minute() == begin.minute()
         {
             // as we do not compare the seconds, this will blink for one
             // minute and then stop.
