@@ -33,7 +33,7 @@ use f3::{
     led::Led,
 };
 
-use ds1307::{DateTime, Hours, DS1307};
+use ds1307::{Datelike, Ds1307, NaiveDate, Rtcc, Timelike};
 
 #[entry]
 fn main() -> ! {
@@ -57,25 +57,16 @@ fn main() -> ! {
 
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
 
-    let mut rtc = DS1307::new(i2c);
-    let begin = DateTime {
-        year: 2019,
-        month: 1,
-        day: 2,
-        weekday: 3,
-        hour: Hours::H24(4),
-        minute: 5,
-        second: 6,
-    };
+    let mut rtc = Ds1307::new(i2c);
+    let begin = NaiveDate::from_ymd(2020, 5, 2).and_hms(10, 21, 34);
     rtc.set_datetime(&begin).unwrap();
     loop {
         let now = rtc.get_datetime().unwrap();
-        if now.year == begin.year
-            && now.month == begin.month
-            && now.day == begin.day
-            && now.weekday == begin.weekday
-            && now.hour == begin.hour
-            && now.minute == begin.minute
+        if now.year() == begin.year()
+            && now.month() == begin.month()
+            && now.day() == begin.day()
+            && now.hour() == begin.hour()
+            && now.minute() == begin.minute()
         {
             // as we do not compare the seconds, this will blink for one
             // minute and then stop.
