@@ -1,8 +1,6 @@
 //! Stores the date and time on a DS3231 real-time clock (RTC).
-//! Then reads the date and time repeatedly and if everything but the
-//! seconds match, blinks LED 0.
-//! After 1 minute it will stop blinking as the minutes will not match
-//! anymore.
+//! Then reads the date and time repeatedly and blink LED 0
+//! for the first 30 seconds.
 //!
 //! This example is runs on the STM32F3 Discovery board using I2C1.
 //!
@@ -24,14 +22,12 @@
 // panic handler
 extern crate panic_semihosting;
 
-use chrono::{Datelike, Timelike};
 use cortex_m_rt::entry;
-use ds323x::{Ds323x, NaiveDate};
+use ds323x::{Ds323x, NaiveDate, Rtcc};
 use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
-use rtcc::Rtcc;
 
 #[entry]
 fn main() -> ! {
@@ -56,22 +52,16 @@ fn main() -> ! {
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
 
     let mut rtc = Ds323x::new_ds3231(i2c);
-    let begin = NaiveDate::from_ymd(2020, 5, 2).and_hms(13, 50, 23);
+    let begin = NaiveDate::from_ymd(2020, 5, 2).and_hms(10, 21, 34);
     rtc.set_datetime(&begin).unwrap();
     loop {
         let now = rtc.get_datetime().unwrap();
-        if now.year() == begin.year()
-            && now.month() == begin.month()
-            && now.day() == begin.day()
-            && now.hour() == begin.hour()
-            && now.minute() == begin.minute()
-        {
-            // as we do not compare the seconds, this will blink for one
-            // minute and then stop.
+        if (now - begin).num_seconds() < 30 {
+            // this will blink for 30 seconds
             led.on();
-            delay.delay_ms(500_u16);
+            delay.delay_ms(250_u16);
             led.off();
-            delay.delay_ms(500_u16);
+            delay.delay_ms(250_u16);
         }
     }
 }

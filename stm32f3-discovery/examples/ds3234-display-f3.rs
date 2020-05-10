@@ -41,8 +41,12 @@ use f3::{
 };
 
 use core::fmt::Write;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use ssd1306::prelude::*;
 use ssd1306::Builder;
 
@@ -81,11 +85,13 @@ fn main() -> ! {
     let sda = gpiob.pb7.into_af4(&mut gpiob.moder, &mut gpiob.afrl);
 
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
-
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(i2c).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let spi = Spi::spi1(
         dp.SPI1,
@@ -111,14 +117,12 @@ fn main() -> ! {
         let now = rtc.get_datetime().unwrap();
         let mut line: heapless::String<heapless::consts::U32> = heapless::String::new();
 
-        write!(line, "{}   ", now).unwrap();
-        disp.draw(
-            Font6x8::render_str(&line)
-                .with_stroke(Some(1u8.into()))
-                .translate(Coord::new(0, 0))
-                .into_iter(),
-        );
-
+        write!(line, "{}", now).unwrap();
+        disp.clear();
+        Text::new(&line, Point::zero())
+            .into_styled(text_style)
+            .draw(&mut disp)
+            .unwrap();
         disp.flush().unwrap();
     }
 }

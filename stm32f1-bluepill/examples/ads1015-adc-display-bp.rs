@@ -67,7 +67,12 @@
 use ads1x1x::{channel as AdcChannel, Ads1x1x, FullScaleRange, SlaveAddr};
 use core::fmt::Write;
 use cortex_m_rt::entry;
-use embedded_graphics::{fonts::Font6x8, prelude::*};
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use embedded_hal::digital::v2::OutputPin;
 use nb::block;
 use panic_semihosting as _;
@@ -101,7 +106,7 @@ fn main() -> ! {
         (scl, sda),
         &mut afio.mapr,
         Mode::Fast {
-            frequency: 100_000,
+            frequency: 100_000.hz(),
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
@@ -118,9 +123,11 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
-    disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let mut adc = Ads1x1x::new_ads1015(manager.acquire(), SlaveAddr::default());
     // need to be able to measure [0-5V]
@@ -150,15 +157,13 @@ fn main() -> ! {
             heapless::String::new(),
         ];
 
-        // write some extra spaces after the number to clear up when the numbers get smaller
+        disp.clear();
         for i in 0..values.len() {
-            write!(lines[i], "Channel {}: {}    ", i, values[i]).unwrap();
-            disp.draw(
-                Font6x8::render_str(&lines[i])
-                    .with_stroke(Some(1u8.into()))
-                    .translate(Coord::new(0, i as i32 * 16))
-                    .into_iter(),
-            );
+            write!(lines[i], "Channel {}: {}", i, values[i]).unwrap();
+            Text::new(&lines[i], Point::new(0, i as i32 * 16))
+                .into_styled(text_style)
+                .draw(&mut disp)
+                .unwrap();
         }
         disp.flush().unwrap();
     }

@@ -33,8 +33,12 @@ extern crate panic_semihosting;
 
 use ads1x1x::{channel as AdcChannel, Ads1x1x, FullScaleRange, SlaveAddr};
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use embedded_hal::adc::OneShot;
 use embedded_hal::blocking::delay::DelayMs;
 use embedded_hal::digital::v2::OutputPin;
@@ -80,9 +84,12 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let mut adc = Ads1x1x::new_ads1115(manager.acquire(), SlaveAddr::default());
     // need to be able to measure [0-5V] since that is the reference voltage of the DAC (VREFA)
@@ -130,14 +137,14 @@ fn main() -> ! {
         let mut msg: heapless::String<heapless::consts::U64> = heapless::String::new();
 
         // write some extra spaces after the number to clear up when the number get smaller
-        write!(msg, "Channel 0: {}   ", value_ch0).unwrap();
+        write!(msg, "Channel 0: {}", value_ch0).unwrap();
 
         // print
-        disp.draw(
-            Font6x8::render_str(&msg)
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
+        disp.clear();
+        Text::new(&msg, Point::zero())
+            .into_styled(text_style)
+            .draw(&mut disp)
+            .unwrap();
         disp.flush().unwrap();
 
         // Actually this gets only until 4080.

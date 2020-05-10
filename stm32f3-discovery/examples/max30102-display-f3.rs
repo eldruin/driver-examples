@@ -24,8 +24,12 @@ extern crate embedded_graphics;
 extern crate panic_semihosting;
 
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
@@ -59,9 +63,12 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let mut max30102 = Max3010x::new_max30102(manager.acquire());
 
@@ -85,14 +92,14 @@ fn main() -> ! {
         let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
 
         let mut data = [0; 3];
-        let read = max30102.read_fifo(&mut data).unwrap_or(0xFF);
+        let _read = max30102.read_fifo(&mut data).unwrap_or(0xFF);
 
-        write!(buffer, "{}, {}, {}       ", data[0], data[1], data[2]).unwrap();
-        disp.draw(
-            Font6x8::render_str(&buffer)
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
+        write!(buffer, "{}, {}, {}", data[0], data[1], data[2]).unwrap();
+        disp.clear();
+        Text::new(&buffer, Point::zero())
+            .into_styled(text_style)
+            .draw(&mut disp)
+            .unwrap();
 
         disp.flush().unwrap();
     }

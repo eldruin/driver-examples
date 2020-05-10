@@ -20,7 +20,12 @@
 
 use core::fmt::Write;
 use cortex_m_rt::entry;
-use embedded_graphics::{fonts::Font6x12, prelude::*};
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use embedded_hal::digital::v2::OutputPin;
 use nb::block;
 use panic_semihosting as _;
@@ -53,7 +58,7 @@ fn main() -> ! {
         (scl, sda),
         &mut afio.mapr,
         Mode::Fast {
-            frequency: 100_000,
+            frequency: 100_000.hz(),
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
@@ -70,9 +75,12 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let mut sensor = Hdc20xx::new(manager.acquire(), SlaveAddr::default());
     let mut lines: [heapless::String<heapless::consts::U32>; 2] =
@@ -91,17 +99,13 @@ fn main() -> ! {
         lines[1].clear();
         write!(lines[0], "Temperature: {}ºC  ", data.temperature).unwrap();
         write!(lines[1], "Humidity: {}%  ", data.humidity.unwrap()).unwrap();
-        disp.draw(
-            Font6x12::render_str(&lines[0])
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
-        disp.draw(
-            Font6x12::render_str(&lines[1])
-                .with_stroke(Some(1u8.into()))
-                .translate(Coord::new(0, 16))
-                .into_iter(),
-        );
+        disp.clear();
+        for (i, line) in lines.iter().enumerate() {
+            Text::new(line, Point::new(0, i as i32 * 16))
+                .into_styled(text_style)
+                .draw(&mut disp)
+                .unwrap();
+        }
         disp.flush().unwrap();
     }
 }

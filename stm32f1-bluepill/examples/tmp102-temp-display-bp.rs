@@ -23,7 +23,12 @@
 
 use core::fmt::Write;
 use cortex_m_rt::entry;
-use embedded_graphics::{fonts::Font6x8, prelude::*};
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use embedded_hal::digital::v2::OutputPin;
 use panic_semihosting as _;
 use ssd1306::{prelude::*, Builder};
@@ -57,7 +62,7 @@ fn main() -> ! {
         (scl, sda),
         &mut afio.mapr,
         Mode::Fast {
-            frequency: 400_000,
+            frequency: 400_000.hz(),
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
@@ -74,9 +79,12 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let mut tmp102 = Tmp1x2::new(manager.acquire(), SlaveAddr::default());
 
@@ -94,11 +102,12 @@ fn main() -> ! {
 
         buffer.clear();
         write!(buffer, "Temperature: {:.1}ºC", temp_c).unwrap();
-        disp.draw(
-            Font6x8::render_str(&buffer)
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
+        disp.clear();
+        Text::new(&buffer, Point::zero())
+            .into_styled(text_style)
+            .draw(&mut disp)
+            .unwrap();
+
         disp.flush().unwrap();
     }
 }

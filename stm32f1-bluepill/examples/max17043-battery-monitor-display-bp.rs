@@ -20,8 +20,12 @@
 
 extern crate embedded_graphics;
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use embedded_hal::digital::v2::OutputPin;
 use panic_semihosting as _;
 use ssd1306::prelude::*;
@@ -58,7 +62,7 @@ fn main() -> ! {
         (scl, sda),
         &mut afio.mapr,
         Mode::Fast {
-            frequency: 100_000,
+            frequency: 100_000.hz(),
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
@@ -79,9 +83,14 @@ fn main() -> ! {
     disp.init().unwrap();
     disp.flush().unwrap();
 
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
+
     let mut sensor = Max17043::new(manager.acquire());
 
-    let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
+    let mut lines: [heapless::String<heapless::consts::U32>; 2] =
+        [heapless::String::new(), heapless::String::new()];
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 is off, something went wrong.
@@ -93,13 +102,17 @@ fn main() -> ! {
         let soc = sensor.soc().unwrap();
         let voltage = sensor.voltage().unwrap();
 
-        buffer.clear();
-        write!(buffer, "Charge: {:2}%, Voltage: {:2}V   ", soc, voltage).unwrap();
-        disp.draw(
-            Font6x8::render_str(&buffer)
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
+        lines[0].clear();
+        lines[1].clear();
+        write!(lines[0], "Charge: {:.2}%   ", soc).unwrap();
+        write!(lines[1], "Voltage: {:.2}V   ", voltage).unwrap();
+        disp.clear();
+        for (i, line) in lines.iter().enumerate() {
+            Text::new(line, Point::new(0, i as i32 * 16))
+                .into_styled(text_style)
+                .draw(&mut disp)
+                .unwrap();
+        }
         disp.flush().unwrap();
     }
 }

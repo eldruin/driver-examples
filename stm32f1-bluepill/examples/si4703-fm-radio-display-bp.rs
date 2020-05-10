@@ -28,7 +28,12 @@
 
 use core::fmt::Write;
 use cortex_m_rt::entry;
-use embedded_graphics::{fonts::Font6x8, prelude::*};
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use embedded_hal::digital::v2::{InputPin, OutputPin};
 use panic_semihosting as _;
 use si4703::{
@@ -56,7 +61,7 @@ fn main() -> ! {
     let mut gpiob = dp.GPIOB.split(&mut rcc.apb2);
 
     let scl = gpiob.pb8.into_alternate_open_drain(&mut gpiob.crh);
-    let mut sda = gpiob.pb9.into_alternate_open_drain(&mut gpiob.crh);
+    let mut sda = gpiob.pb9.into_push_pull_output(&mut gpiob.crh);
     let mut rst = gpiob.pb7.into_push_pull_output(&mut gpiob.crl);
     let stcint = gpiob.pb6.into_pull_up_input(&mut gpiob.crl);
     let seekdown = gpiob.pb11.into_pull_down_input(&mut gpiob.crh);
@@ -66,12 +71,13 @@ fn main() -> ! {
     let mut delay = Delay::new(cp.SYST, clocks);
 
     reset_si4703(&mut rst, &mut sda, &mut delay).unwrap();
+    let sda = sda.into_alternate_open_drain(&mut gpiob.crh);
     let i2c = BlockingI2c::i2c1(
         dp.I2C1,
         (scl, sda),
         &mut afio.mapr,
         Mode::Fast {
-            frequency: 400_000,
+            frequency: 400_000.hz(),
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
@@ -83,9 +89,12 @@ fn main() -> ! {
     );
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let mut radio = Si4703::new(manager.acquire());
     radio.enable_oscillator().unwrap();
@@ -110,13 +119,14 @@ fn main() -> ! {
         let should_seek_up = seekup.is_high().unwrap();
         if should_seek_down || should_seek_up {
             buffer.clear();
-            write!(buffer, "Seeking...     ").unwrap();
+            write!(buffer, "Seeking...").unwrap();
 
-            disp.draw(
-                Font6x8::render_str(&buffer)
-                    .with_stroke(Some(1u8.into()))
-                    .into_iter(),
-            );
+            disp.clear();
+            Text::new(&buffer, Point::zero())
+                .into_styled(text_style)
+                .draw(&mut disp)
+                .unwrap();
+
             disp.flush().unwrap();
             let direction = if should_seek_down {
                 SeekDirection::Down
@@ -143,11 +153,12 @@ fn main() -> ! {
                     }
                 }
             }
-            disp.draw(
-                Font6x8::render_str(&buffer)
-                    .with_stroke(Some(1u8.into()))
-                    .into_iter(),
-            );
+            disp.clear();
+            Text::new(&buffer, Point::zero())
+                .into_styled(text_style)
+                .draw(&mut disp)
+                .unwrap();
+
             disp.flush().unwrap();
         }
     }

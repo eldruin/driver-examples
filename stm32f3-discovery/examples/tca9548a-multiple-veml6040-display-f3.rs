@@ -28,8 +28,12 @@ extern crate embedded_graphics;
 extern crate panic_semihosting;
 
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
@@ -64,9 +68,12 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let i2c_switch = Xca9548a::new(manager.acquire(), SlaveAddr::default());
     let parts = i2c_switch.split();
@@ -82,36 +89,32 @@ fn main() -> ! {
         led.off();
         delay.delay_ms(50_u16);
 
-        let mut line0: heapless::String<heapless::consts::U64> = heapless::String::new();
-        let mut line1: heapless::String<heapless::consts::U64> = heapless::String::new();
+        let mut lines: [heapless::String<heapless::consts::U32>; 2] =
+            [heapless::String::new(), heapless::String::new()];
 
         let m0 = sensor0.read_all_channels().unwrap();
         let m1 = sensor1.read_all_channels().unwrap();
 
         write!(
-            line0,
-            "Sensor 0: R {} G {} B {} W {}     ",
+            lines[0],
+            "Sensor 0: R {} G {} B {} W {}",
             m0.red, m0.green, m0.blue, m0.white
         )
         .unwrap();
         write!(
-            line1,
+            lines[1],
             "Sensor 1: R {} G {} B {} W {}     ",
             m1.red, m1.green, m1.blue, m1.white
         )
         .unwrap();
 
-        disp.draw(
-            Font6x8::render_str(&line0)
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
-        disp.draw(
-            Font6x8::render_str(&line0)
-                .with_stroke(Some(1u8.into()))
-                .translate(Coord::new(0, 12))
-                .into_iter(),
-        );
+        disp.clear();
+        for (i, line) in lines.iter().enumerate() {
+            Text::new(line, Point::new(0, i as i32 * 16))
+                .into_styled(text_style)
+                .draw(&mut disp)
+                .unwrap();
+        }
         disp.flush().unwrap();
     }
 }

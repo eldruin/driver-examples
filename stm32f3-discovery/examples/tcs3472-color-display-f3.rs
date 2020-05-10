@@ -26,8 +26,12 @@ extern crate embedded_graphics;
 extern crate panic_semihosting;
 
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
@@ -61,9 +65,12 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let mut sensor = Tcs3472::new(manager.acquire());
     sensor.enable().unwrap();
@@ -89,18 +96,12 @@ fn main() -> ! {
         let green = sensor.read_green_channel().unwrap_or(0);
         let blue = sensor.read_blue_channel().unwrap_or(0);
 
-        write!(
-            buffer,
-            "C {} R {} G {} B {}       ",
-            clear, red, green, blue
-        )
-        .unwrap();
-
-        disp.draw(
-            Font6x8::render_str(&buffer)
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
+        write!(buffer, "C {} R {} G {} B {}", clear, red, green, blue).unwrap();
+        disp.clear();
+        Text::new(&buffer, Point::zero())
+            .into_styled(text_style)
+            .draw(&mut disp)
+            .unwrap();
         disp.flush().unwrap();
     }
 }

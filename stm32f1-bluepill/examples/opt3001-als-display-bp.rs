@@ -23,8 +23,12 @@
 
 extern crate embedded_graphics;
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use embedded_hal::digital::v2::OutputPin;
 use nb::block;
 use panic_semihosting as _;
@@ -62,7 +66,7 @@ fn main() -> ! {
         (scl, sda),
         &mut afio.mapr,
         Mode::Fast {
-            frequency: 100_000,
+            frequency: 100_000.hz(),
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
@@ -79,9 +83,12 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let mut sensor = Opt300x::new_opt3001(manager.acquire(), SlaveAddr::Alternative(false, false));
 
@@ -101,12 +108,13 @@ fn main() -> ! {
         let m = block!(sensor.read_lux()).unwrap_or(def);
 
         buffer.clear();
-        write!(buffer, "lux: {:2}     ", m.result).unwrap();
-        disp.draw(
-            Font6x8::render_str(&buffer)
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
+        write!(buffer, "lux: {:.2}", m.result).unwrap();
+        disp.clear();
+        Text::new(&buffer, Point::zero())
+            .into_styled(text_style)
+            .draw(&mut disp)
+            .unwrap();
+
         disp.flush().unwrap();
     }
 }

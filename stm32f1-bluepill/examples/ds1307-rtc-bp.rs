@@ -1,8 +1,5 @@
 //! Stores the date and time on a DS1307 real-time clock (RTC).
-//! Then reads the date and time repeatedly and if everything but the
-//! seconds match, blinks LED 0.
-//! After 1 minute it will stop blinking as the minutes will not match
-//! anymore.
+//! Then reads the date and time repeatedly blink LED 0 for 30 seconds.
 //!
 //! Introductory blog post here:
 //! https://blog.eldruin.com/ds1307-real-time-clock-rtc-driver-in-rust/
@@ -25,7 +22,7 @@
 #![no_main]
 
 use cortex_m_rt::entry;
-use ds1307::{Datelike, Ds1307, NaiveDate, Rtcc, Timelike};
+use ds1307::{Ds1307, NaiveDate, Rtcc};
 use embedded_hal::digital::v2::OutputPin;
 use panic_semihosting as _;
 use stm32f1xx_hal::{
@@ -57,7 +54,7 @@ fn main() -> ! {
         (scl, sda),
         &mut afio.mapr,
         Mode::Fast {
-            frequency: 100_000,
+            frequency: 100_000.hz(),
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
@@ -77,14 +74,8 @@ fn main() -> ! {
     rtc.set_datetime(&begin).unwrap();
     loop {
         let now = rtc.get_datetime().unwrap();
-        if now.year() == begin.year()
-            && now.month() == begin.month()
-            && now.day() == begin.day()
-            && now.hour() == begin.hour()
-            && now.minute() == begin.minute()
-        {
-            // as we do not compare the seconds, this will blink for one
-            // minute and then stop.
+        if (now - begin).num_seconds() < 30 {
+            // this will blink for 30 seconds
             led.set_high().unwrap();
             delay.delay_ms(250_u16);
             led.set_low().unwrap();

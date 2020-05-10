@@ -29,11 +29,11 @@ veml6030 = "0.1"
 veml6070 = "0.1"
 veml6075 = "0.2"
 
-ssd1306 = "0.2"
-embedded-graphics = "0.4.4"
+ssd1306 = "0.3"
+embedded-graphics = "0.6"
 shared-bus = { version = "0.1.4", features = ["cortexm"] }
 heapless = "0.5.0"
-nb = "0.1"
+nb = "1"
 embedded-hal = "0.2.3"
 libm = "0.1"
 panic-semihosting = "0.5"
@@ -41,5 +41,5 @@ cortex-m = "0.6"
 cortex-m-rt = "0.6.5"
 cortex-m-semihosting = "0.3.3"
 [dependencies.stm32f1xx-hal]
-version = "0.4.0"
-features = ["stm32f103", "rt"]
+version = "0.6"
+features = ["stm32f103", "rt", "medium"]

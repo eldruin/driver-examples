@@ -27,8 +27,12 @@ extern crate panic_semihosting;
 
 use apds9960::Apds9960;
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
@@ -62,9 +66,12 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let mut sensor = Apds9960::new(manager.acquire());
     sensor.enable().unwrap();
@@ -83,16 +90,16 @@ fn main() -> ! {
 
         write!(
             buffer,
-            "C {} R {} G {} B {}     ",
+            "C {} R {} G {} B {}",
             light.clear, light.red, light.green, light.blue
         )
         .unwrap();
 
-        disp.draw(
-            Font6x8::render_str(&buffer)
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
+        disp.clear();
+        Text::new(&buffer, Point::zero())
+            .into_styled(text_style)
+            .draw(&mut disp)
+            .unwrap();
         disp.flush().unwrap();
     }
 }

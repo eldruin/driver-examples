@@ -53,7 +53,7 @@ fn main() -> ! {
     let mut gpiob = dp.GPIOB.split(&mut rcc.apb2);
 
     let scl = gpiob.pb8.into_alternate_open_drain(&mut gpiob.crh);
-    let mut sda = gpiob.pb9.into_alternate_open_drain(&mut gpiob.crh);
+    let mut sda = gpiob.pb9.into_push_pull_output(&mut gpiob.crh);
     let mut rst = gpiob.pb7.into_push_pull_output(&mut gpiob.crl);
     let stcint = gpiob.pb6.into_pull_up_input(&mut gpiob.crl);
     let seekdown = gpiob.pb11.into_pull_down_input(&mut gpiob.crh);
@@ -63,12 +63,13 @@ fn main() -> ! {
     let mut delay = Delay::new(cp.SYST, clocks);
 
     reset_si4703(&mut rst, &mut sda, &mut delay).unwrap();
+    let sda = sda.into_alternate_open_drain(&mut gpiob.crh);
     let i2c = BlockingI2c::i2c1(
         dp.I2C1,
         (scl, sda),
         &mut afio.mapr,
         Mode::Fast {
-            frequency: 400_000,
+            frequency: 400_000.hz(),
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,

@@ -36,8 +36,12 @@ extern crate panic_semihosting;
 
 use ads1x1x::{channel as AdcChannel, Ads1x1x, FullScaleRange, SlaveAddr};
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use embedded_hal::adc::OneShot;
 use embedded_hal::blocking::delay::DelayMs;
 use embedded_hal::digital::v2::OutputPin;
@@ -83,9 +87,12 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let mut adc = Ads1x1x::new_ads1115(manager.acquire(), SlaveAddr::default());
     // need to be able to measure [0-5V]
@@ -136,26 +143,21 @@ fn main() -> ! {
         let value_ch0 = value_ch0 >> 5;
         let value_ch1 = value_ch1 >> 5;
 
-        let mut line0: heapless::String<heapless::consts::U32> = heapless::String::new();
-        let mut line1: heapless::String<heapless::consts::U32> = heapless::String::new();
+        let mut lines: [heapless::String<heapless::consts::U32>; 2] =
+            [heapless::String::new(), heapless::String::new()];
 
         // write some extra spaces after the number to clear up when the numbers get smaller
-        write!(line0, "Channel 0: {}    ", value_ch0).unwrap();
-        write!(line1, "Channel 1: {}    ", value_ch1).unwrap();
+        write!(lines[0], "Channel 0: {}", value_ch0).unwrap();
+        write!(lines[1], "Channel 1: {}", value_ch1).unwrap();
 
-        // print first line
-        disp.draw(
-            Font6x8::render_str(&line0)
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
-        // print second line
-        disp.draw(
-            Font6x8::render_str(&line1)
-                .with_stroke(Some(1u8.into()))
-                .translate(Coord::new(0, 16))
-                .into_iter(),
-        );
+        // print
+        disp.clear();
+        for (i, line) in lines.iter().enumerate() {
+            Text::new(line, Point::new(0, i as i32 * 16))
+                .into_styled(text_style)
+                .draw(&mut disp)
+                .unwrap();
+        }
         disp.flush().unwrap();
 
         if position >= 248 {

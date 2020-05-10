@@ -1,8 +1,6 @@
 //! Stores the date and time on a DS1307 real-time clock (RTC).
-//! Then reads the date and time repeatedly and if everything but the
-//! seconds match, blinks LED 0.
-//! After 1 minute it will stop blinking as the minutes will not match
-//! anymore.
+//! Then reads the date and time repeatedly and blinks LED 0
+//! for the first 30 seconds.
 //!
 //! Introductory blog post here:
 //! https://blog.eldruin.com/ds1307-real-time-clock-rtc-driver-in-rust/
@@ -33,7 +31,7 @@ use f3::{
     led::Led,
 };
 
-use ds1307::{Datelike, Ds1307, NaiveDate, Rtcc, Timelike};
+use ds1307::{Ds1307, NaiveDate, Rtcc};
 
 #[entry]
 fn main() -> ! {
@@ -62,18 +60,12 @@ fn main() -> ! {
     rtc.set_datetime(&begin).unwrap();
     loop {
         let now = rtc.get_datetime().unwrap();
-        if now.year() == begin.year()
-            && now.month() == begin.month()
-            && now.day() == begin.day()
-            && now.hour() == begin.hour()
-            && now.minute() == begin.minute()
-        {
-            // as we do not compare the seconds, this will blink for one
-            // minute and then stop.
+        if (now - begin).num_seconds() < 30 {
+            // this will blink for 30 seconds
             led.on();
-            delay.delay_ms(500_u16);
+            delay.delay_ms(250_u16);
             led.off();
-            delay.delay_ms(500_u16);
+            delay.delay_ms(250_u16);
         }
     }
 }

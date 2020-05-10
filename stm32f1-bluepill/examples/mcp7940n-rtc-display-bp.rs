@@ -23,7 +23,12 @@
 
 use core::fmt::Write;
 use cortex_m_rt::entry;
-use embedded_graphics::{fonts::Font6x8, prelude::*};
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use embedded_hal::digital::v2::OutputPin;
 use mcp794xx::{Datelike, Mcp794xx, NaiveDate, Rtcc, Timelike};
 use panic_semihosting as _;
@@ -57,7 +62,7 @@ fn main() -> ! {
         (scl, sda),
         &mut afio.mapr,
         Mode::Fast {
-            frequency: 100_000,
+            frequency: 100_000.hz(),
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
@@ -74,9 +79,12 @@ fn main() -> ! {
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     let mut rtc = Mcp794xx::new_mcp7940n(manager.acquire());
     let begin = NaiveDate::from_ymd(2019, 1, 2).and_hms(4, 5, 6);
@@ -104,11 +112,11 @@ fn main() -> ! {
             now.second()
         )
         .unwrap();
-        disp.draw(
-            Font6x8::render_str(&buffer)
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
+        disp.clear();
+        Text::new(&buffer, Point::zero())
+            .into_styled(text_style)
+            .draw(&mut disp)
+            .unwrap();
 
         disp.flush().unwrap();
     }

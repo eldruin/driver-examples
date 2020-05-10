@@ -29,8 +29,12 @@ extern crate panic_semihosting;
 
 use core::fmt::Write;
 use cortex_m_rt::entry;
-use embedded_graphics::fonts::Font6x8;
-use embedded_graphics::prelude::*;
+use embedded_graphics::{
+    fonts::{Font6x8, Text},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    style::TextStyleBuilder,
+};
 use embedded_hal::blocking::delay::DelayMs;
 use embedded_hal::digital::v2::OutputPin;
 use f3::{
@@ -69,9 +73,12 @@ fn main() -> ! {
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 400.khz(), clocks, &mut rcc.apb1);
 
     let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(i2c).into();
-
     disp.init().unwrap();
     disp.flush().unwrap();
+
+    let text_style = TextStyleBuilder::new(Font6x8)
+        .text_color(BinaryColor::On)
+        .build();
 
     // SPI configuration
     let sck = gpioa.pa5.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
@@ -106,12 +113,11 @@ fn main() -> ! {
         let mut msg: heapless::String<heapless::consts::U64> = heapless::String::new();
 
         write!(msg, "JEDEC ID: {} {} {}", id[0], id[1], id[2]).unwrap();
-
-        disp.draw(
-            Font6x8::render_str(&msg)
-                .with_stroke(Some(1u8.into()))
-                .into_iter(),
-        );
+        disp.clear();
+        Text::new(&msg, Point::zero())
+            .into_styled(text_style)
+            .draw(&mut disp)
+            .unwrap();
         disp.flush().unwrap();
     }
 }
