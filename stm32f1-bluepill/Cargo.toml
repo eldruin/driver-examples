@@ -21,6 +21,7 @@ isl29125 = "0.1"
 mcp794xx = "0.2"
 opt300x = "0.1"
 pwm-pca9685 = "0.2"
+#pwm-pca9685 = {path = "../../pca9685/pwm-pca9685-rs"}
 si4703 = "0.1"
 tmp006 = "0.1"
 tmp1x2 = "0.2"
@@ -39,6 +40,17 @@ panic-semihosting = "0.5"
 cortex-m = "0.6"
 cortex-m-rt = "0.6.5"
 cortex-m-semihosting = "0.3.3"
+bitbang-hal = "0.3"
+
 [dependencies.stm32f1xx-hal]
 version = "0.4.0"
 features = ["stm32f103", "rt"]
+
+# Better optimizations are necessary for the I2S example
+[profile.release]
+codegen-units = 1
+lto = true
+
+[patch.crates-io]
+embedded-hal = { git = "https://github.com/eldruin/embedded-hal", branch = "i2s-v0.2.x", features = ["unproven"] }
+bitbang-hal = { git = "https://github.com/eldruin/bitbang-hal", branch = "i2s-v0.2.x" }
