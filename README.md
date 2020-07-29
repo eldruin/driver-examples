@@ -24,6 +24,7 @@ This repository includes examples of using devices through these drivers:
 |[Mcp4x]           | Digital potentiometers.                                   | SPI       |                                   |
 |[Mcp49xx]         | 8/10/12-bit Digital-to-analog (DAC) converters.           | SPI       |                                   |
 |[Mcp794xx]        | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-mcp794xx]  |
+|[Mlx9061x]        | Non-contact infrared (IR) thermometer.                    | I2C       |                                   |
 |[Opt300x]         | Ambient light sensor.                                     | I2C       | [Intro blog post][blog-opt300x]   |
 |[Pcf857x]         | 8/16-pin I/O port expanders.                              | I2C       |                                   |
 |[Pwm-Pca9685]     | 16-pin PWM port expander / LED driver.                    | I2C       | [Intro blog post][blog-pca9685]   |
@@ -91,6 +92,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Mcp4x]: https://crates.io/crates/mcp4x
 [Mcp49xx]: https://crates.io/crates/mcp49xx
 [Mcp794xx]: https://crates.io/crates/mcp794xx
+[Mlx9061x]: https://crates.io/crates/mlx9061x
 [Opt300x]: https://crates.io/crates/Opt300x
 [Pcf857x]: https://crates.io/crates/pcf857x
 [Pwm-Pca9685]: https://crates.io/crates/pwm-pca9685
