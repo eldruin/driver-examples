@@ -25,6 +25,7 @@ env:
             mcp49xx
             mcp794xx
             mlx9061x
+            mma8x5x
             opt300x
             pcf857x
             pwm-pca9685
