@@ -25,8 +25,7 @@
 #![no_std]
 #![no_main]
 
-// panic handler
-extern crate panic_semihosting;
+use panic_semihosting as _;
 
 use cortex_m_rt::entry;
 use embedded_hal::blocking::delay::DelayMs;

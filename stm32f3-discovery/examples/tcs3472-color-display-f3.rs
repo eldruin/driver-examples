@@ -21,9 +21,7 @@
 #![no_std]
 #![no_main]
 
-// panic handler
-extern crate embedded_graphics;
-extern crate panic_semihosting;
+use panic_semihosting as _;
 
 use cortex_m_rt::entry;
 use embedded_graphics::{
@@ -36,8 +34,7 @@ use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
-use ssd1306::prelude::*;
-use ssd1306::Builder;
+use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use tcs3472::Tcs3472;
 
 use core::fmt::Write;
@@ -64,7 +61,8 @@ fn main() -> ! {
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 400.khz(), clocks, &mut rcc.apb1);
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
+    let interface = I2CDIBuilder::new().init(manager.acquire());
+    let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
     disp.init().unwrap();
     disp.flush().unwrap();
 

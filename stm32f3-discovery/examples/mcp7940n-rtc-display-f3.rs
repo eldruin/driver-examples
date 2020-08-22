@@ -38,9 +38,9 @@ use f3::{
     led::Led,
 };
 use mcp794xx::{Datelike, Mcp794xx, NaiveDate, Rtcc, Timelike};
-// panic handler
+
 use panic_semihosting as _;
-use ssd1306::{prelude::*, Builder};
+use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 
 #[entry]
 fn main() -> ! {
@@ -65,7 +65,8 @@ fn main() -> ! {
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 400.khz(), clocks, &mut rcc.apb1);
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
+    let interface = I2CDIBuilder::new().init(manager.acquire());
+    let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
     disp.init().unwrap();
     disp.flush().unwrap();
 

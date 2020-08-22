@@ -24,7 +24,6 @@
 #![no_std]
 #![no_main]
 
-// panic handler
 use nb::block;
 use panic_semihosting as _;
 
@@ -40,8 +39,7 @@ use f3::{
     led::Led,
 };
 use opt300x::{Opt300x, SlaveAddr};
-use ssd1306::prelude::*;
-use ssd1306::Builder;
+use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 
 use core::fmt::Write;
 #[entry]
@@ -67,7 +65,8 @@ fn main() -> ! {
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
+    let interface = I2CDIBuilder::new().init(manager.acquire());
+    let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
     disp.init().unwrap();
     disp.flush().unwrap();
 

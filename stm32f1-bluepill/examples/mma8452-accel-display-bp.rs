@@ -18,7 +18,6 @@
 #![no_std]
 #![no_main]
 
-extern crate embedded_graphics;
 use cortex_m_rt::entry;
 use embedded_graphics::{
     fonts::{Font6x8, Text},
@@ -28,8 +27,7 @@ use embedded_graphics::{
 };
 use embedded_hal::digital::v2::OutputPin;
 use panic_semihosting as _;
-use ssd1306::prelude::*;
-use ssd1306::Builder;
+use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 
 use mma8x5x::{Measurement, Mma8x5x, SlaveAddr};
 use stm32f1xx_hal::{
@@ -78,7 +76,8 @@ fn main() -> ! {
     let mut delay = Delay::new(cp.SYST, clocks);
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
+    let interface = I2CDIBuilder::new().init(manager.acquire());
+    let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
     disp.init().unwrap();
     disp.flush().unwrap();
 

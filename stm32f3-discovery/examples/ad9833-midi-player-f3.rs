@@ -26,8 +26,7 @@
 #![no_std]
 #![no_main]
 
-// panic handler
-extern crate panic_semihosting;
+use panic_semihosting as _;
 
 use ad983x::{Ad983x, FrequencyRegister, MODE};
 use cortex_m_rt::entry;

@@ -40,7 +40,7 @@ use si4703::{
     reset_and_select_i2c_method1 as reset_si4703, ChannelSpacing, DeEmphasis, ErrorWithPin,
     SeekDirection, SeekMode, Si4703, Volume,
 };
-use ssd1306::{prelude::*, Builder};
+use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use stm32f1xx_hal::{
     delay::Delay,
     i2c::{BlockingI2c, DutyCycle, Mode},
@@ -88,7 +88,8 @@ fn main() -> ! {
         1000,
     );
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
+    let interface = I2CDIBuilder::new().init(manager.acquire());
+    let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
     disp.init().unwrap();
     disp.flush().unwrap();
 

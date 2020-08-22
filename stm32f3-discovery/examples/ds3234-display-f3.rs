@@ -24,9 +24,7 @@
 #![no_std]
 #![no_main]
 
-extern crate embedded_graphics;
-// panic handler
-extern crate panic_semihosting;
+use panic_semihosting as _;
 
 use cortex_m_rt::entry;
 use embedded_hal::blocking::delay::DelayMs;
@@ -47,8 +45,7 @@ use embedded_graphics::{
     prelude::*,
     style::TextStyleBuilder,
 };
-use ssd1306::prelude::*;
-use ssd1306::Builder;
+use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 
 use ds323x::{Ds323x, NaiveDate};
 use rtcc::Rtcc;
@@ -85,7 +82,8 @@ fn main() -> ! {
     let sda = gpiob.pb7.into_af4(&mut gpiob.moder, &mut gpiob.afrl);
 
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
-    let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(i2c).into();
+    let interface = I2CDIBuilder::new().init(i2c);
+    let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
     disp.init().unwrap();
     disp.flush().unwrap();
 

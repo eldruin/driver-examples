@@ -31,7 +31,7 @@ veml6030 = "0.1"
 veml6070 = "0.1"
 veml6075 = "0.2"
 
-ssd1306 = "0.3"
+ssd1306 = "0.4"
 embedded-graphics = "0.6"
 shared-bus = { version = "0.1.4", features = ["cortexm"] }
 heapless = "0.5.0"

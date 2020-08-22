@@ -39,7 +39,7 @@ xca9548a = "0.2"
 
 rtcc = "0.2"
 chrono = { version = "0.4", default-features = false }
-ssd1306 = "0.3"
+ssd1306 = "0.4"
 embedded-graphics = "0.6"
 cortex-m = "0.6.0"
 cortex-m-rt = "0.6.5"

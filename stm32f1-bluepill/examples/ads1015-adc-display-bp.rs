@@ -76,7 +76,7 @@ use embedded_graphics::{
 use embedded_hal::digital::v2::OutputPin;
 use nb::block;
 use panic_semihosting as _;
-use ssd1306::{prelude::*, Builder};
+use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use stm32f1xx_hal::{
     delay::Delay,
     i2c::{BlockingI2c, DutyCycle, Mode},
@@ -122,7 +122,8 @@ fn main() -> ! {
     let mut delay = Delay::new(cp.SYST, clocks);
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(manager.acquire()).into();
+    let interface = I2CDIBuilder::new().init(manager.acquire());
+    let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
     disp.init().unwrap();
 
     let text_style = TextStyleBuilder::new(Font6x8)

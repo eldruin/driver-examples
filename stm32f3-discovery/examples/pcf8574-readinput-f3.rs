@@ -19,18 +19,13 @@
 #![no_std]
 #![no_main]
 
-extern crate cortex_m;
-#[macro_use(entry)]
-extern crate cortex_m_rt as rt;
-extern crate f3;
-extern crate panic_semihosting;
-extern crate pcf857x;
-
+use cortex_m_rt::entry;
 use f3::hal::delay::Delay;
 use f3::hal::i2c::I2c;
 use f3::hal::prelude::*;
 use f3::hal::stm32f30x;
 pub use f3::hal::stm32f30x::i2c1;
+use panic_semihosting as _;
 use pcf857x::{Pcf8574, PinFlag, SlaveAddr};
 
 #[entry]

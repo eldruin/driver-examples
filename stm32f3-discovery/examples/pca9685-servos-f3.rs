@@ -23,17 +23,12 @@
 #![no_std]
 #![no_main]
 
-// panic handler
-extern crate cortex_m_rt;
-extern crate f3;
-extern crate panic_semihosting;
-extern crate pwm_pca9685;
-
 use cortex_m_rt::entry;
 use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
+use panic_semihosting as _;
 use pwm_pca9685::{Channel, Pca9685, SlaveAddr};
 
 #[entry]

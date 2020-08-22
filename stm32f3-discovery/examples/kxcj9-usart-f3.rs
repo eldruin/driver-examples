@@ -34,8 +34,7 @@
 #![no_std]
 #![no_main]
 
-// panic handler
-extern crate panic_semihosting;
+use panic_semihosting as _;
 
 pub use cortex_m::{asm::bkpt, iprint, iprintln, peripheral::ITM};
 use cortex_m_rt::entry;

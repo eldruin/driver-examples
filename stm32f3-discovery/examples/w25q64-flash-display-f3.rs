@@ -23,10 +23,6 @@
 #![no_std]
 #![no_main]
 
-extern crate embedded_graphics;
-// panic handler
-extern crate panic_semihosting;
-
 use core::fmt::Write;
 use cortex_m_rt::entry;
 use embedded_graphics::{
@@ -44,8 +40,8 @@ use f3::{
     },
     led::Led,
 };
-use ssd1306::prelude::*;
-use ssd1306::Builder;
+use panic_semihosting as _;
+use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use w25::{MODE_0, W25};
 
 #[entry]
@@ -72,7 +68,8 @@ fn main() -> ! {
 
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 400.khz(), clocks, &mut rcc.apb1);
 
-    let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(i2c).into();
+    let interface = I2CDIBuilder::new().init(i2c);
+    let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
     disp.init().unwrap();
     disp.flush().unwrap();
 
