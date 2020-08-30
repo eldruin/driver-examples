@@ -1,5 +1,5 @@
-//! Continuously measure the eCO2 and eTVOC in the air
-//! and print it to an SSD1306 OLED display.
+//! Continuously measure the eCO2 and eTVOC in the air and print it to an
+//! SSD1306 OLED display.
 //!
 //! This example is runs on the STM32F103 "Bluepill" board using I2C1.
 //!
@@ -9,7 +9,7 @@
 //! 3.3V <-> VCC    <-> VDD
 //! PB8  <-> SCL    <-> SCL
 //! PB9  <-> SDA    <-> SDA
-//! PB7  <-> nWAKE
+//! GND  <-> nWAKE
 //! 3.3V <-> RST
 //! ```
 //!
@@ -30,6 +30,7 @@ use embedded_graphics::{
     style::TextStyleBuilder,
 };
 use embedded_hal::digital::v2::OutputPin;
+use heapless::String;
 use nb::block;
 use panic_semihosting as _;
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
@@ -89,21 +90,18 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    led.set_high().unwrap();
-    delay.delay_ms(50_u16);
-    led.set_low().unwrap();
-    let address = SlaveAddr::default();
-    let mut sensor = Ccs811Awake::new(manager.acquire(), address);
-    sensor.software_reset().unwrap();
-    delay.delay_ms(3_u16);
-    let mut sensor = sensor.start_application().ok().unwrap();
-    delay.delay_ms(2_u8);
+    let mut ccs811 = Ccs811Awake::new(manager.acquire(), SlaveAddr::default());
+    ccs811.software_reset().unwrap();
+    delay.delay_ms(10_u16);
+    let mut lines: [String<heapless::consts::U32>; 2] = [String::new(), String::new()];
+
+    let mut ccs811 = ccs811.start_application().ok().unwrap();
     let temperature_c = 25.0;
-    let relative_humidity_perc = 60.0;
-    sensor
-        .set_environment(temperature_c, relative_humidity_perc)
+    let humidity_perc = 60.0;
+    ccs811
+        .set_environment(temperature_c, humidity_perc)
         .unwrap();
-    sensor.set_mode(MeasurementMode::ConstantPower1s).unwrap();
+    ccs811.set_mode(MeasurementMode::ConstantPower1s).unwrap();
 
     let default = AlgorithmResult {
         eco2: 9999,
@@ -111,20 +109,19 @@ fn main() -> ! {
         raw_current: 255,
         raw_voltage: 9999,
     };
-    let mut lines: [heapless::String<heapless::consts::U32>; 2] =
-        [heapless::String::new(), heapless::String::new()];
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 is off, something went wrong.
         led.set_high().unwrap();
-        delay.delay_ms(50_u16);
+        delay.delay_ms(100_u16);
         led.set_low().unwrap();
-        delay.delay_ms(50_u16);
+        delay.delay_ms(100_u16);
 
-        let data = block!(sensor.data()).unwrap_or(default);
+        let data = block!(ccs811.data()).unwrap_or(default);
 
-        lines[0].clear();
-        lines[1].clear();
+        for line in lines.iter_mut() {
+            line.clear();
+        }
         write!(lines[0], "eCO2: {}", data.eco2).unwrap();
         write!(lines[1], "eTVOC: {}", data.etvoc).unwrap();
         disp.clear();
