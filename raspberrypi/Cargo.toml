@@ -1,0 +1,20 @@
+[package]
+authors = ["Diego Barrios Romero <eldruin@gmail.com>"]
+categories = ["embedded", "no-std"]
+description = "Examples of using several rust drivers using a Raspberry Pi board."
+keywords = ["driver", "i2c", "spi", "example"]
+license = "MIT OR Apache-2.0"
+name = "driver-examples-raspberrypi"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+embedded-ccs811 = "0.1"
+hdc20xx = "0.1"
+
+shared-bus = { version = "0.2", features = ["std"] }
+ssd1306 = "0.4"
+embedded-graphics = "0.6"
+nb = "1"
+embedded-hal = "0.2.3"
+linux-embedded-hal = "0.3"
