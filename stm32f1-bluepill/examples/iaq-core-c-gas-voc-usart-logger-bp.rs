@@ -31,7 +31,7 @@ use stm32f1xx_hal::{
         gpioc::PC13,
         Alternate, OpenDrain, Output, PushPull, State,
     },
-    i2c::{BlockingI2c, DutyCycle, Mode},
+    i2c::{BlockingI2c, Mode},
     pac,
     prelude::*,
     serial,
