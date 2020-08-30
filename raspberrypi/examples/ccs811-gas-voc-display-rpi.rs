@@ -59,8 +59,8 @@ fn main() {
                 .set_environment(env.temperature, env.humidity.unwrap_or(0.0))
                 .unwrap();
             ccs811.set_mode(MeasurementMode::ConstantPower1s).unwrap();
-            let mut lines = [String::new(), String::new(), String::new(), String::new()];
             loop {
+                let mut lines = [String::new(), String::new(), String::new(), String::new()];
                 let data = block!(ccs811.data()).unwrap();
                 write!(lines[0], "eCO2: {}", data.eco2).unwrap();
                 write!(lines[1], "eTVOC: {}", data.etvoc).unwrap();
