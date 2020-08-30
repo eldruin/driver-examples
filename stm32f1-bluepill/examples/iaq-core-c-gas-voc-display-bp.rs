@@ -32,7 +32,7 @@ use panic_semihosting as _;
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use stm32f1xx_hal::{
     delay::Delay,
-    i2c::{BlockingI2c, DutyCycle, Mode},
+    i2c::{BlockingI2c, Mode},
     pac,
     prelude::*,
 };
