@@ -29,7 +29,7 @@ use f3::{
     led::Led,
 };
 use panic_semihosting as _;
-use pwm_pca9685::{Channel, Pca9685, SlaveAddr};
+use pwm_pca9685::{Address, Channel, Pca9685};
 
 #[entry]
 fn main() -> ! {
@@ -53,7 +53,7 @@ fn main() -> ! {
 
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
 
-    let mut pwm = Pca9685::new(i2c, SlaveAddr::default());
+    let mut pwm = Pca9685::new(i2c, Address::default()).unwrap();
     // This results in about 60 Hz, which is the frequency at which servos operate.
     pwm.set_prescale(100).unwrap();
     pwm.enable().unwrap();

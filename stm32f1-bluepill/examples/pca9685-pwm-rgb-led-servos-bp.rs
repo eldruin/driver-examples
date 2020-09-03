@@ -25,7 +25,7 @@
 
 use cortex_m_rt::entry;
 use panic_semihosting as _;
-use pwm_pca9685::{Pca9685, SlaveAddr};
+use pwm_pca9685::{Address, Pca9685};
 use stm32f1xx_hal::{
     delay::Delay,
     i2c::{BlockingI2c, DutyCycle, Mode},
@@ -65,7 +65,7 @@ fn main() -> ! {
         1000,
     );
 
-    let mut pwm = Pca9685::new(i2c, SlaveAddr::default());
+    let mut pwm = Pca9685::new(i2c, Address::default()).unwrap();
     pwm.enable().unwrap();
     pwm.set_prescale(100).unwrap();
 
