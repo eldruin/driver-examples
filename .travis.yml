@@ -14,6 +14,7 @@ env:
             ds1307
             ds323x
             eeprom24x
+            embedded-ccs811
             hdc20xx
             isl29125
             kxcj9
@@ -36,7 +37,6 @@ env:
             veml6075
             xca9548a"
 
-# embedded-ccs811 Deactivated as the name differs.
 # veml6040 Git version is not compatible. Deactivated until a new version is released.
 # veml6070 Git version is not compatible. Deactivated until a new version is released.
 
