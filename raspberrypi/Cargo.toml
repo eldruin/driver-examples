@@ -9,7 +9,7 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-embedded-ccs811 = { git = "https://github.com/eldruin/embedded-ccs811-rs"} # "0.1"
+embedded-ccs811 = "0.2"
 hdc20xx = "0.1"
 
 shared-bus = { version = "0.2", features = ["std"] }

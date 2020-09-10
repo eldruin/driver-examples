@@ -12,7 +12,7 @@ This repository includes examples of using devices through these drivers:
 |[Ds1307]          | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-ds1307]    |
 |[Ds323x]          | Extremely accurate real-time clock (RTC) / calendar.      | I2C / SPI |                                   |
 |[Eeprom24x]       | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
-|[Embedded-Ccs811] | Digital gas sensor for monitoring indoor air quality.     | I2C       |                                   |
+|[Embedded-Ccs811] | Digital gas sensor for monitoring indoor air quality.     | I2C       | [Intro blog post][blog-ccs811]    |
 |[Hdc20xx]         | Temperature and humidity sensors.                         | I2C       |                                   |
 |[iAQ-Core]        | Indoor air quality sensor.                                | I2C       |                                   |
 |[Isl29125]        | RGB color light sensor with IR blocking filter.           | I2C       |                                   |
@@ -111,6 +111,7 @@ be dual licensed as above, without any additional terms or conditions.
 
 [blog-ad983x]: https://blog.eldruin.com/ad983x-waveform-generator-dds-driver-in-rust/
 [blog-ads1x1x]: https://blog.eldruin.com/ads1x1x-analog-to-digital-converter-driver-in-rust/
+[blog-ccs811]: https://blog.eldruin.com/ccs811-indoor-air-quality-sensor-driver-in-rust/
 [blog-ds1307]: https://blog.eldruin.com/ds1307-real-time-clock-rtc-driver-in-rust/
 [blog-eeprom24x]: https://blog.eldruin.com/24x-serial-eeprom-driver-in-rust/
 [blog-kxcj9]: https://blog.eldruin.com/kxcj9-kxcjb-tri-axis-mems-accelerator-driver-in-rust/
