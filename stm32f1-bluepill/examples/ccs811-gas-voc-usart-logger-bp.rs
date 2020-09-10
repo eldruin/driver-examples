@@ -3,6 +3,9 @@
 //! In order to compensate for the ambient temperature and humidity, an HDC2080
 //! sensor is used.
 //!
+//! Introductory blog post with some pictures here:
+//! https://blog.eldruin.com/ccs811-indoor-air-quality-sensor-driver-in-rust/
+//!
 //! This example is runs on the STM32F103 "Bluepill" board using I2C1 and USART1.
 //!
 //! To setup the serial communication, have a look at the discovery book:

@@ -1,6 +1,9 @@
 //! Continuously measure the eCO2 and eTVOC in the air and print it to an
 //! SSD1306 OLED display.
 //!
+//! Introductory blog post with some pictures here:
+//! https://blog.eldruin.com/ccs811-indoor-air-quality-sensor-driver-in-rust/
+//!
 //! This example is runs on the STM32F103 "Bluepill" board using I2C1.
 //!
 //! ```

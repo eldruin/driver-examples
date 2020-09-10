@@ -3,6 +3,9 @@
 //! In order to compensate for the ambient temperature and humidity, an HDC2080
 //! sensor is used.
 //!
+//! Introductory blog post with some pictures here:
+//! https://blog.eldruin.com/ccs811-indoor-air-quality-sensor-driver-in-rust/
+//!
 //! ```
 //! RPi   <-> CCS811 <-> HDC2080 <-> Display
 //! GND   <-> GND    <-> GND     <-> GND

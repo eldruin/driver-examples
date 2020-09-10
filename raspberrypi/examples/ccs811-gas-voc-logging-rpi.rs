@@ -2,6 +2,9 @@
 //! and humidity with an HDC2080 sensor and print the data in CSV format every
 //! 10 seconds.
 //!
+//! Introductory blog post with some pictures here:
+//! https://blog.eldruin.com/ccs811-indoor-air-quality-sensor-driver-in-rust/
+//!
 //! ```
 //! RPi   <-> CCS811 <-> HDC2080
 //! GND   <-> GND    <-> GND
