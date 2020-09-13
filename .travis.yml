@@ -58,10 +58,10 @@ matrix:
     - env: TARGET=thumbv6m-none-eabi SUBFOLDER=microbit
       rust: nightly
 
-    - env: TARGET=armv7-unknown-linux-gnueabihf SUBFOLDER=raspberrypi
+    # - env: TARGET=armv7-unknown-linux-gnueabihf SUBFOLDER=raspberrypi
 
-    - env: TARGET=armv7-unknown-linux-gnueabihf SUBFOLDER=raspberrypi
-      rust: nightly
+    # - env: TARGET=armv7-unknown-linux-gnueabihf SUBFOLDER=raspberrypi
+    #   rust: nightly
 
     - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=stm32f3-discovery
 
@@ -78,10 +78,10 @@ matrix:
     - env: TARGET=thumbv6m-none-eabi GIT_DRIVERS=$DRIVERS SUBFOLDER=microbit
       rust: nightly
 
-    - env: TARGET=armv7-unknown-linux-gnueabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=raspberrypi
+    # - env: TARGET=armv7-unknown-linux-gnueabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=raspberrypi
 
-    - env: TARGET=armv7-unknown-linux-gnueabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=raspberrypi
-      rust: nightly
+    # - env: TARGET=armv7-unknown-linux-gnueabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=raspberrypi
+    #   rust: nightly
 
 install:
   bash ci/install.sh
