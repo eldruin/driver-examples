@@ -1,8 +1,11 @@
 //! Measure the acceleration with the LSM303AGR sensor and transmit the
 //! data through the serial interface.
 //!
+//! Install cargo-embed with:
+//! `cargo install cargo-embed`
+//!
 //! Run with:
-//! `cargo run --example lsm303agr-accel-mb`
+//! `cargo embed --example lsm303agr-accel-mb`
 //!
 #![no_main]
 #![no_std]
@@ -15,10 +18,13 @@ use microbit::hal::i2c;
 use microbit::hal::prelude::*;
 use microbit::hal::serial;
 use microbit::hal::serial::BAUD115200;
-use panic_halt as _;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("LSM303AGR accelerometer example");
     if let Some(p) = microbit::Peripherals::take() {
         let gpio = p.GPIO.split();
 
