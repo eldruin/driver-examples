@@ -1,0 +1,11 @@
+[default.probe]
+protocol = "Swd"
+
+[default.general]
+chip = "nrf51822_xxAA"
+
+[default.rtt]
+enabled = true
+
+[default.gdb]
+enabled = false
