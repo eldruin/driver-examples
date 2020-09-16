@@ -46,19 +46,31 @@ matrix:
     - env: TARGET=thumbv7em-none-eabihf SUBFOLDER=stm32f3-discovery
 
     - env: TARGET=thumbv7em-none-eabihf SUBFOLDER=stm32f3-discovery
+      rust: beta
+
+    - env: TARGET=thumbv7em-none-eabihf SUBFOLDER=stm32f3-discovery
       rust: nightly
 
     - env: TARGET=thumbv7m-none-eabi SUBFOLDER=stm32f1-bluepill
+
+    - env: TARGET=thumbv7m-none-eabi SUBFOLDER=stm32f1-bluepill
+      rust: beta
 
     - env: TARGET=thumbv7m-none-eabi SUBFOLDER=stm32f1-bluepill
       rust: nightly
 
     - env: TARGET=thumbv6m-none-eabi SUBFOLDER=microbit
+
+    - env: TARGET=thumbv6m-none-eabi SUBFOLDER=microbit
+      rust: beta
 
     - env: TARGET=thumbv6m-none-eabi SUBFOLDER=microbit
       rust: nightly
 
     # - env: TARGET=armv7-unknown-linux-gnueabihf SUBFOLDER=raspberrypi
+
+    # - env: TARGET=armv7-unknown-linux-gnueabihf SUBFOLDER=raspberrypi
+    #   rust: beta
 
     # - env: TARGET=armv7-unknown-linux-gnueabihf SUBFOLDER=raspberrypi
     #   rust: nightly
@@ -66,9 +78,15 @@ matrix:
     - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=stm32f3-discovery
 
     - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=stm32f3-discovery
+      rust: beta
+
+    - env: TARGET=thumbv7em-none-eabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=stm32f3-discovery
       rust: nightly
 
     - env: TARGET=thumbv7m-none-eabi GIT_DRIVERS=$DRIVERS SUBFOLDER=stm32f1-bluepill
+
+    - env: TARGET=thumbv7m-none-eabi GIT_DRIVERS=$DRIVERS SUBFOLDER=stm32f1-bluepill
+      rust: beta
 
     - env: TARGET=thumbv7m-none-eabi GIT_DRIVERS=$DRIVERS SUBFOLDER=stm32f1-bluepill
       rust: nightly
@@ -78,10 +96,20 @@ matrix:
     - env: TARGET=thumbv6m-none-eabi GIT_DRIVERS=$DRIVERS SUBFOLDER=microbit
       rust: nightly
 
+    - env: TARGET=thumbv6m-none-eabi GIT_DRIVERS=$DRIVERS SUBFOLDER=microbit
+      rust: nightly
+
     # - env: TARGET=armv7-unknown-linux-gnueabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=raspberrypi
 
     # - env: TARGET=armv7-unknown-linux-gnueabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=raspberrypi
+    #   rust: beta
+
+    # - env: TARGET=armv7-unknown-linux-gnueabihf GIT_DRIVERS=$DRIVERS SUBFOLDER=raspberrypi
     #   rust: nightly
+
+  allow_failures:
+  - rust: nightly
+
 
 install:
   bash ci/install.sh
