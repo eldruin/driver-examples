@@ -32,7 +32,7 @@ use embedded_graphics::{
 use embedded_hal::digital::v2::OutputPin;
 use nb::block;
 use panic_rtt_target as _;
-use rtt_target::{rprintln, rtt_init_print};
+use rtt_target::rtt_init_print;
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use stm32f1xx_hal::{
     delay::Delay,
@@ -45,7 +45,6 @@ use tmp006::{SlaveAddr, Tmp006};
 #[entry]
 fn main() -> ! {
     rtt_init_print!();
-    rprintln!("TMP006 example");
     let cp = cortex_m::Peripherals::take().unwrap();
     let dp = pac::Peripherals::take().unwrap();
 
