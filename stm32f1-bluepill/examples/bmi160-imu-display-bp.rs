@@ -12,12 +12,16 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example bmi160-imu-display-bp`,
+//! `cargo embed --example bmi160-imu-display-bp`,
 
 #![deny(unsafe_code)]
 #![no_std]
 #![no_main]
 
+use bmi160::{
+    AccelerometerPowerMode, Bmi160, Data, GyroscopePowerMode, Sensor3DData, SensorSelector,
+    SlaveAddr,
+};
 use core::fmt::Write;
 use cortex_m_rt::entry;
 use embedded_graphics::{
@@ -27,7 +31,8 @@ use embedded_graphics::{
     style::TextStyleBuilder,
 };
 use embedded_hal::digital::v2::OutputPin;
-use panic_semihosting as _;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use stm32f1xx_hal::{
     delay::Delay,
@@ -36,13 +41,10 @@ use stm32f1xx_hal::{
     prelude::*,
 };
 
-use bmi160::{
-    AccelerometerPowerMode, Bmi160, Data, GyroscopePowerMode, Sensor3DData, SensorSelector,
-    SlaveAddr,
-};
-
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("BMI160 example");
     let cp = cortex_m::Peripherals::take().unwrap();
     let dp = pac::Peripherals::take().unwrap();
 

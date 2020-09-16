@@ -23,7 +23,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example ccs811-gas-voc-usart-logger-bp`,
+//! `cargo embed --example ccs811-gas-voc-usart-logger-bp`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -37,9 +37,10 @@ use embedded_ccs811::{
 use embedded_hal::digital::v2::OutputPin;
 use hdc20xx::{mode as Hdc20xxMode, Hdc20xx, SlaveAddr as Hdc20xxSlaveAddr};
 use nb::block;
-use panic_semihosting as _;
+use panic_rtt_target as _;
 use rtic::app;
 use rtic::cyccnt::U32Ext;
+use rtt_target::{rprintln, rtt_init_print};
 use shared_bus_rtic::SharedBus;
 use stm32f1xx_hal::{
     delay::Delay,
@@ -81,6 +82,8 @@ const APP: () = {
 
     #[init(schedule = [measure])]
     fn init(cx: init::Context) -> init::LateResources {
+        rtt_init_print!();
+        rprintln!("CCS811/HDC2080 example");
         let mut core = cx.core;
         core.DWT.enable_cycle_counter();
 

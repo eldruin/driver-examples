@@ -15,7 +15,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example veml6030-als-display-bp`,
+//! `cargo embed --example veml6030-als-display-bp`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -30,7 +30,8 @@ use embedded_graphics::{
     style::TextStyleBuilder,
 };
 use embedded_hal::digital::v2::OutputPin;
-use panic_semihosting as _;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use stm32f1xx_hal::{
     delay::Delay,
@@ -42,6 +43,8 @@ use veml6030::{SlaveAddr, Veml6030};
 
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("VEML6030 example");
     let cp = cortex_m::Peripherals::take().unwrap();
     let dp = pac::Peripherals::take().unwrap();
 

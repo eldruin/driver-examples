@@ -1,0 +1,11 @@
+[default.probe]
+protocol = "Swd"
+
+[default.general]
+chip = "STM32F103C8"
+
+[default.rtt]
+enabled = true
+
+[default.gdb]
+enabled = false

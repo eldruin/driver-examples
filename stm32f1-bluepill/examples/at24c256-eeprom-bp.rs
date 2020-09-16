@@ -15,7 +15,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example at24c256-eeprom-bp`,
+//! `cargo embed --example at24c256-eeprom-bp`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -24,7 +24,8 @@
 use cortex_m_rt::entry;
 use eeprom24x::{Eeprom24x, SlaveAddr};
 use embedded_hal::digital::v2::OutputPin;
-use panic_semihosting as _;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 use stm32f1xx_hal::{
     delay::Delay,
     i2c::{BlockingI2c, DutyCycle, Mode},
@@ -34,6 +35,8 @@ use stm32f1xx_hal::{
 
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("AT24C256 example");
     let cp = cortex_m::Peripherals::take().unwrap();
     let dp = pac::Peripherals::take().unwrap();
 

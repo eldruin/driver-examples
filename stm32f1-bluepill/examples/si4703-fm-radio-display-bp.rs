@@ -20,7 +20,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example si4703-fm-radio-bp`,
+//! `cargo embed --example si4703-fm-radio-bp`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -35,7 +35,8 @@ use embedded_graphics::{
     style::TextStyleBuilder,
 };
 use embedded_hal::digital::v2::{InputPin, OutputPin};
-use panic_semihosting as _;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 use si4703::{
     reset_and_select_i2c_method1 as reset_si4703, ChannelSpacing, DeEmphasis, ErrorWithPin,
     SeekDirection, SeekMode, Si4703, Volume,
@@ -50,6 +51,8 @@ use stm32f1xx_hal::{
 
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("Si4703 example");
     let cp = cortex_m::Peripherals::take().unwrap();
     let dp = pac::Peripherals::take().unwrap();
 

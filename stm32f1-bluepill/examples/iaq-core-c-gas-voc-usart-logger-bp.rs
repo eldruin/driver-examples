@@ -16,15 +16,20 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example iaq-core-c-gas-voc-usart-logger-bp`,
+//! `cargo embed --example iaq-core-c-gas-voc-usart-logger-bp`,
 
 #![deny(unsafe_code)]
 #![no_std]
 #![no_main]
 
 use core::fmt::Write;
+use embedded_hal::digital::v2::OutputPin;
+use iaq_core::{IaqCore, Measurement};
 use nb::block;
-use panic_semihosting as _;
+use panic_rtt_target as _;
+use rtic::app;
+use rtic::cyccnt::U32Ext;
+use rtt_target::{rprintln, rtt_init_print};
 use stm32f1xx_hal::{
     gpio::{
         gpiob::{PB8, PB9},
@@ -36,13 +41,6 @@ use stm32f1xx_hal::{
     prelude::*,
     serial,
 };
-
-use iaq_core::{IaqCore, Measurement};
-
-use embedded_hal::digital::v2::OutputPin;
-use panic_semihosting as _;
-use rtic::app;
-use rtic::cyccnt::U32Ext;
 
 const PERIOD: u32 = 1_000_000_000; // 10 seconds
 type I2cBus = BlockingI2c<pac::I2C1, (PB8<Alternate<OpenDrain>>, PB9<Alternate<OpenDrain>>)>;
@@ -57,6 +55,9 @@ const APP: () = {
 
     #[init(schedule = [measure])]
     fn init(cx: init::Context) -> init::LateResources {
+        rtt_init_print!();
+        rprintln!("iAQ-Core-C example");
+
         let mut core = cx.core;
         core.DWT.enable_cycle_counter();
 

@@ -15,12 +15,13 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example opt3001-als-display-bp`,
+//! `cargo embed --example opt3001-als-display-bp`,
 
 #![deny(unsafe_code)]
 #![no_std]
 #![no_main]
 
+use core::fmt::Write;
 use cortex_m_rt::entry;
 use embedded_graphics::{
     fonts::{Font6x8, Text},
@@ -30,10 +31,10 @@ use embedded_graphics::{
 };
 use embedded_hal::digital::v2::OutputPin;
 use nb::block;
-use panic_semihosting as _;
-use ssd1306::{prelude::*, Builder, I2CDIBuilder};
-
 use opt300x::{Measurement, Opt300x, SlaveAddr, Status};
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
+use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use stm32f1xx_hal::{
     delay::Delay,
     i2c::{BlockingI2c, DutyCycle, Mode},
@@ -41,9 +42,10 @@ use stm32f1xx_hal::{
     prelude::*,
 };
 
-use core::fmt::Write;
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("OPT3001 example");
     let cp = cortex_m::Peripherals::take().unwrap();
     let dp = pac::Peripherals::take().unwrap();
 

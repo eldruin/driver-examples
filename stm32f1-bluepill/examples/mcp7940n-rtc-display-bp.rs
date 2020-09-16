@@ -15,7 +15,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example mcp7940n-rtc-display-bp`,
+//! `cargo embed --example mcp7940n-rtc-display-bp`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -31,7 +31,8 @@ use embedded_graphics::{
 };
 use embedded_hal::digital::v2::OutputPin;
 use mcp794xx::{Datelike, Mcp794xx, NaiveDate, Rtcc, Timelike};
-use panic_semihosting as _;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use stm32f1xx_hal::{
     delay::Delay,
@@ -42,6 +43,8 @@ use stm32f1xx_hal::{
 
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("MCP7940N example");
     let cp = cortex_m::Peripherals::take().unwrap();
     let dp = pac::Peripherals::take().unwrap();
 

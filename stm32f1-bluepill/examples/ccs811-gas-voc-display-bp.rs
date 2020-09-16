@@ -17,7 +17,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example ccs811-gas-voc-display-bp`,
+//! `cargo embed --example ccs811-gas-voc-display-bp`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -35,7 +35,8 @@ use embedded_graphics::{
 use embedded_hal::digital::v2::OutputPin;
 use heapless::String;
 use nb::block;
-use panic_semihosting as _;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use stm32f1xx_hal::{
     delay::Delay,
@@ -46,6 +47,8 @@ use stm32f1xx_hal::{
 
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("CCS811 example");
     let cp = cortex_m::Peripherals::take().unwrap();
     let dp = pac::Peripherals::take().unwrap();
 

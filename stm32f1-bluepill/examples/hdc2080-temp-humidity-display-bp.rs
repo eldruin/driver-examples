@@ -12,7 +12,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example hdc2080-temp-humidity-display-bp`,
+//! `cargo embed --example hdc2080-temp-humidity-display-bp`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -27,8 +27,10 @@ use embedded_graphics::{
     style::TextStyleBuilder,
 };
 use embedded_hal::digital::v2::OutputPin;
+use hdc20xx::{Hdc20xx, SlaveAddr};
 use nb::block;
-use panic_semihosting as _;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use stm32f1xx_hal::{
     delay::Delay,
@@ -37,10 +39,10 @@ use stm32f1xx_hal::{
     prelude::*,
 };
 
-use hdc20xx::{Hdc20xx, SlaveAddr};
-
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("HDC2080 example");
     let cp = cortex_m::Peripherals::take().unwrap();
     let dp = pac::Peripherals::take().unwrap();
 

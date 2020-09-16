@@ -12,7 +12,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example isl29125-color-display-bp`,
+//! `cargo embed --example isl29125-color-display-bp`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -27,7 +27,9 @@ use embedded_graphics::{
     style::TextStyleBuilder,
 };
 use embedded_hal::digital::v2::OutputPin;
-use panic_semihosting as _;
+use isl29125::{Isl29125, OperatingMode};
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 use stm32f1xx_hal::{
     delay::Delay,
@@ -36,10 +38,10 @@ use stm32f1xx_hal::{
     prelude::*,
 };
 
-use isl29125::{Isl29125, OperatingMode};
-
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("ISL29125 example");
     let cp = cortex_m::Peripherals::take().unwrap();
     let dp = pac::Peripherals::take().unwrap();
 
