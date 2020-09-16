@@ -6,7 +6,7 @@ To run examples do the following:
 ```
 git clone https://github.com/eldruin/driver-examples
 cd driver-examples/microbit
-cargo run --example lsm303agr-accel-mb
+cargo embed --example lsm303agr-accel-mb
 ```
 
 ## License
