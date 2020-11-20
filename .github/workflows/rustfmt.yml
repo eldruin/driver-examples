@@ -1,0 +1,25 @@
+on: [push, pull_request]
+
+name: Code formatting check
+
+jobs:
+  fmt:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        SUBFOLDER:
+          - stm32f3-discovery
+          - stm32f1-bluepill
+          - microbit
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+          components: rustfmt,
+
+      - run: cargo fmt --all -- --check 
+        working-directory: ${{ matrix.SUBFOLDER }}

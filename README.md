@@ -1,6 +1,6 @@
 # Additional example programs for several rust drivers
 
-[![Build Status](https://travis-ci.org/eldruin/driver-examples.svg?branch=master)](https://travis-ci.org/eldruin/driver-examples)
+[![Build Status](https://github.com/eldruin/driver-examples/workflows/Build/badge.svg)](https://github.com/eldruin/driver-examples/actions?query=workflow%3ABuild)
 
 This repository includes examples of using devices through these drivers:
 

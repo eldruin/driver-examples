@@ -1,0 +1,99 @@
+on: 
+  push:
+  pull_request:
+  schedule:
+    - cron: 0 1 * * 1
+
+name: Build
+
+env:
+  RUSTFLAGS: '-D warnings'
+  DRIVERS: >
+    ad983x
+    ads1x1x
+    apds9960
+    bmi160
+    ds1307
+    ds323x
+    eeprom24x
+    embedded-ccs811
+    hdc20xx
+    isl29125
+    kxcj9
+    lm75
+    lsm303agr
+    max170xx
+    max3010x
+    max44009
+    mcp4x
+    mcp49xx
+    mcp794xx
+    mlx9061x
+    mma8x5x
+    opt300x
+    pcf857x
+    pwm-pca9685
+    tcs3472
+    tmp006
+    tmp1x2
+    veml6030
+    veml6075
+    xca9548a
+
+# veml6040 Git version is not compatible. Deactivated until a new version is released.
+# veml6070 Git version is not compatible. Deactivated until a new version is released.
+
+jobs:
+  ci-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust: [stable, beta, nightly]
+        SUBFOLDER:
+          - stm32f3-discovery
+          - stm32f1-bluepill
+          - microbit
+
+        VERSION:
+          - released
+          - git
+
+        include:
+          - rust: nightly
+            experimental: true
+
+          - SUBFOLDER: stm32f3-discovery
+            TARGET: thumbv7em-none-eabihf
+
+          - SUBFOLDER: stm32f1-bluepill
+            TARGET: thumbv7m-none-eabi
+
+          - SUBFOLDER: microbit
+            TARGET: thumbv6m-none-eabi
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          target: ${{ matrix.TARGET }}
+          override: true
+
+      - name: Checkout CI scripts
+        uses: actions/checkout@v2
+        with:
+          repository: 'eldruin/rust-driver-ci-scripts'
+          ref: 'master'
+          path: 'ci'
+
+      - run: ../ci/patch-no-std.sh
+        working-directory: ${{ matrix.SUBFOLDER }}
+
+      - run: ../ci/patch-git-drivers.sh
+        working-directory: ${{ matrix.SUBFOLDER }}
+        if: contains(matrix.VERSION, 'git')
+
+      - name: Build
+        working-directory: ${{ matrix.SUBFOLDER }}
+        run: cargo build --target=${{ matrix.TARGET }} --examples
