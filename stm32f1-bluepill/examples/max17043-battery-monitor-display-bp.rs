@@ -90,8 +90,7 @@ fn main() -> ! {
 
     let mut sensor = Max17043::new(manager.acquire());
 
-    let mut lines: [heapless::String<32>; 2] =
-        [heapless::String::new(), heapless::String::new()];
+    let mut lines: [heapless::String<32>; 2] = [heapless::String::new(), heapless::String::new()];
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 is off, something went wrong.

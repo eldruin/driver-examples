@@ -86,8 +86,7 @@ fn main() -> ! {
         .build();
 
     let mut sensor = Hdc20xx::new(manager.acquire(), SlaveAddr::default());
-    let mut lines: [heapless::String<32>; 2] =
-        [heapless::String::new(), heapless::String::new()];
+    let mut lines: [heapless::String<32>; 2] = [heapless::String::new(), heapless::String::new()];
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 is off, something went wrong.

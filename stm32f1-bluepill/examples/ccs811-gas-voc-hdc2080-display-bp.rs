@@ -105,8 +105,7 @@ fn main() -> ! {
     let mut ccs811 = Ccs811Awake::new(manager.acquire(), Ccs811SlaveAddr::default());
     ccs811.software_reset().unwrap();
     delay.delay_ms(10_u16);
-    let mut lines: [String<32>; 4] =
-        [String::new(), String::new(), String::new(), String::new()];
+    let mut lines: [String<32>; 4] = [String::new(), String::new(), String::new(), String::new()];
 
     let mut ccs811 = ccs811.start_application().ok().unwrap();
     let mut env = block!(hdc2080.read()).unwrap();

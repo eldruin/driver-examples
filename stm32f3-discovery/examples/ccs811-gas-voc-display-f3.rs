@@ -91,8 +91,7 @@ fn main() -> ! {
         raw_current: 255,
         raw_voltage: 9999,
     };
-    let mut lines: [heapless::String<32>; 2] =
-        [heapless::String::new(), heapless::String::new()];
+    let mut lines: [heapless::String<32>; 2] = [heapless::String::new(), heapless::String::new()];
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 is off, something went wrong.
