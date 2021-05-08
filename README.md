@@ -41,22 +41,22 @@ This repository includes examples of using devices through these drivers:
 |[W25]             | Winbond's W25 serial flash memory devices.                | SPI       |                                   |
 |[Xca9548a]        | TCA9548A/PCA9548A I2C switches/multiplexers.              | I2C       |                                   |
 
-These examples use either the STM32F3Discovery board or the STM32F103 "Blue pill" board.
-At the beginning of each example the setup
-and behavior is described. Many of them also use an SSD1306 OLED display.
+These examples use several boards: STM32F3-Discovery, STM32F103 "Blue pill", Raspberry Pi
+and Micro:bit V2. These are classified in different folders.
+
+At the beginning of each example the setup and behavior is described.
+Many of them also use an SSD1306 OLED display.
 You can get most of the modules used here on [AliExpress] generally for a very small price.
 
-For example, to run the mcp41x-f3 example:
-First, connect your discovery board per USB, then connect OpenOCD in a terminal with:
-```
-openocd -f interface/stlink-v2-1.cfg -f target/stm32f3x.cfg
-```
+These examples are guaranteed to build with the latest Rust stable release.
+If you get a build error, try updating your Rust installation.
 
-Then on another terminal run:
+To run the examples, clone this repository, go to the appropriate folder and run
+either `cargo embed` or `cargo run`. Look in the README of each folder for instructions.
 ```
 git clone https://github.com/eldruin/driver-examples
-cd driver-examples/stm32f3-discovery
-cargo run --example mcp41x-f3
+cd driver-examples/stm32f1-discovery
+# ...
 ```
 
 ## License
