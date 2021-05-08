@@ -18,6 +18,7 @@ This repository includes examples of using devices through these drivers:
 |[Isl29125]        | RGB color light sensor with IR blocking filter.           | I2C       |                                   |
 |[Kxcj9]           | Tri-axis MEMS accelerometer.                              | I2C       | [Intro blog post][blog-kxcj9]     |
 |[Lm75]            | Temperature sensor and thermal watchdog.                  | I2C       |                                   |
+|[Lsm303agr]       | Tri-axis accelerometer and tri-axis magnetometer.         | I2C / SPI |                                   |
 |[Max170xx]        | Fuel-gauge for lithium-ion (Li+) batteries.               | I2C       |                                   |
 |[Max3010x]        | Pulse oximeter and heart-rate sensor.                     | I2C       |                                   |
 |[Max44009]        | Ambient light sensor.                                     | I2C       |                                   |
@@ -60,7 +61,7 @@ cargo run --example mcp41x-f3
 
 ## License
 
-Licensed under either of
+Licensed under either of:
 
  * Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or
    http://www.apache.org/licenses/LICENSE-2.0)
@@ -87,6 +88,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Isl29125]: https://crates.io/crates/isl29125
 [iAQ-Core]: https://crates.io/crates/iaq-core
 [Lm75]: https://crates.io/crates/lm75
+[Lsm303agr]: https://crates.io/crates/lsm303agr
 [Max170xx]: https://crates.io/crates/max170xx
 [Max3010x]: https://crates.io/crates/max3010x
 [Max44009]: https://crates.io/crates/max44009
