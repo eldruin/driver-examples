@@ -86,7 +86,7 @@ fn main() -> ! {
         .build();
 
     let mut sensor = IaqCore::new(manager.acquire());
-    let mut lines: [heapless::String<heapless::consts::U32>; 3] = [
+    let mut lines: [heapless::String<32>; 3] = [
         heapless::String::new(),
         heapless::String::new(),
         heapless::String::new(),

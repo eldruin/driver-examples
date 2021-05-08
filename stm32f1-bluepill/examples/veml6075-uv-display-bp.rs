@@ -93,7 +93,7 @@ fn main() -> ! {
 
     let mut sensor = Veml6075::new(manager.acquire(), Calibration::default());
 
-    let mut lines: [heapless::String<heapless::consts::U32>; 3] = [
+    let mut lines: [heapless::String<32>; 3] = [
         heapless::String::new(),
         heapless::String::new(),
         heapless::String::new(),

@@ -81,7 +81,7 @@ fn main() -> ! {
         led.off();
         delay.delay_ms(50_u16);
 
-        let mut buffer: heapless::String<heapless::consts::U32> = heapless::String::new();
+        let mut buffer: heapless::String<32> = heapless::String::new();
         let prox = sensor.read_proximity().unwrap();
 
         write!(buffer, "Proximity: {}", prox).unwrap();

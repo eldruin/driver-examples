@@ -107,7 +107,7 @@ fn main() -> ! {
 
         let id = flash.get_jedec_id().unwrap_or([255; 3]);
 
-        let mut msg: heapless::String<heapless::consts::U64> = heapless::String::new();
+        let mut msg: heapless::String<64> = heapless::String::new();
 
         write!(msg, "JEDEC ID: {} {} {}", id[0], id[1], id[2]).unwrap();
         disp.clear();

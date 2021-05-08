@@ -87,7 +87,7 @@ fn main() -> ! {
         led.off();
         delay.delay_ms(50_u16);
 
-        let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
+        let mut buffer: heapless::String<64> = heapless::String::new();
 
         let mut data = [0; 3];
         let _read = max30102.read_fifo(&mut data).unwrap_or(0xFF);

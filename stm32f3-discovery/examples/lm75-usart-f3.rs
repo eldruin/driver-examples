@@ -76,7 +76,7 @@ fn main() -> ! {
         let temp = lm75.read_temperature().unwrap();
 
         // transform number to string
-        let mut buffer: heapless::String<heapless::consts::U16> = heapless::String::new();
+        let mut buffer: heapless::String<1616> = heapless::String::new();
         write!(buffer, "{} ", temp).unwrap();
 
         // send buffer

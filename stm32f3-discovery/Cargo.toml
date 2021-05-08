@@ -48,9 +48,9 @@ panic-semihosting = "0.5.1"
 stm32f30x = "0.8"
 f3 = "0.6.1"
 shared-bus = { version = "0.1.4", features = ["cortexm"] }
-heapless = "0.6"
+heapless = "0.7"
 nb = "1"
-embedded-hal = "0.2.3"
+embedded-hal = "0.2.4"
 libm = "0.2"
 
 [profile.release]

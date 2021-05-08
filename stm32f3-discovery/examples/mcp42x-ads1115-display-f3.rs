@@ -141,7 +141,7 @@ fn main() -> ! {
         let value_ch0 = value_ch0 >> 5;
         let value_ch1 = value_ch1 >> 5;
 
-        let mut lines: [heapless::String<heapless::consts::U32>; 2] =
+        let mut lines: [heapless::String<32>; 2] =
             [heapless::String::new(), heapless::String::new()];
 
         // write some extra spaces after the number to clear up when the numbers get smaller

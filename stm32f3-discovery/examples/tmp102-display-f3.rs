@@ -75,7 +75,7 @@ fn main() -> ! {
 
     let mut tmp102 = Tmp1x2::new(manager.acquire(), SlaveAddr::default());
 
-    let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
+    let mut buffer: heapless::String<64> = heapless::String::new();
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 is off, something went wrong.

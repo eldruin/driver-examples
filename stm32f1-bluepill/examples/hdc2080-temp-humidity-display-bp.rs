@@ -86,7 +86,7 @@ fn main() -> ! {
         .build();
 
     let mut sensor = Hdc20xx::new(manager.acquire(), SlaveAddr::default());
-    let mut lines: [heapless::String<heapless::consts::U32>; 2] =
+    let mut lines: [heapless::String<32>; 2] =
         [heapless::String::new(), heapless::String::new()];
     loop {
         // Blink LED 0 to check that everything is actually running.

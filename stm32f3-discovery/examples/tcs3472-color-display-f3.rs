@@ -86,7 +86,7 @@ fn main() -> ! {
         led.off();
         delay.delay_ms(50_u8);
 
-        let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
+        let mut buffer: heapless::String<64> = heapless::String::new();
 
         // if there was an error, it will print 0
         let clear = sensor.read_clear_channel().unwrap_or(0);

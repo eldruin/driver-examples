@@ -94,7 +94,7 @@ fn main() -> ! {
         // wait for measurement to be available
         delay.delay_ms(50_u8);
     }
-    let mut lines: [heapless::String<heapless::consts::U32>; 4] = [
+    let mut lines: [heapless::String<32>; 4] = [
         heapless::String::new(),
         heapless::String::new(),
         heapless::String::new(),

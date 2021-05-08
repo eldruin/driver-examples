@@ -139,7 +139,7 @@ fn main() -> ! {
             block!(adc.read(&mut AdcChannel::SingleA3)).unwrap_or(8091),
         ];
 
-        let mut lines: [heapless::String<heapless::consts::U32>; 4] = [
+        let mut lines: [heapless::String<32>; 4] = [
             heapless::String::new(),
             heapless::String::new(),
             heapless::String::new(),

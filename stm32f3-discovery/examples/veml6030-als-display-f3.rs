@@ -82,7 +82,7 @@ fn main() -> ! {
         led.off();
         delay.delay_ms(50_u16);
 
-        let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
+        let mut buffer: heapless::String<64> = heapless::String::new();
 
         // If there is an error, it will print -1.0
         let lux = sensor.read_lux().unwrap_or(-1.0);

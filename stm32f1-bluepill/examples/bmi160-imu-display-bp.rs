@@ -92,7 +92,7 @@ fn main() -> ! {
         .unwrap();
     imu.set_gyro_power_mode(GyroscopePowerMode::Normal).unwrap();
 
-    let mut lines: [heapless::String<heapless::consts::U32>; 2] =
+    let mut lines: [heapless::String<32>; 2] =
         [heapless::String::new(), heapless::String::new()];
     let default_3ddata = Sensor3DData {
         x: -1,

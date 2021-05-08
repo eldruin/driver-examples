@@ -111,7 +111,7 @@ fn main() -> ! {
     radio.set_channel_spacing(ChannelSpacing::Khz100).unwrap();
     radio.unmute().unwrap();
 
-    let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
+    let mut buffer: heapless::String<64> = heapless::String::new();
     loop {
         // Blink LED 0 every time a new seek is started
         // to check that everything is actually running.

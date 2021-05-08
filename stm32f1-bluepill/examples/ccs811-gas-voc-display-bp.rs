@@ -99,7 +99,7 @@ fn main() -> ! {
     let mut ccs811 = Ccs811Awake::new(manager.acquire(), SlaveAddr::default());
     ccs811.software_reset().unwrap();
     delay.delay_ms(10_u16);
-    let mut lines: [String<heapless::consts::U32>; 2] = [String::new(), String::new()];
+    let mut lines: [String<32>; 2] = [String::new(), String::new()];
 
     let mut ccs811 = ccs811.start_application().ok().unwrap();
     let temperature_c = 25.0;

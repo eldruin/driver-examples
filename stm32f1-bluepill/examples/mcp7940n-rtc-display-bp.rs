@@ -104,7 +104,7 @@ fn main() -> ! {
 
         let now = rtc.get_datetime().unwrap();
 
-        let mut buffer: heapless::String<heapless::consts::U32> = heapless::String::new();
+        let mut buffer: heapless::String<32> = heapless::String::new();
         write!(
             buffer,
             "{}-{}-{} {}:{}:{}   ",

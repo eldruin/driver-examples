@@ -73,7 +73,7 @@ fn main() -> ! {
         let accel = accelerometer.read().unwrap();
 
         // transform numbers to string
-        let mut buffer: heapless::String<heapless::consts::U16> = heapless::String::new();
+        let mut buffer: heapless::String<1616> = heapless::String::new();
         write!(buffer, "{},{},{} ", accel.x, accel.y, accel.z).unwrap();
 
         // send buffer

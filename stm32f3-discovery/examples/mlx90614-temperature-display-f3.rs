@@ -71,7 +71,7 @@ fn main() -> ! {
 
     let mut sensor = Mlx9061x::new_mlx90614(manager.acquire(), SlaveAddr::default(), 5).unwrap();
 
-    let mut lines: [heapless::String<heapless::consts::U32>; 2] =
+    let mut lines: [heapless::String<32>; 2] =
         [heapless::String::new(), heapless::String::new()];
 
     loop {

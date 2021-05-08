@@ -75,7 +75,7 @@ fn main() -> ! {
         .build();
 
     let mut sensor = Opt300x::new_opt3001(manager.acquire(), SlaveAddr::default());
-    let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
+    let mut buffer: heapless::String<64> = heapless::String::new();
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 is off, something went wrong.

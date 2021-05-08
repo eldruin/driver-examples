@@ -87,7 +87,7 @@ fn main() -> ! {
         led.off();
         delay.delay_ms(50_u16);
 
-        let mut lines: [heapless::String<heapless::consts::U32>; 2] =
+        let mut lines: [heapless::String<32>; 2] =
             [heapless::String::new(), heapless::String::new()];
 
         let m0 = sensor0.read_all_channels().unwrap();

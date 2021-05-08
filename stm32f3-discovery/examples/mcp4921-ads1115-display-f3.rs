@@ -132,7 +132,7 @@ fn main() -> ! {
         // make the number smaller for reading ease
         let value_ch0 = value_ch0 >> 5;
 
-        let mut msg: heapless::String<heapless::consts::U64> = heapless::String::new();
+        let mut msg: heapless::String<64> = heapless::String::new();
 
         // write some extra spaces after the number to clear up when the number get smaller
         write!(msg, "Channel 0: {}", value_ch0).unwrap();

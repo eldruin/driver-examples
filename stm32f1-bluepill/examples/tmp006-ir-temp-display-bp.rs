@@ -92,7 +92,7 @@ fn main() -> ! {
 
     let mut tmp006 = Tmp006::new(manager.acquire(), SlaveAddr::default());
 
-    let mut lines: [heapless::String<heapless::consts::U32>; 2] =
+    let mut lines: [heapless::String<32>; 2] =
         [heapless::String::new(), heapless::String::new()];
     loop {
         // Blink LED 0 to check that everything is actually running.

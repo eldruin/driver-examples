@@ -87,7 +87,7 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    let mut buffer: heapless::String<heapless::consts::U64> = heapless::String::new();
+    let mut buffer: heapless::String<64> = heapless::String::new();
     let sensor = Mma8x5x::new_mma8452(manager.acquire(), SlaveAddr::default());
     let mut sensor = sensor.into_active().ok().unwrap();
 
