@@ -1,4 +1,4 @@
-on: 
+on:
   push:
   pull_request:
   schedule:
@@ -44,7 +44,7 @@ env:
 # veml6070 Git version is not compatible. Deactivated until a new version is released.
 
 jobs:
-  ci-linux:
+  ci-bare-metal:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -94,3 +94,45 @@ jobs:
       - name: Build
         working-directory: ${{ matrix.SUBFOLDER }}
         run: cargo build --target=${{ matrix.TARGET }} --examples
+
+
+  ci-rpi:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust: [stable, beta]
+        SUBFOLDER:
+          - raspberrypi
+
+        TARGET:
+          - armv7-unknown-linux-gnueabihf
+
+        VERSION:
+          - released
+          - git
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          target: ${{ matrix.TARGET }}
+          override: true
+
+      - run: cargo install cross
+
+      - name: Checkout CI scripts
+        uses: actions/checkout@v2
+        with:
+          repository: 'eldruin/rust-driver-ci-scripts'
+          ref: 'master'
+          path: 'ci'
+
+      - run: ../ci/patch-git-drivers.sh
+        working-directory: ${{ matrix.SUBFOLDER }}
+        if: contains(matrix.VERSION, 'git')
+
+      - name: Build
+        working-directory: ${{ matrix.SUBFOLDER }}
+        run: cross build --target=${{ matrix.TARGET }} --examples
