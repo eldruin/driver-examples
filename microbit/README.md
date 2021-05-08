@@ -1,6 +1,6 @@
-# Additional example programs for several rust drivers running on a Micro:bit board
+# Additional example programs for several rust drivers running on a Micro:bit V2 board
 
-At the beginning of each example the setup and behavior is described. 
+At the beginning of each example the setup and behavior is described.
 
 To run examples do the following:
 ```

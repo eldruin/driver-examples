@@ -9,11 +9,11 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-lsm303agr = { git = "https://github.com/eldruin/lsm303agr-rs" }
+lsm303agr = "0.1"
 
 nb = "1"
 microbit = "0.8"
-embedded-hal = "0.2.3"
+embedded-hal = "0.2.4"
 cortex-m = "0.6.1"
 cortex-m-rt = "0.6.10"
 panic-rtt-target = { version =  "0.1.1", features = ["cortex-m"] }
