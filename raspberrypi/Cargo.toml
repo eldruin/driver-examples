@@ -11,6 +11,7 @@ edition = "2018"
 [dependencies]
 embedded-ccs811 = "0.2"
 hdc20xx = "0.1"
+iaq-core = "0.1"
 
 shared-bus = { version = "0.2", features = ["std"] }
 ssd1306 = "0.4"
