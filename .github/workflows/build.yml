@@ -20,6 +20,7 @@ env:
     hdc20xx
     isl29125
     kxcj9
+    lm75
     lsm303agr
     max170xx
     max3010x
@@ -39,7 +40,6 @@ env:
     veml6075
     xca9548a
 
-# lm75 Git version is not compatible. Deactivated until a new version is released.
 # veml6040 Git version is not compatible. Deactivated until a new version is released.
 # veml6070 Git version is not compatible. Deactivated until a new version is released.
 

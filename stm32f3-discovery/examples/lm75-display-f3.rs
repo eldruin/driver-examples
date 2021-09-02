@@ -31,7 +31,7 @@ use f3::{
     hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
     led::Led,
 };
-use lm75::{Lm75, SlaveAddr};
+use lm75::{Address, Lm75};
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 
 use core::fmt::Write;
@@ -67,7 +67,7 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    let mut lm75 = Lm75::new(manager.acquire(), SlaveAddr::default());
+    let mut lm75 = Lm75::new(manager.acquire(), Address::default());
 
     loop {
         // Blink LED 0 to check that everything is actually running.

@@ -40,7 +40,7 @@ use f3::hal::{
     timer::Timer,
 };
 
-use lm75::{Lm75, SlaveAddr};
+use lm75::{Address, Lm75};
 use nb::block;
 
 use core::fmt::Write;
@@ -68,7 +68,7 @@ fn main() -> ! {
 
     let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
 
-    let mut lm75 = Lm75::new(i2c, SlaveAddr::Alternative(false, false, false));
+    let mut lm75 = Lm75::new(i2c, Address::default());
 
     loop {
         block!(timer.wait()).unwrap();
