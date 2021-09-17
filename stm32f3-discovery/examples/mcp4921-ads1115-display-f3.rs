@@ -30,6 +30,7 @@
 use panic_semihosting as _;
 
 use ads1x1x::{channel as AdcChannel, Ads1x1x, FullScaleRange, SlaveAddr};
+use core::fmt::Write;
 use cortex_m_rt::entry;
 use embedded_graphics::{
     fonts::{Font6x8, Text},
@@ -47,13 +48,9 @@ use f3::{
     },
     led::Led,
 };
-
+use mcp49xx::{Command as DacCommand, Mcp49xx, MODE_0};
 use nb::block;
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
-
-use core::fmt::Write;
-
-use mcp49xx::{Command as DacCommand, Mcp49xx, MODE0};
 
 #[entry]
 fn main() -> ! {
@@ -102,7 +99,7 @@ fn main() -> ! {
     let spi = Spi::spi1(
         dp.SPI1,
         (sck, miso, mosi),
-        MODE0,
+        MODE_0,
         1.mhz(),
         clocks,
         &mut rcc.apb2,
