@@ -24,36 +24,39 @@
 #![no_std]
 #![no_main]
 
-use panic_semihosting as _;
-
+use core::convert::TryInto;
+use core::fmt::Write;
 use cortex_m_rt::entry;
+use embedded_graphics::{
+    mono_font::{ascii::FONT_6X10, MonoTextStyleBuilder},
+    pixelcolor::BinaryColor,
+    prelude::*,
+    text::{Baseline, Text},
+};
 use embedded_hal::blocking::delay::DelayMs;
 use embedded_hal::digital::v2::OutputPin;
 use embedded_hal::spi::MODE_1;
-use f3::{
-    hal::{
-        delay::Delay, flash::FlashExt, gpio::GpioExt, i2c::I2c, rcc::RccExt, spi::Spi, stm32f30x,
-        time::U32Ext,
-    },
-    led::Led,
-};
-
-use core::fmt::Write;
-use embedded_graphics::{
-    fonts::{Font6x8, Text},
-    pixelcolor::BinaryColor,
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
+use ssd1306::{prelude::*, I2CDisplayInterface, Ssd1306};
+use stm32f3xx_hal::{
+    self as hal,
+    delay::Delay,
+    pac,
     prelude::*,
-    style::TextStyleBuilder,
+    spi::{config::Config, Spi},
 };
-use ssd1306::{prelude::*, Builder, I2CDIBuilder};
 
 use ds323x::{Ds323x, NaiveDate};
 use rtcc::Rtcc;
 
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("DS3234 example");
+
     let cp = cortex_m::Peripherals::take().unwrap();
-    let dp = stm32f30x::Peripherals::take().unwrap();
+    let dp = pac::Peripherals::take().unwrap();
 
     let mut flash = dp.FLASH.constrain();
     let mut rcc = dp.RCC.constrain();
@@ -61,41 +64,63 @@ fn main() -> ! {
     let mut delay = Delay::new(cp.SYST, clocks);
 
     let mut gpioe = dp.GPIOE.split(&mut rcc.ahb);
-    let mut led: Led = gpioe
+    let mut led = gpioe
         .pe9
-        .into_push_pull_output(&mut gpioe.moder, &mut gpioe.otyper)
-        .into();
+        .into_push_pull_output(&mut gpioe.moder, &mut gpioe.otyper);
 
     let mut gpioa = dp.GPIOA.split(&mut rcc.ahb);
     let mut gpiob = dp.GPIOB.split(&mut rcc.ahb);
 
-    // SPI configuration
-    let sck = gpioa.pa5.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
-    let miso = gpioa.pa6.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
-    let mosi = gpioa.pa7.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
-    led.on();
+    led.set_high().unwrap();
     delay.delay_ms(500_u16);
-    led.off();
+    led.set_low().unwrap();
     delay.delay_ms(500_u16);
 
-    let scl = gpiob.pb6.into_af4(&mut gpiob.moder, &mut gpiob.afrl);
-    let sda = gpiob.pb7.into_af4(&mut gpiob.moder, &mut gpiob.afrl);
+    let mut scl =
+        gpiob
+            .pb6
+            .into_af4_open_drain(&mut gpiob.moder, &mut gpiob.otyper, &mut gpiob.afrl);
+    let mut sda =
+        gpiob
+            .pb7
+            .into_af4_open_drain(&mut gpiob.moder, &mut gpiob.otyper, &mut gpiob.afrl);
+    scl.internal_pull_up(&mut gpiob.pupdr, true);
+    sda.internal_pull_up(&mut gpiob.pupdr, true);
 
-    let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
-    let interface = I2CDIBuilder::new().init(i2c);
-    let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
+    let i2c = hal::i2c::I2c::new(
+        dp.I2C1,
+        (scl, sda),
+        100.kHz().try_into().unwrap(),
+        clocks,
+        &mut rcc.apb1,
+    );
+    let interface = I2CDisplayInterface::new(i2c);
+    let mut disp = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
+        .into_buffered_graphics_mode();
     disp.init().unwrap();
     disp.flush().unwrap();
 
-    let text_style = TextStyleBuilder::new(Font6x8)
+    let text_style = MonoTextStyleBuilder::new()
+        .font(&FONT_6X10)
         .text_color(BinaryColor::On)
         .build();
 
-    let spi = Spi::spi1(
+    // SPI configuration
+    let sck = gpioa
+        .pa5
+        .into_af5_push_pull(&mut gpioa.moder, &mut gpioa.otyper, &mut gpioa.afrl);
+    let miso = gpioa
+        .pa6
+        .into_af5_push_pull(&mut gpioa.moder, &mut gpioa.otyper, &mut gpioa.afrl);
+    let mosi = gpioa
+        .pa7
+        .into_af5_push_pull(&mut gpioa.moder, &mut gpioa.otyper, &mut gpioa.afrl);
+
+    let spi_config = Config::default().frequency(1.MHz()).mode(MODE_1);
+    let spi = Spi::new(
         dp.SPI1,
         (sck, miso, mosi),
-        MODE_1,
-        1.mhz(),
+        spi_config,
         clocks,
         &mut rcc.apb2,
     );
@@ -117,8 +142,7 @@ fn main() -> ! {
 
         write!(line, "{}", now).unwrap();
         disp.clear();
-        Text::new(&line, Point::zero())
-            .into_styled(text_style)
+        Text::with_baseline(&line, Point::zero(), text_style, Baseline::Top)
             .draw(&mut disp)
             .unwrap();
         disp.flush().unwrap();

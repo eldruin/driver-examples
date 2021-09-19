@@ -34,41 +34,56 @@
 #![no_std]
 #![no_main]
 
-use panic_semihosting as _;
-
-pub use cortex_m::{asm::bkpt, iprint, iprintln, peripheral::ITM};
+use core::convert::TryInto;
 use cortex_m_rt::entry;
-use f3::hal::{
-    i2c::I2c,
-    prelude::*,
-    serial::Serial,
-    stm32f30x::{self, USART1},
-};
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
+use stm32f3xx_hal::{self as hal, pac, prelude::*, serial::Serial};
 
 use kxcj9::{Kxcj9, SlaveAddr};
 
 use core::fmt::Write;
 #[entry]
 fn main() -> ! {
-    let dp = stm32f30x::Peripherals::take().unwrap();
+    rtt_init_print!();
+    rprintln!("KXCJ9 example");
+
+    let dp = pac::Peripherals::take().unwrap();
 
     let mut flash = dp.FLASH.constrain();
     let mut rcc = dp.RCC.constrain();
     let clocks = rcc.cfgr.freeze(&mut flash.acr);
 
     let mut gpioa = dp.GPIOA.split(&mut rcc.ahb);
-    let tx = gpioa.pa9.into_af7(&mut gpioa.moder, &mut gpioa.afrh);
-    let rx = gpioa.pa10.into_af7(&mut gpioa.moder, &mut gpioa.afrh);
-
-    Serial::usart1(dp.USART1, (tx, rx), 115_200.bps(), clocks, &mut rcc.apb2);
-    let usart1: &'static stm32f30x::usart1::RegisterBlock =
-        unsafe { &mut *(USART1::ptr() as *mut _) };
+    let pins = (
+        gpioa
+            .pa9
+            .into_af7_push_pull(&mut gpioa.moder, &mut gpioa.otyper, &mut gpioa.afrh),
+        gpioa
+            .pa10
+            .into_af7_push_pull(&mut gpioa.moder, &mut gpioa.otyper, &mut gpioa.afrh),
+    );
+    let mut serial = Serial::new(dp.USART1, pins, 115_200.Bd(), clocks, &mut rcc.apb2);
 
     let mut gpiob = dp.GPIOB.split(&mut rcc.ahb);
-    let scl = gpiob.pb6.into_af4(&mut gpiob.moder, &mut gpiob.afrl);
-    let sda = gpiob.pb7.into_af4(&mut gpiob.moder, &mut gpiob.afrl);
+    let mut scl =
+        gpiob
+            .pb6
+            .into_af4_open_drain(&mut gpiob.moder, &mut gpiob.otyper, &mut gpiob.afrl);
+    let mut sda =
+        gpiob
+            .pb7
+            .into_af4_open_drain(&mut gpiob.moder, &mut gpiob.otyper, &mut gpiob.afrl);
+    scl.internal_pull_up(&mut gpiob.pupdr, true);
+    sda.internal_pull_up(&mut gpiob.pupdr, true);
 
-    let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
+    let i2c = hal::i2c::I2c::new(
+        dp.I2C1,
+        (scl, sda),
+        100.kHz().try_into().unwrap(),
+        clocks,
+        &mut rcc.apb1,
+    );
 
     let mut accelerometer = Kxcj9::new_kxcj9_1018(i2c, SlaveAddr::default());
     accelerometer.enable().unwrap();
@@ -80,10 +95,7 @@ fn main() -> ! {
         let mut buffer: heapless::String<1616> = heapless::String::new();
         write!(buffer, "{},{},{} ", accel.x, accel.y, accel.z).unwrap();
 
-        // send buffer
-        for byte in buffer.into_bytes().iter() {
-            while usart1.isr.read().txe().bit_is_clear() {}
-            usart1.tdr.write(|w| w.tdr().bits(u16::from(*byte)));
-        }
+        serial.bwrite_all(&buffer.into_bytes()).unwrap();
+        serial.bflush().unwrap();
     }
 }

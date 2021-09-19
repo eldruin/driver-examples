@@ -64,61 +64,78 @@
 #![no_std]
 #![no_main]
 
-use ads1x1x::{channel as AdcChannel, Ads1x1x, FullScaleRange, SlaveAddr};
+use core::convert::TryInto;
 use core::fmt::Write;
 use cortex_m_rt::entry;
 use embedded_graphics::{
-    fonts::{Font6x8, Text},
+    mono_font::{ascii::FONT_6X10, MonoTextStyleBuilder},
     pixelcolor::BinaryColor,
     prelude::*,
-    style::TextStyleBuilder,
+    text::{Baseline, Text},
 };
 use embedded_hal::adc::OneShot;
-use f3::{
-    hal::{delay::Delay, i2c::I2c, prelude::*, stm32f30x},
-    led::Led,
-};
 use nb::block;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
+use ssd1306::{prelude::*, I2CDisplayInterface, Ssd1306};
+use stm32f3xx_hal::{self as hal, delay::Delay, pac, prelude::*};
 
-use panic_semihosting as _;
-use ssd1306::{prelude::*, Builder, I2CDIBuilder};
+use ads1x1x::{channel as AdcChannel, Ads1x1x, FullScaleRange, SlaveAddr};
 
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("ADS1015 example");
+
     let cp = cortex_m::Peripherals::take().unwrap();
-    let dp = stm32f30x::Peripherals::take().unwrap();
+    let dp = pac::Peripherals::take().unwrap();
 
     let mut flash = dp.FLASH.constrain();
     let mut rcc = dp.RCC.constrain();
     let mut gpioe = dp.GPIOE.split(&mut rcc.ahb);
     let clocks = rcc.cfgr.freeze(&mut flash.acr);
 
-    let mut led: Led = gpioe
+    let mut led = gpioe
         .pe9
-        .into_push_pull_output(&mut gpioe.moder, &mut gpioe.otyper)
-        .into();
+        .into_push_pull_output(&mut gpioe.moder, &mut gpioe.otyper);
     let mut delay = Delay::new(cp.SYST, clocks);
 
     let mut gpiob = dp.GPIOB.split(&mut rcc.ahb);
 
-    let scl = gpiob.pb6.into_af4(&mut gpiob.moder, &mut gpiob.afrl);
-    let sda = gpiob.pb7.into_af4(&mut gpiob.moder, &mut gpiob.afrl);
+    let mut scl =
+        gpiob
+            .pb6
+            .into_af4_open_drain(&mut gpiob.moder, &mut gpiob.otyper, &mut gpiob.afrl);
+    let mut sda =
+        gpiob
+            .pb7
+            .into_af4_open_drain(&mut gpiob.moder, &mut gpiob.otyper, &mut gpiob.afrl);
+    scl.internal_pull_up(&mut gpiob.pupdr, true);
+    sda.internal_pull_up(&mut gpiob.pupdr, true);
 
-    let i2c = I2c::i2c1(dp.I2C1, (scl, sda), 100.khz(), clocks, &mut rcc.apb1);
+    let i2c = hal::i2c::I2c::new(
+        dp.I2C1,
+        (scl, sda),
+        100.kHz().try_into().unwrap(),
+        clocks,
+        &mut rcc.apb1,
+    );
 
     let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let interface = I2CDIBuilder::new().init(manager.acquire());
-    let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
+    let interface = I2CDisplayInterface::new(manager.acquire());
+    let mut disp = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
+        .into_buffered_graphics_mode();
     disp.init().unwrap();
     disp.flush().unwrap();
 
-    let text_style = TextStyleBuilder::new(Font6x8)
+    let text_style = MonoTextStyleBuilder::new()
+        .font(&FONT_6X10)
         .text_color(BinaryColor::On)
         .build();
 
-    led.on();
+    led.set_high().unwrap();
     delay.delay_ms(50_u16);
-    led.off();
+    led.set_low().unwrap();
     let mut adc = Ads1x1x::new_ads1015(manager.acquire(), SlaveAddr::default());
     // need to be able to measure [0-5V]
     adc.set_full_scale_range(FullScaleRange::Within6_144V)
@@ -127,9 +144,9 @@ fn main() -> ! {
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 does not blink, something went wrong.
-        led.on();
+        led.set_high().unwrap();
         delay.delay_ms(50_u16);
-        led.off();
+        led.set_low().unwrap();
 
         // Read voltage in all channels
         let values = [
@@ -149,10 +166,14 @@ fn main() -> ! {
         disp.clear();
         for i in 0..values.len() {
             write!(lines[i], "Channel {}: {}", i, values[i]).unwrap();
-            Text::new(&lines[i], Point::new(0, i as i32 * 16))
-                .into_styled(text_style)
-                .draw(&mut disp)
-                .unwrap();
+            Text::with_baseline(
+                &lines[i],
+                Point::new(0, i as i32 * 16),
+                text_style,
+                Baseline::Top,
+            )
+            .draw(&mut disp)
+            .unwrap();
         }
 
         disp.flush().unwrap();

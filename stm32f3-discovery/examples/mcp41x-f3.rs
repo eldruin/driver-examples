@@ -24,49 +24,57 @@
 #![no_std]
 #![no_main]
 
-use panic_semihosting as _;
-
 use cortex_m_rt::entry;
 use embedded_hal::blocking::delay::DelayMs;
 use embedded_hal::digital::v2::OutputPin;
-use f3::{
-    hal::{
-        delay::Delay, flash::FlashExt, gpio::GpioExt, rcc::RccExt, spi::Spi, stm32f30x,
-        time::U32Ext,
-    },
-    led::Led,
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
+use stm32f3xx_hal::{
+    delay::Delay,
+    pac,
+    prelude::*,
+    spi::{config::Config, Spi},
 };
+
 use mcp4x::{Channel, Mcp4x, MODE};
 
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("MCP41010 example");
+
     let cp = cortex_m::Peripherals::take().unwrap();
-    let dp = stm32f30x::Peripherals::take().unwrap();
+    let dp = pac::Peripherals::take().unwrap();
 
     let mut flash = dp.FLASH.constrain();
     let mut rcc = dp.RCC.constrain();
     let mut gpioe = dp.GPIOE.split(&mut rcc.ahb);
     let clocks = rcc.cfgr.freeze(&mut flash.acr);
 
-    let mut led: Led = gpioe
+    let mut led = gpioe
         .pe9
-        .into_push_pull_output(&mut gpioe.moder, &mut gpioe.otyper)
-        .into();
+        .into_push_pull_output(&mut gpioe.moder, &mut gpioe.otyper);
     let mut delay = Delay::new(cp.SYST, clocks);
 
     let mut gpiob = dp.GPIOB.split(&mut rcc.ahb);
     let mut gpioa = dp.GPIOA.split(&mut rcc.ahb);
 
     // SPI configuration
-    let sck = gpioa.pa5.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
-    let miso = gpioa.pa6.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
-    let mosi = gpioa.pa7.into_af5(&mut gpioa.moder, &mut gpioa.afrl);
+    let sck = gpioa
+        .pa5
+        .into_af5_push_pull(&mut gpioa.moder, &mut gpioa.otyper, &mut gpioa.afrl);
+    let miso = gpioa
+        .pa6
+        .into_af5_push_pull(&mut gpioa.moder, &mut gpioa.otyper, &mut gpioa.afrl);
+    let mosi = gpioa
+        .pa7
+        .into_af5_push_pull(&mut gpioa.moder, &mut gpioa.otyper, &mut gpioa.afrl);
 
-    let spi = Spi::spi1(
+    let spi_config = Config::default().frequency(1.MHz()).mode(MODE);
+    let spi = Spi::new(
         dp.SPI1,
         (sck, miso, mosi),
-        MODE,
-        1.mhz(),
+        spi_config,
         clocks,
         &mut rcc.apb2,
     );
@@ -83,9 +91,9 @@ fn main() -> ! {
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 does not blink, something went wrong.
-        led.on();
+        led.set_high().unwrap();
         delay.delay_ms(50_u16);
-        led.off();
+        led.set_low().unwrap();
         delay.delay_ms(50_u16);
 
         digipot.set_position(Channel::Ch0, position).unwrap();
