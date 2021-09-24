@@ -9,7 +9,7 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-ad983x = "0.2"
+ad983x = "0.3"
 ads1x1x = "0.2"
 apds9960 = "0.1"
 ds1307 = "0.3"
