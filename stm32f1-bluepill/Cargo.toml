@@ -6,7 +6,7 @@ keywords = ["driver", "i2c", "spi", "example"]
 license = "MIT OR Apache-2.0"
 name = "driver-examples-bluepill"
 version = "0.1.0"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 ad983x = "0.3"
