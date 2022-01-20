@@ -55,7 +55,7 @@ To run the examples, clone this repository, go to the appropriate folder and run
 either `cargo embed` or `cargo run`. Look in the README of each folder for instructions.
 ```
 git clone https://github.com/eldruin/driver-examples
-cd driver-examples/stm32f1-discovery
+cd driver-examples/stm32f1-bluepill
 # ...
 ```
 
