@@ -81,8 +81,8 @@ fn main() -> ! {
     let mut led = gpioc.pc13.into_push_pull_output(&mut gpioc.crh);
     let mut delay = Delay::new(cp.SYST, clocks);
 
-    let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let interface = I2CDIBuilder::new().init(manager.acquire());
+    let manager = shared_bus::BusManagerSimple::new(i2c);
+    let interface = I2CDIBuilder::new().init(manager.acquire_i2c());
     let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
     disp.init().unwrap();
     disp.flush().unwrap();
@@ -91,7 +91,7 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    let mut sensor = Opt300x::new_opt3001(manager.acquire(), SlaveAddr::Alternative(false, false));
+    let mut sensor = Opt300x::new_opt3001(manager.acquire_i2c(), SlaveAddr::Alternative(false, false));
 
     let mut buffer: heapless::String<64> = heapless::String::new();
     loop {

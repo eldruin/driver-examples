@@ -124,8 +124,8 @@ fn main() -> ! {
     let mut led = gpioc.pc13.into_push_pull_output(&mut gpioc.crh);
     let mut delay = Delay::new(cp.SYST, clocks);
 
-    let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let interface = I2CDIBuilder::new().init(manager.acquire());
+    let manager = shared_bus::BusManagerSimple::new(i2c);
+    let interface = I2CDIBuilder::new().init(manager.acquire_i2c());
     let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
     disp.init().unwrap();
 
@@ -133,7 +133,7 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    let mut adc = Ads1x1x::new_ads1015(manager.acquire(), SlaveAddr::default());
+    let mut adc = Ads1x1x::new_ads1015(manager.acquire_i2c(), SlaveAddr::default());
     // need to be able to measure [0-5V]
     adc.set_full_scale_range(FullScaleRange::Within6_144V)
         .unwrap();

@@ -82,9 +82,9 @@ fn main() -> ! {
         1000,
         1000,
     );
-    let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
+    let manager = shared_bus::BusManagerSimple::new(i2c);
 
-    let mut radio = Si4703::new(manager.acquire());
+    let mut radio = Si4703::new(manager.acquire_i2c());
     radio.enable_oscillator().unwrap();
     delay.delay_ms(500_u16);
     radio.enable().unwrap();

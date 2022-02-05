@@ -86,8 +86,8 @@ fn main() -> ! {
     let mut led = gpioc.pc13.into_push_pull_output(&mut gpioc.crh);
     let mut delay = Delay::new(cp.SYST, clocks);
 
-    let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let interface = I2CDIBuilder::new().init(manager.acquire());
+    let manager = shared_bus::BusManagerSimple::new(i2c);
+    let interface = I2CDIBuilder::new().init(manager.acquire_i2c());
     let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
     disp.init().unwrap();
     disp.flush().unwrap();
@@ -96,7 +96,7 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    let mut ccs811 = Ccs811Awake::new(manager.acquire(), SlaveAddr::default());
+    let mut ccs811 = Ccs811Awake::new(manager.acquire_i2c(), SlaveAddr::default());
     ccs811.software_reset().unwrap();
     delay.delay_ms(10_u16);
     let mut lines: [String<32>; 2] = [String::new(), String::new()];
