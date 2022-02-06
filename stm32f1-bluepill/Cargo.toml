@@ -54,5 +54,5 @@ panic-rtt-target = { version =  "0.1.1", features = ["cortex-m"] }
 rtt-target = { version =  "0.2.2", features = ["cortex-m"] }
 
 [dependencies.stm32f1xx-hal]
-version = "0.6"
+version = "0.7"
 features = ["stm32f103", "rt", "medium"]
