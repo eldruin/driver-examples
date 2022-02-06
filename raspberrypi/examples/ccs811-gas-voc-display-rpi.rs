@@ -24,29 +24,32 @@ use embedded_ccs811::{
     prelude::*, Ccs811Awake, MeasurementMode, ModeChangeError, SlaveAddr as Ccs811Addr,
 };
 use embedded_graphics::{
-    fonts::{Font6x8, Text},
+    mono_font::{ascii::FONT_6X10, MonoTextStyleBuilder},
     pixelcolor::BinaryColor,
     prelude::*,
-    style::TextStyleBuilder,
+    text::{Baseline, Text},
 };
 use embedded_hal::blocking::delay::DelayMs;
 use hdc20xx::{Hdc20xx, SlaveAddr as Hdc20xxAddr};
 use linux_embedded_hal::{Delay, I2cdev};
 use nb::block;
-use ssd1306::{prelude::*, Builder, I2CDIBuilder};
+use ssd1306::{prelude::*, I2CDisplayInterface, Ssd1306};
 
 fn main() {
     let dev = I2cdev::new("/dev/i2c-1").unwrap();
     let bus = shared_bus::BusManagerStd::new(dev);
     let mut delay = Delay {};
-    let interface = I2CDIBuilder::new().init(bus.acquire_i2c());
-    let mut disp: GraphicsMode<_> = Builder::new().connect(interface).into();
+    let interface = I2CDisplayInterface::new(bus.acquire_i2c());
+    let mut disp = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
+        .into_buffered_graphics_mode();
     disp.init().unwrap();
     disp.flush().unwrap();
 
-    let text_style = TextStyleBuilder::new(Font6x8)
+    let text_style = MonoTextStyleBuilder::new()
+        .font(&FONT_6X10)
         .text_color(BinaryColor::On)
         .build();
+
     let mut hdc2080 = Hdc20xx::new(bus.acquire_i2c(), Hdc20xxAddr::default());
     let mut ccs811 = Ccs811Awake::new(bus.acquire_i2c(), Ccs811Addr::default());
     ccs811.software_reset().unwrap();
@@ -71,10 +74,14 @@ fn main() {
                 write!(lines[3], "Humidity: {:.2}%", env.humidity.unwrap_or(0.0)).unwrap();
                 disp.clear();
                 for (i, line) in lines.iter().enumerate() {
-                    Text::new(line, Point::new(0, i as i32 * 16))
-                        .into_styled(text_style)
-                        .draw(&mut disp)
-                        .unwrap();
+                    Text::with_baseline(
+                        line,
+                        Point::new(0, i as i32 * 16),
+                        text_style,
+                        Baseline::Top,
+                    )
+                    .draw(&mut disp)
+                    .unwrap();
                 }
                 disp.flush().unwrap();
 
