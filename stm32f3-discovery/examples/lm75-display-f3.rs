@@ -72,8 +72,8 @@ fn main() -> ! {
         &mut rcc.apb1,
     );
 
-    let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let interface = I2CDisplayInterface::new(manager.acquire());
+    let manager = shared_bus::BusManagerSimple::new(i2c);
+    let interface = I2CDisplayInterface::new(manager.acquire_i2c());
     let mut disp = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
         .into_buffered_graphics_mode();
     disp.init().unwrap();
@@ -84,7 +84,7 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    let mut lm75 = Lm75::new(manager.acquire(), Address::default());
+    let mut lm75 = Lm75::new(manager.acquire_i2c(), Address::default());
 
     loop {
         // Blink LED 0 to check that everything is actually running.

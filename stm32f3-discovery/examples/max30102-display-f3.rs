@@ -73,8 +73,8 @@ fn main() -> ! {
         &mut rcc.apb1,
     );
 
-    let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let interface = I2CDisplayInterface::new(manager.acquire());
+    let manager = shared_bus::BusManagerSimple::new(i2c);
+    let interface = I2CDisplayInterface::new(manager.acquire_i2c());
     let mut disp = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
         .into_buffered_graphics_mode();
     disp.init().unwrap();
@@ -85,7 +85,7 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    let mut max30102 = Max3010x::new_max30102(manager.acquire());
+    let mut max30102 = Max3010x::new_max30102(manager.acquire_i2c());
 
     led.set_high().unwrap();
     delay.delay_ms(50_u16);

@@ -79,8 +79,8 @@ fn main() -> ! {
         &mut rcc.apb1,
     );
 
-    let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let interface = I2CDisplayInterface::new(manager.acquire());
+    let manager = shared_bus::BusManagerSimple::new(i2c);
+    let interface = I2CDisplayInterface::new(manager.acquire_i2c());
     let mut disp = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
         .into_buffered_graphics_mode();
     disp.init().unwrap();
@@ -91,7 +91,7 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    let mut tmp102 = Tmp1x2::new(manager.acquire(), SlaveAddr::default());
+    let mut tmp102 = Tmp1x2::new(manager.acquire_i2c(), SlaveAddr::default());
 
     let mut buffer: heapless::String<64> = heapless::String::new();
     loop {

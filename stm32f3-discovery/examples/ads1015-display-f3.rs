@@ -121,8 +121,8 @@ fn main() -> ! {
         &mut rcc.apb1,
     );
 
-    let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let interface = I2CDisplayInterface::new(manager.acquire());
+    let manager = shared_bus::BusManagerSimple::new(i2c);
+    let interface = I2CDisplayInterface::new(manager.acquire_i2c());
     let mut disp = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
         .into_buffered_graphics_mode();
     disp.init().unwrap();
@@ -136,7 +136,7 @@ fn main() -> ! {
     led.set_high().unwrap();
     delay.delay_ms(50_u16);
     led.set_low().unwrap();
-    let mut adc = Ads1x1x::new_ads1015(manager.acquire(), SlaveAddr::default());
+    let mut adc = Ads1x1x::new_ads1015(manager.acquire_i2c(), SlaveAddr::default());
     // need to be able to measure [0-5V]
     adc.set_full_scale_range(FullScaleRange::Within6_144V)
         .unwrap();

@@ -74,8 +74,8 @@ fn main() -> ! {
         &mut rcc.apb1,
     );
 
-    let manager = shared_bus::BusManager::<cortex_m::interrupt::Mutex<_>, _>::new(i2c);
-    let interface = I2CDisplayInterface::new(manager.acquire());
+    let manager = shared_bus::BusManagerSimple::new(i2c);
+    let interface = I2CDisplayInterface::new(manager.acquire_i2c());
     let mut disp = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
         .into_buffered_graphics_mode();
     disp.init().unwrap();
@@ -86,7 +86,7 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    let mut sensor = Apds9960::new(manager.acquire());
+    let mut sensor = Apds9960::new(manager.acquire_i2c());
     sensor.enable().unwrap();
     sensor.enable_proximity().unwrap();
 
