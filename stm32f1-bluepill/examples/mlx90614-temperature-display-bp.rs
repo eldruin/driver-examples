@@ -87,7 +87,8 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    let mut sensor = Mlx9061x::new_mlx90614(manager.acquire_i2c(), SlaveAddr::default(), 5).unwrap();
+    let mut sensor =
+        Mlx9061x::new_mlx90614(manager.acquire_i2c(), SlaveAddr::default(), 5).unwrap();
 
     let mut lines: [heapless::String<32>; 2] = [heapless::String::new(), heapless::String::new()];
     loop {

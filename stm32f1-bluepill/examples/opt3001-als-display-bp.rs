@@ -91,7 +91,8 @@ fn main() -> ! {
         .text_color(BinaryColor::On)
         .build();
 
-    let mut sensor = Opt300x::new_opt3001(manager.acquire_i2c(), SlaveAddr::Alternative(false, false));
+    let mut sensor =
+        Opt300x::new_opt3001(manager.acquire_i2c(), SlaveAddr::Alternative(false, false));
 
     let mut buffer: heapless::String<64> = heapless::String::new();
     loop {
