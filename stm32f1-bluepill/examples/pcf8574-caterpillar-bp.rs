@@ -12,7 +12,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo embed --example pcf8574-caterpillar-bp`,
+//! `cargo embed --example pcf8574-caterpillar-bp --release`
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -37,13 +37,10 @@ fn main() -> ! {
     let dp = pac::Peripherals::take().unwrap();
 
     let mut flash = dp.FLASH.constrain();
-    let mut rcc = dp.RCC.constrain();
-
+    let rcc = dp.RCC.constrain();
     let clocks = rcc.cfgr.freeze(&mut flash.acr);
-
-    let mut afio = dp.AFIO.constrain(&mut rcc.apb2);
-
-    let mut gpiob = dp.GPIOB.split(&mut rcc.apb2);
+    let mut afio = dp.AFIO.constrain();
+    let mut gpiob = dp.GPIOB.split();
 
     let scl = gpiob.pb8.into_alternate_open_drain(&mut gpiob.crh);
     let sda = gpiob.pb9.into_alternate_open_drain(&mut gpiob.crh);
@@ -57,7 +54,6 @@ fn main() -> ! {
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
-        &mut rcc.apb1,
         1000,
         10,
         1000,

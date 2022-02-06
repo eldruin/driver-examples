@@ -21,7 +21,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo run --example mcp4921-ads1115-display-bp --target thumbv7em-none-eabihf`,
+//! `cargo run --example mcp4921-ads1115-display-bp  --release`
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -38,7 +38,6 @@ use embedded_graphics::{
 };
 use embedded_hal::adc::OneShot;
 use embedded_hal::blocking::delay::DelayMs;
-use embedded_hal::digital::v2::OutputPin;
 use mcp49xx::{Command as DacCommand, Mcp49xx, MODE_0};
 use nb::block;
 use panic_rtt_target as _;
@@ -60,13 +59,13 @@ fn main() -> ! {
     let dp = pac::Peripherals::take().unwrap();
 
     let mut flash = dp.FLASH.constrain();
-    let mut rcc = dp.RCC.constrain();
+    let rcc = dp.RCC.constrain();
 
     let clocks = rcc.cfgr.freeze(&mut flash.acr);
 
-    let mut afio = dp.AFIO.constrain(&mut rcc.apb2);
-    let mut gpioa = dp.GPIOA.split(&mut rcc.apb2);
-    let mut gpiob = dp.GPIOB.split(&mut rcc.apb2);
+    let mut afio = dp.AFIO.constrain();
+    let mut gpioa = dp.GPIOA.split();
+    let mut gpiob = dp.GPIOB.split();
 
     let scl = gpiob.pb8.into_alternate_open_drain(&mut gpiob.crh);
     let sda = gpiob.pb9.into_alternate_open_drain(&mut gpiob.crh);
@@ -80,7 +79,6 @@ fn main() -> ! {
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
-        &mut rcc.apb1,
         1000,
         10,
         1000,
@@ -100,10 +98,9 @@ fn main() -> ! {
         MODE_0,
         1_u32.mhz(),
         clocks,
-        &mut rcc.apb2,
     );
 
-    let mut gpioc = dp.GPIOC.split(&mut rcc.apb2);
+    let mut gpioc = dp.GPIOC.split();
     let mut led = gpioc.pc13.into_push_pull_output(&mut gpioc.crh);
     let mut delay = Delay::new(cp.SYST, clocks);
 
@@ -122,7 +119,7 @@ fn main() -> ! {
     adc.set_full_scale_range(FullScaleRange::Within6_144V)
         .unwrap();
 
-    cs.set_high().unwrap();
+    cs.set_high();
 
     let mut dac = Mcp49xx::new_mcp4921(spi, cs);
     let dac_cmd = DacCommand::default();
@@ -130,9 +127,9 @@ fn main() -> ! {
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 does not blink, something went wrong.
-        led.set_high().unwrap();
+        led.set_high();
         delay.delay_ms(50_u16);
-        led.set_low().unwrap();
+        led.set_low();
 
         dac.send(dac_cmd.value(position)).unwrap();
 
@@ -142,14 +139,14 @@ fn main() -> ! {
         // make the number smaller for reading ease
         let value_ch0 = value_ch0 >> 5;
 
-        let mut msg: heapless::String<64> = heapless::String::new();
+        let mut buffer: heapless::String<64> = heapless::String::new();
 
         // write some extra spaces after the number to clear up when the number get smaller
-        write!(msg, "Channel 0: {}", value_ch0).unwrap();
+        write!(buffer, "Channel 0: {}   ", value_ch0).unwrap();
 
         // print
         disp.clear();
-        Text::new(&msg, Point::zero())
+        Text::new(&buffer, Point::zero())
             .into_styled(text_style)
             .draw(&mut disp)
             .unwrap();

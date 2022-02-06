@@ -15,7 +15,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo embed --example max30102-heart-usart-bp`,
+//! `cargo embed --example max30102-heart-usart-bp --release`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -43,15 +43,15 @@ fn main() -> ! {
     let dp = pac::Peripherals::take().unwrap();
 
     let mut flash = dp.FLASH.constrain();
-    let mut rcc = dp.RCC.constrain();
+    let rcc = dp.RCC.constrain();
     let clocks = rcc
         .cfgr
         .use_hse(8.mhz())
         .sysclk(72.mhz())
         .pclk1(36.mhz())
         .freeze(&mut flash.acr);
-    let mut afio = dp.AFIO.constrain(&mut rcc.apb2);
-    let mut gpiob = dp.GPIOB.split(&mut rcc.apb2);
+    let mut afio = dp.AFIO.constrain();
+    let mut gpiob = dp.GPIOB.split();
     let mut delay = Delay::new(cp.SYST, clocks);
 
     let scl = gpiob.pb8.into_alternate_open_drain(&mut gpiob.crh);
@@ -66,7 +66,6 @@ fn main() -> ! {
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
-        &mut rcc.apb1,
         1000,
         10,
         1000,
@@ -81,7 +80,6 @@ fn main() -> ! {
         &mut afio.mapr,
         serial::Config::default().baudrate(9600.bps()),
         clocks,
-        &mut rcc.apb2,
     );
     let (mut tx, _rx) = serial.split();
 

@@ -19,7 +19,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo embed --example ccs811-gas-voc-display-bp`,
+//! `cargo embed --example ccs811-gas-voc-display-bp --release`,
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -36,7 +36,6 @@ use embedded_graphics::{
     prelude::*,
     style::TextStyleBuilder,
 };
-use embedded_hal::digital::v2::OutputPin;
 use hdc20xx::{Hdc20xx, SlaveAddr as Hdc20xxSlaveAddr};
 use heapless::String;
 use nb::block;
@@ -58,18 +57,17 @@ fn main() -> ! {
     let dp = pac::Peripherals::take().unwrap();
 
     let mut flash = dp.FLASH.constrain();
-    let mut rcc = dp.RCC.constrain();
+    let rcc = dp.RCC.constrain();
 
     let clocks = rcc.cfgr.freeze(&mut flash.acr);
 
-    let mut afio = dp.AFIO.constrain(&mut rcc.apb2);
-
-    let mut gpiob = dp.GPIOB.split(&mut rcc.apb2);
+    let mut afio = dp.AFIO.constrain();
+    let mut gpiob = dp.GPIOB.split();
 
     let scl = gpiob.pb8.into_alternate_open_drain(&mut gpiob.crh);
     let sda = gpiob.pb9.into_alternate_open_drain(&mut gpiob.crh);
     let mut nwake = gpiob.pb7.into_push_pull_output(&mut gpiob.crl);
-    nwake.set_high().unwrap();
+    nwake.set_high();
 
     let i2c = BlockingI2c::i2c1(
         dp.I2C1,
@@ -80,14 +78,13 @@ fn main() -> ! {
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
-        &mut rcc.apb1,
         1000,
         10,
         1000,
         1000,
     );
 
-    let mut gpioc = dp.GPIOC.split(&mut rcc.apb2);
+    let mut gpioc = dp.GPIOC.split();
     let mut led = gpioc.pc13.into_push_pull_output(&mut gpioc.crh);
     let mut delay = Delay::new(cp.SYST, clocks);
 
@@ -125,9 +122,9 @@ fn main() -> ! {
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 is off, something went wrong.
-        led.set_high().unwrap();
+        led.set_high();
         delay.delay_ms(500_u16);
-        led.set_low().unwrap();
+        led.set_low();
         delay.delay_ms(500_u16);
 
         let data = block!(ccs811.data()).unwrap_or(default);

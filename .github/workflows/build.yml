@@ -93,7 +93,7 @@ jobs:
 
       - name: Build
         working-directory: ${{ matrix.SUBFOLDER }}
-        run: cargo build --target=${{ matrix.TARGET }} --examples
+        run: cargo build --target=${{ matrix.TARGET }} --examples --release
 
 
   ci-rpi:

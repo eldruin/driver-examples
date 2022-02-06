@@ -20,7 +20,7 @@
 //! ```
 //!
 //! Run with:
-//! `cargo embed --example si4703-fm-radio-bp`,
+//! `cargo embed --example si4703-fm-radio-bp --release`
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -34,7 +34,6 @@ use embedded_graphics::{
     prelude::*,
     style::TextStyleBuilder,
 };
-use embedded_hal::digital::v2::{InputPin, OutputPin};
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 use si4703::{
@@ -57,11 +56,11 @@ fn main() -> ! {
     let dp = pac::Peripherals::take().unwrap();
 
     let mut flash = dp.FLASH.constrain();
-    let mut rcc = dp.RCC.constrain();
+    let rcc = dp.RCC.constrain();
 
     let clocks = rcc.cfgr.freeze(&mut flash.acr);
-    let mut afio = dp.AFIO.constrain(&mut rcc.apb2);
-    let mut gpiob = dp.GPIOB.split(&mut rcc.apb2);
+    let mut afio = dp.AFIO.constrain();
+    let mut gpiob = dp.GPIOB.split();
 
     let scl = gpiob.pb8.into_alternate_open_drain(&mut gpiob.crh);
     let mut sda = gpiob.pb9.into_push_pull_output(&mut gpiob.crh);
@@ -69,7 +68,7 @@ fn main() -> ! {
     let stcint = gpiob.pb6.into_pull_up_input(&mut gpiob.crl);
     let seekdown = gpiob.pb11.into_pull_down_input(&mut gpiob.crh);
     let seekup = gpiob.pb10.into_pull_down_input(&mut gpiob.crh);
-    let mut gpioc = dp.GPIOC.split(&mut rcc.apb2);
+    let mut gpioc = dp.GPIOC.split();
     let mut led = gpioc.pc13.into_push_pull_output(&mut gpioc.crh);
     let mut delay = Delay::new(cp.SYST, clocks);
 
@@ -84,7 +83,6 @@ fn main() -> ! {
             duty_cycle: DutyCycle::Ratio2to1,
         },
         clocks,
-        &mut rcc.apb1,
         1000,
         10,
         1000,
@@ -115,12 +113,12 @@ fn main() -> ! {
     loop {
         // Blink LED 0 every time a new seek is started
         // to check that everything is actually running.
-        led.set_low().unwrap();
+        led.set_low();
         delay.delay_ms(50_u16);
-        led.set_high().unwrap();
+        led.set_high();
         delay.delay_ms(50_u16);
-        let should_seek_down = seekdown.is_high().unwrap();
-        let should_seek_up = seekup.is_high().unwrap();
+        let should_seek_down = seekdown.is_high();
+        let should_seek_up = seekup.is_high();
         if should_seek_down || should_seek_up {
             buffer.clear();
             write!(buffer, "Seeking...").unwrap();

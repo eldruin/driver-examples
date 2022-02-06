@@ -46,13 +46,17 @@ heapless = "0.7"
 nb = "1"
 embedded-hal = "0.2.4"
 libm = "0.2"
-cortex-m = "0.6"
-cortex-m-rt = "0.6.5"
+cortex-m = "0.7"
+cortex-m-rt = "0.7"
 
 
 panic-rtt-target = { version =  "0.1.1", features = ["cortex-m"] }
-rtt-target = { version =  "0.2.2", features = ["cortex-m"] }
+rtt-target = { version =  "0.3.1", features = ["cortex-m"] }
 
 [dependencies.stm32f1xx-hal]
-version = "0.7"
+version = "0.8"
 features = ["stm32f103", "rt", "medium"]
+
+# Optimize all dependencies
+[profile.dev.package."*"]
+opt-level = "z"

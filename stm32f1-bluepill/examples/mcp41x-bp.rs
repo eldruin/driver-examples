@@ -18,7 +18,7 @@
 //! For example, 0-50Kohm for MCP41050 and 0-100Kohm for MCP41100.
 //!
 //! Run with:
-//! `cargo embed --example mcp41x-bp
+//! `cargo embed --example mcp41x-bp --release`
 
 #![deny(unsafe_code)]
 #![no_std]
@@ -26,12 +26,10 @@
 
 use cortex_m_rt::entry;
 use embedded_hal::blocking::delay::DelayMs;
-use embedded_hal::digital::v2::OutputPin;
+use mcp4x::{Channel, Mcp4x, MODE};
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 use stm32f1xx_hal::{delay::Delay, pac, prelude::*, spi::Spi};
-
-use mcp4x::{Channel, Mcp4x, MODE};
 
 #[entry]
 fn main() -> ! {
@@ -42,14 +40,14 @@ fn main() -> ! {
     let dp = pac::Peripherals::take().unwrap();
 
     let mut flash = dp.FLASH.constrain();
-    let mut rcc = dp.RCC.constrain();
+    let rcc = dp.RCC.constrain();
 
     let clocks = rcc.cfgr.freeze(&mut flash.acr);
 
-    let mut afio = dp.AFIO.constrain(&mut rcc.apb2);
-    let mut gpioa = dp.GPIOA.split(&mut rcc.apb2);
+    let mut afio = dp.AFIO.constrain();
+    let mut gpioa = dp.GPIOA.split();
 
-    let mut gpioc = dp.GPIOC.split(&mut rcc.apb2);
+    let mut gpioc = dp.GPIOC.split();
     let mut led = gpioc.pc13.into_push_pull_output(&mut gpioc.crh);
     let mut delay = Delay::new(cp.SYST, clocks);
 
@@ -66,10 +64,9 @@ fn main() -> ! {
         MODE,
         1_u32.mhz(),
         clocks,
-        &mut rcc.apb2,
     );
 
-    cs.set_high().unwrap();
+    cs.set_high();
 
     let mut digipot = Mcp4x::new_mcp41x(spi, cs);
 
@@ -77,9 +74,9 @@ fn main() -> ! {
     loop {
         // Blink LED 0 to check that everything is actually running.
         // If the LED 0 does not blink, something went wrong.
-        led.set_high().unwrap();
+        led.set_high();
         delay.delay_ms(50_u16);
-        led.set_low().unwrap();
+        led.set_low();
         delay.delay_ms(50_u16);
 
         digipot.set_position(Channel::Ch0, position).unwrap();
