@@ -20,7 +20,7 @@
 #![no_main]
 
 use cortex_m_rt::entry;
-use ds323x::{Ds323x, NaiveDate, Rtcc};
+use ds323x::{DateTimeAccess, Ds323x, NaiveDate};
 
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
@@ -76,7 +76,7 @@ fn main() -> ! {
         led.set_low();
         delay.delay_ms(750_u16);
 
-        let now = rtc.get_datetime().unwrap();
+        let now = rtc.datetime().unwrap();
         rprintln!("Date/Time: {:?}", now);
     }
 }

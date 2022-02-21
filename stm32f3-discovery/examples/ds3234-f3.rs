@@ -34,7 +34,7 @@ use stm32f3xx_hal::{
     spi::{config::Config, Spi},
 };
 
-use ds323x::{Ds323x, NaiveDate, Rtcc};
+use ds323x::{DateTimeAccess, Ds323x, NaiveDate};
 
 #[entry]
 fn main() -> ! {
@@ -87,7 +87,7 @@ fn main() -> ! {
     let begin = NaiveDate::from_ymd(2020, 5, 2).and_hms(10, 21, 34);
     rtc.set_datetime(&begin).unwrap();
     loop {
-        let now = rtc.get_datetime().unwrap();
+        let now = rtc.datetime().unwrap();
         if (now - begin).num_seconds() < 30 {
             // this will blink for 30 seconds
             led.set_high().unwrap();

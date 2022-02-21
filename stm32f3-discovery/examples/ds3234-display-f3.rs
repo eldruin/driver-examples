@@ -47,8 +47,7 @@ use stm32f3xx_hal::{
     spi::{config::Config, Spi},
 };
 
-use ds323x::{Ds323x, NaiveDate};
-use rtcc::Rtcc;
+use ds323x::{DateTimeAccess, Ds323x, NaiveDate};
 
 #[entry]
 fn main() -> ! {
@@ -137,7 +136,7 @@ fn main() -> ! {
     rtc.set_datetime(&begin).unwrap();
     rtc.enable().unwrap();
     loop {
-        let now = rtc.get_datetime().unwrap();
+        let now = rtc.datetime().unwrap();
         let mut line: heapless::String<32> = heapless::String::new();
 
         write!(line, "{}", now).unwrap();
