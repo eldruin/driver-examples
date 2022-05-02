@@ -37,7 +37,6 @@ veml6075 = "0.2"
 w25 = { git = "https://github.com/eldruin/w25-rs"}
 xca9548a = "0.2"
 
-rtcc = "0.2"
 chrono = { version = "0.4", default-features = false }
 ssd1306 = "0.7"
 embedded-graphics = "0.7"
