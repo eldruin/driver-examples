@@ -91,7 +91,7 @@ fn main() -> ! {
     let mosi = gpioa.pa7.into_alternate_push_pull(&mut gpioa.crl);
     let mut cs = gpioa.pa4.into_push_pull_output(&mut gpioa.crl);
 
-    let spi = Spi::spi1(
+    let mut spi = Spi::spi1(
         dp.SPI1,
         (sck, miso, mosi),
         &mut afio.mapr,
@@ -121,7 +121,7 @@ fn main() -> ! {
 
     cs.set_high();
 
-    let mut dac = Mcp49xx::new_mcp4921(spi, cs);
+    let mut dac = Mcp49xx::new_mcp4921(cs);
     let dac_cmd = DacCommand::default();
     let mut position = 0;
     loop {
@@ -131,7 +131,7 @@ fn main() -> ! {
         delay.delay_ms(50_u16);
         led.set_low();
 
-        dac.send(dac_cmd.value(position)).unwrap();
+        dac.send(&mut spi, dac_cmd.value(position)).unwrap();
 
         // Read voltage in channel 0
         let value_ch0 = block!(adc.read(&mut AdcChannel::SingleA0)).unwrap();
