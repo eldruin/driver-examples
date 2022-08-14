@@ -9,7 +9,6 @@ name: Build
 env:
   RUSTFLAGS: '-D warnings'
   DRIVERS: >
-    ad983x
     ads1x1x
     apds9960
     bmi160
@@ -39,6 +38,7 @@ env:
     veml6075
     xca9548a
 
+# ad983x Git version is not compatible. Deactivated until a new version is released.
 # lsm303agr Git version is not compatible. Deactivated until a new version is released.
 # veml6040 Git version is not compatible. Deactivated until a new version is released.
 # veml6070 Git version is not compatible. Deactivated until a new version is released.
