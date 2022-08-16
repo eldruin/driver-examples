@@ -39,7 +39,7 @@ use rtt_target::{rprintln, rtt_init_print};
 use ssd1306::{prelude::*, I2CDisplayInterface, Ssd1306};
 use stm32f3xx_hal::{self as hal, delay::Delay, pac, prelude::*};
 
-use mcp794xx::{Datelike, Mcp794xx, NaiveDate, Rtcc, Timelike};
+use mcp794xx::{DateTimeAccess, Datelike, Mcp794xx, NaiveDate, Timelike};
 
 #[entry]
 fn main() -> ! {
@@ -103,7 +103,7 @@ fn main() -> ! {
         led.set_low().unwrap();
         delay.delay_ms(50_u8);
 
-        let now = rtc.get_datetime().unwrap();
+        let now = rtc.datetime().unwrap();
         let mut buffer: heapless::String<32> = heapless::String::new();
         write!(
             buffer,

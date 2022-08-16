@@ -29,7 +29,7 @@ use embedded_graphics::{
     prelude::*,
     style::TextStyleBuilder,
 };
-use mcp794xx::{Datelike, Mcp794xx, NaiveDate, Rtcc, Timelike};
+use mcp794xx::{DateTimeAccess, Datelike, Mcp794xx, NaiveDate, Timelike};
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 use ssd1306::{prelude::*, Builder, I2CDIBuilder};
@@ -97,7 +97,7 @@ fn main() -> ! {
         led.set_low();
         delay.delay_ms(50_u16);
 
-        let now = rtc.get_datetime().unwrap();
+        let now = rtc.datetime().unwrap();
 
         let mut buffer: heapless::String<32> = heapless::String::new();
         write!(
