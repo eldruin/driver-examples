@@ -26,7 +26,7 @@ use embedded_graphics::{
     prelude::*,
     style::TextStyleBuilder,
 };
-use iaq_core::{IaqCore, Measurement};
+use iaq_core::IaqCore;
 use nb::block;
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
@@ -97,7 +97,7 @@ fn main() -> ! {
         led.set_low();
         delay.delay_ms(50_u16);
 
-        let data = block!(sensor.data()).unwrap_or(Measurement::default());
+        let data = block!(sensor.data()).unwrap_or_default();
 
         lines[0].clear();
         lines[1].clear();

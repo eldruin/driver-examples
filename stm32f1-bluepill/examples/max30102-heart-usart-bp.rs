@@ -102,8 +102,8 @@ fn main() -> ! {
         delay.delay_ms(100_u8);
         let mut data = [0; 16];
         let read = max30102.read_fifo(&mut data).unwrap_or(0);
-        for i in 0..read.into() {
-            writeln!(tx, "{}\r", data[i],).unwrap();
+        for v in data.iter().take(read.into()) {
+            writeln!(tx, "{}\r", v,).unwrap();
         }
     }
 }

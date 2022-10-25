@@ -139,8 +139,8 @@ fn main() -> ! {
                 .unwrap();
         }
 
-        for i in 0..4 {
-            lines[i].clear();
+        for line in &mut lines {
+            line.clear();
         }
         write!(lines[0], "eCO2: {}", data.eco2).unwrap();
         write!(lines[1], "eTVOC: {}", data.etvoc).unwrap();

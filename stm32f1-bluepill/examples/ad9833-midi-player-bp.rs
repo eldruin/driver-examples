@@ -27,7 +27,6 @@
 
 use ad983x::{Ad983x, FrequencyRegister, MODE};
 use cortex_m_rt::entry;
-use libm;
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 use stm32f1xx_hal::{delay::Delay, pac, prelude::*, spi::Spi};
