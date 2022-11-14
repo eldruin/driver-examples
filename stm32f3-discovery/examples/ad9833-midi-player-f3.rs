@@ -29,7 +29,6 @@
 use cortex_m_rt::entry;
 use embedded_hal::blocking::delay::DelayMs;
 use embedded_hal::digital::v2::OutputPin;
-use libm;
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 use stm32f3xx_hal::{
