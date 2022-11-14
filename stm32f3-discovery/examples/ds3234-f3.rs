@@ -84,7 +84,10 @@ fn main() -> ! {
     chip_select.set_high().unwrap();
 
     let mut rtc = Ds323x::new_ds3234(spi, chip_select);
-    let begin = NaiveDate::from_ymd(2020, 5, 2).and_hms(10, 21, 34);
+    let begin = NaiveDate::from_ymd_opt(2022, 5, 2)
+        .unwrap()
+        .and_hms_opt(10, 21, 34)
+        .unwrap();
     rtc.set_datetime(&begin).unwrap();
     loop {
         let now = rtc.datetime().unwrap();

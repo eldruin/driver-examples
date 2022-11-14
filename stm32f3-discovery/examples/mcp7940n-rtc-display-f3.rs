@@ -92,7 +92,10 @@ fn main() -> ! {
         .build();
 
     let mut rtc = Mcp794xx::new_mcp7940n(manager.acquire_i2c());
-    let begin = NaiveDate::from_ymd(2019, 1, 2).and_hms(4, 5, 6);
+    let begin = NaiveDate::from_ymd_opt(2022, 5, 2)
+        .unwrap()
+        .and_hms_opt(10, 21, 34)
+        .unwrap();
     rtc.set_datetime(&begin).unwrap();
     rtc.enable().unwrap();
     loop {
