@@ -9,6 +9,7 @@ This repository includes examples of using devices through these drivers:
 |[Ad983x]          | Waveform generator / direct digital synthesizer (DDS).    | SPI       | [Intro blog post][blog-ad983x]    |
 |[Ads1x1x]         | 12/16-bit Analog-to-digital (ADC) converters.             | I2C       | [Intro blog post][blog-ads1x1x]   |
 |[Apds9960]        | Digital proximity, ambient light, RGB and gesture sensor. | I2C       |                                   |
+|[Bmi160]          | Inertial measurement unit (IMU) (accelerometer + gyro).   | I2C / SPI |                                   |
 |[Ds1307]          | Real-time clock (RTC) / calendar.                         | I2C       | [Intro blog post][blog-ds1307]    |
 |[Ds323x]          | Extremely accurate real-time clock (RTC) / calendar.      | I2C / SPI |                                   |
 |[Eeprom24x]       | 24x series serial EEPROM devices.                         | I2C       | [Intro blog post][blog-eeprom24x] |
@@ -79,6 +80,7 @@ be dual licensed as above, without any additional terms or conditions.
 [Ad983x]: https://crates.io/crates/ad983x
 [Ads1x1x]: https://crates.io/crates/ads1x1x
 [Apds9960]: https://crates.io/crates/apds9960
+[Bmi160]: https://crates.io/crates/bmi160
 [Ds1307]: https://crates.io/crates/ds1307
 [Ds323x]: https://crates.io/crates/ds323x
 [Kxcj9]: https://crates.io/crates/kxcj9
