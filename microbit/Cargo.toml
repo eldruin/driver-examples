@@ -9,13 +9,12 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-lsm303agr = "0.2"
+lsm303agr = "0.3"
 
-nb = "1"
+nb = "1.1"
 microbit = "0.8"
-embedded-hal = "0.2.4"
+embedded-hal = "0.2.7"
 cortex-m = "0.6.1"
 cortex-m-rt = "0.6.10"
 panic-rtt-target = { version =  "0.1.1", features = ["cortex-m"] }
 rtt-target = { version =  "0.2.2", features = ["cortex-m"] }
-

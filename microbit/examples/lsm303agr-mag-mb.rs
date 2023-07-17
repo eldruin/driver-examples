@@ -12,7 +12,8 @@
 
 use cortex_m;
 use cortex_m_rt::entry;
-use lsm303agr::{Lsm303agr, MagOutputDataRate};
+use lsm303agr::{Lsm303agr, MagMode, MagOutputDataRate};
+use microbit::hal::delay::Delay;
 use microbit::hal::i2c;
 use microbit::hal::prelude::*;
 use panic_rtt_target as _;
@@ -28,16 +29,22 @@ fn main() -> ! {
         let scl = gpio.pin0.into_open_drain_input().into();
         let sda = gpio.pin30.into_open_drain_input().into();
         let i2c = i2c::I2c::i2c1(p.TWI1, sda, scl);
+        let mut delay = Delay::new(p.TIMER0);
 
         let mut lsm = Lsm303agr::new_with_i2c(i2c);
         lsm.init().unwrap();
-        lsm.set_mag_odr(MagOutputDataRate::Hz100).unwrap();
+        lsm.set_mag_mode_and_odr(
+            &mut delay,
+            MagMode::HighResolution,
+            MagOutputDataRate::Hz100,
+        )
+        .unwrap();
         let mut lsm = lsm.into_mag_continuous().ok().unwrap();
         loop {
             let status = lsm.mag_status().unwrap();
-            if status.xyz_new_data {
-                let data = lsm.mag_data().unwrap();
-                rprintln!("{:>4} {:>4} {:>4}", data.x, data.y, data.z);
+            if status.xyz_new_data() {
+                let data = lsm.magnetic_field().unwrap();
+                rprintln!("{:>4} {:>4} {:>4}", data.x_nt(), data.y_nt(), data.z_nt());
             }
             for _ in 0..20_000 {
                 cortex_m::asm::nop();

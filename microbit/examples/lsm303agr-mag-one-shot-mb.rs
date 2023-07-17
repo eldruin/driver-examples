@@ -33,8 +33,8 @@ fn main() -> ! {
         let mut lsm = Lsm303agr::new_with_i2c(i2c);
         lsm.init().unwrap();
         loop {
-            let data = nb::block!(lsm.mag_data()).unwrap();
-            rprintln!("{:>4} {:>4} {:>4}", data.x, data.y, data.z);
+            let data = nb::block!(lsm.magnetic_field()).unwrap();
+            rprintln!("{:>4} {:>4} {:>4}", data.x_nt(), data.y_nt(), data.z_nt());
 
             for _ in 0..20_000 {
                 cortex_m::asm::nop();
