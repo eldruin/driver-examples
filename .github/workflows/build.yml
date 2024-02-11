@@ -9,17 +9,12 @@ name: Build
 env:
   RUSTFLAGS: '-D warnings'
   DRIVERS: >
-    ads1x1x
     apds9960
-    bmi160
-    ds1307
     ds323x
-    eeprom24x
     embedded-ccs811
     hdc20xx
     isl29125
     kxcj9
-    lm75
     max170xx
     max3010x
     max44009
@@ -30,18 +25,24 @@ env:
     mma8x5x
     opt300x
     pcf857x
-    pwm-pca9685
     tcs3472
-    tmp006
-    tmp1x2
     veml6030
     veml6075
     xca9548a
 
-# ad983x Git version is not compatible. Deactivated until a new version is released.
-# lsm303agr Git version is not compatible. Deactivated until a new version is released.
-# veml6040 Git version is not compatible. Deactivated until a new version is released.
-# veml6070 Git version is not compatible. Deactivated until a new version is released.
+# The Git version of these drivers are not compatible. Deactivated until a new version is released.
+# ad983x
+# ads1x1x
+# bmi160
+# ds1307
+# eeprom24x
+# lm75
+# lsm303agr
+# pwm-pca9685
+# tmp006
+# tmp1x2
+# veml6040
+# veml6070
 
 jobs:
   ci-bare-metal:
