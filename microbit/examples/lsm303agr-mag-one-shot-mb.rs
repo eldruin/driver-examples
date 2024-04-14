@@ -10,12 +10,10 @@
 #![no_main]
 #![no_std]
 
-use cortex_m;
 use cortex_m_rt::entry;
 use lsm303agr::Lsm303agr;
 use microbit::hal::i2c;
 use microbit::hal::prelude::*;
-use nb;
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 

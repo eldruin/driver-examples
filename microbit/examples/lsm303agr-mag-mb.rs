@@ -10,7 +10,6 @@
 #![no_main]
 #![no_std]
 
-use cortex_m;
 use cortex_m_rt::entry;
 use lsm303agr::{Lsm303agr, MagMode, MagOutputDataRate};
 use microbit::hal::delay::Delay;

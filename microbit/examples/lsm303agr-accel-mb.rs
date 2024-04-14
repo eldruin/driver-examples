@@ -11,7 +11,6 @@
 #![no_std]
 
 use core::fmt::Write;
-use cortex_m;
 use cortex_m_rt::entry;
 use lsm303agr::{AccelMode, AccelOutputDataRate, Lsm303agr};
 use microbit::hal::delay::Delay;
