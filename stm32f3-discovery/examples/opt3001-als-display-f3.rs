@@ -24,7 +24,6 @@
 #![no_std]
 #![no_main]
 
-use core::convert::TryInto;
 use cortex_m_rt::entry;
 use embedded_graphics::{
     mono_font::{ascii::FONT_6X10, MonoTextStyleBuilder},

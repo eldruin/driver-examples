@@ -23,7 +23,6 @@
 #![no_std]
 #![no_main]
 
-use core::convert::TryInto;
 use core::fmt::Write;
 use cortex_m_rt::entry;
 use embedded_graphics::{
