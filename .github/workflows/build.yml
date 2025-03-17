@@ -87,7 +87,7 @@ jobs:
             ${{ runner.OS }}-cargo-
 
       - name: Cache build output dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: target
           key: ${{ runner.OS }}-build-${{ hashFiles('**/Cargo.lock') }}
@@ -95,7 +95,7 @@ jobs:
             ${{ runner.OS }}-build-${{ hashFiles('**/Cargo.lock') }}
             ${{ runner.OS }}-build-
 
-      - uses: dtolnay/rust-toolchain@v1
+      - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.rust }}
           target: ${{ matrix.TARGET }}
@@ -151,7 +151,7 @@ jobs:
             ${{ runner.OS }}-cargo-
 
       - name: Cache build output dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: target
           key: ${{ runner.OS }}-build-${{ hashFiles('**/Cargo.lock') }}
@@ -159,7 +159,7 @@ jobs:
             ${{ runner.OS }}-build-${{ hashFiles('**/Cargo.lock') }}
             ${{ runner.OS }}-build-
 
-      - uses: dtolnay/rust-toolchain@v1
+      - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.rust }}
           target: ${{ matrix.TARGET }}
